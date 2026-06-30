@@ -1,0 +1,935 @@
+{
+  "meta": {
+    "station": "Jungle Star Radio",
+    "anniversary": "10 Year Anniversary",
+    "rights_note": "Students keep full creative ownership of their original work. Jungle Star teaches credits, backups, publishing, and responsible release.",
+    "audio_note": "Host audio externally. Keep GitHub for pages, data, thumbnails, and embeds."
+  },
+  "artists": [
+    {
+      "id": "dr-jawnkenstein",
+      "name": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "role": "Founder, artist, producer, curriculum builder",
+      "city": "Philadelphia",
+      "genres": [
+        "Reggae",
+        "Hip-Hop",
+        "Testimony",
+        "Great Food Fight",
+        "Youth Music"
+      ],
+      "bio": "Lab music, testimony records, youth-safe classroom songs, and soundtrack energy for the Jungle Star universe.",
+      "links": {
+        "instagram": "https://www.instagram.com/iszzyprodizzy/",
+        "youtube": ""
+      }
+    },
+    {
+      "id": "animal-radio-archive",
+      "name": "Animal Radio / Positive Music Archive",
+      "role": "Archive and station legacy",
+      "city": "Philadelphia / Worldwide",
+      "genres": [
+        "Positive Music",
+        "Open Mic",
+        "Community Radio"
+      ],
+      "bio": "The ten-year signal: positive music, social sharing, live energy, community-building, and substance over noise.",
+      "links": {}
+    },
+    {
+      "id": "academy-sound-lab",
+      "name": "Academy Sound Lab Youth Artists",
+      "role": "Student creators",
+      "city": "Build-A-Better-World Academy",
+      "genres": [
+        "Youth-owned",
+        "Garden Songs",
+        "Classroom Music"
+      ],
+      "bio": "Young creators keep their rights while learning music, ownership, publishing, credits, and backups.",
+      "links": {}
+    }
+  ],
+  "albums": [
+    {
+      "id": "album-01",
+      "title": "Side B: Science of the Streets",
+      "artist": "Dr. Jawnkenstein",
+      "year": 2026,
+      "type": "Album",
+      "description": "Add final embed links when uploaded.",
+      "link": ""
+    },
+    {
+      "id": "album-02",
+      "title": "Side C",
+      "artist": "Dr. Jawnkenstein",
+      "year": 2026,
+      "type": "Album",
+      "description": "Add final embed links when uploaded.",
+      "link": ""
+    },
+    {
+      "id": "album-03",
+      "title": "Side D",
+      "artist": "Dr. Jawnkenstein",
+      "year": 2026,
+      "type": "Album",
+      "description": "Add final embed links when uploaded.",
+      "link": ""
+    },
+    {
+      "id": "album-04",
+      "title": "Side E",
+      "artist": "Dr. Jawnkenstein",
+      "year": 2026,
+      "type": "Album",
+      "description": "Add final embed links when uploaded.",
+      "link": ""
+    },
+    {
+      "id": "album-05",
+      "title": "Side F",
+      "artist": "Dr. Jawnkenstein",
+      "year": 2026,
+      "type": "Album",
+      "description": "Add final embed links when uploaded.",
+      "link": ""
+    },
+    {
+      "id": "album-06",
+      "title": "Side G",
+      "artist": "Dr. Jawnkenstein",
+      "year": 2026,
+      "type": "Album",
+      "description": "Add final embed links when uploaded.",
+      "link": ""
+    },
+    {
+      "id": "album-07",
+      "title": "The Great Food Fight Soundtrack",
+      "artist": "Dr. Jawnkenstein",
+      "year": 2026,
+      "type": "Archive/Soundtrack",
+      "description": "Add final embed links when uploaded.",
+      "link": ""
+    },
+    {
+      "id": "album-08",
+      "title": "Dangerous To Darkness",
+      "artist": "Dr. Jawnkenstein",
+      "year": 2026,
+      "type": "Archive/Soundtrack",
+      "description": "Add final embed links when uploaded.",
+      "link": ""
+    },
+    {
+      "id": "album-09",
+      "title": "Animal Radio 10-Year Anniversary Archive",
+      "artist": "Various / Family Archive",
+      "year": 2026,
+      "type": "Archive/Soundtrack",
+      "description": "Add final embed links when uploaded.",
+      "link": ""
+    },
+    {
+      "id": "album-10",
+      "title": "Family Music Company Legacy Archive",
+      "artist": "Various / Family Archive",
+      "year": "1985\u2013Present",
+      "type": "Archive/Soundtrack",
+      "description": "Add final embed links when uploaded.",
+      "link": ""
+    }
+  ],
+  "playlists": [
+    {
+      "id": "live-station-rotation",
+      "title": "Live Station Rotation",
+      "vibe": "Positive, clean, mission-focused rotation.",
+      "tags": [
+        "Positive",
+        "Radio",
+        "Jungle Star"
+      ],
+      "embed": ""
+    },
+    {
+      "id": "kids-clean-build-mode",
+      "title": "Kids Clean Build Mode",
+      "vibe": "Positive, clean, mission-focused rotation.",
+      "tags": [
+        "Positive",
+        "Radio",
+        "Jungle Star"
+      ],
+      "embed": ""
+    },
+    {
+      "id": "garden-work-mode",
+      "title": "Garden Work Mode",
+      "vibe": "Positive, clean, mission-focused rotation.",
+      "tags": [
+        "Positive",
+        "Radio",
+        "Jungle Star"
+      ],
+      "embed": ""
+    },
+    {
+      "id": "great-food-fight-soundtrack",
+      "title": "Great Food Fight Soundtrack",
+      "vibe": "Positive, clean, mission-focused rotation.",
+      "tags": [
+        "Positive",
+        "Radio",
+        "Jungle Star"
+      ],
+      "embed": ""
+    },
+    {
+      "id": "dr.-jawnkenstein-lab-session",
+      "title": "Dr. Jawnkenstein Lab Session",
+      "vibe": "Positive, clean, mission-focused rotation.",
+      "tags": [
+        "Positive",
+        "Radio",
+        "Jungle Star"
+      ],
+      "embed": ""
+    },
+    {
+      "id": "positive-music-archive",
+      "title": "Positive Music Archive",
+      "vibe": "Positive, clean, mission-focused rotation.",
+      "tags": [
+        "Positive",
+        "Radio",
+        "Jungle Star"
+      ],
+      "embed": ""
+    },
+    {
+      "id": "open-mic-heat-substance-only",
+      "title": "Open Mic Heat: Substance Only",
+      "vibe": "Positive, clean, mission-focused rotation.",
+      "tags": [
+        "Positive",
+        "Radio",
+        "Jungle Star"
+      ],
+      "embed": ""
+    }
+  ],
+  "tracks": [
+    {
+      "id": "drj-2026-001",
+      "title": "Dr. J 2026 Track 001",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Reggae",
+        "Hip-Hop",
+        "Testimony"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": true,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-002",
+      "title": "Dr. J 2026 Track 002",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Great Food Fight",
+        "Youth-safe",
+        "Soundtrack"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": true,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-003",
+      "title": "Dr. J 2026 Track 003",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Reggae",
+        "Hip-Hop",
+        "Testimony"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": true,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-004",
+      "title": "Dr. J 2026 Track 004",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Great Food Fight",
+        "Youth-safe",
+        "Soundtrack"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": true,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-005",
+      "title": "Dr. J 2026 Track 005",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Reggae",
+        "Hip-Hop",
+        "Testimony"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": true,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-006",
+      "title": "Dr. J 2026 Track 006",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Great Food Fight",
+        "Youth-safe",
+        "Soundtrack"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": true,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-007",
+      "title": "Dr. J 2026 Track 007",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Reggae",
+        "Hip-Hop",
+        "Testimony"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": true,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-008",
+      "title": "Dr. J 2026 Track 008",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Great Food Fight",
+        "Youth-safe",
+        "Soundtrack"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": true,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-009",
+      "title": "Dr. J 2026 Track 009",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Reggae",
+        "Hip-Hop",
+        "Testimony"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": false,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-010",
+      "title": "Dr. J 2026 Track 010",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Great Food Fight",
+        "Youth-safe",
+        "Soundtrack"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": false,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-011",
+      "title": "Dr. J 2026 Track 011",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Reggae",
+        "Hip-Hop",
+        "Testimony"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": false,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-012",
+      "title": "Dr. J 2026 Track 012",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Great Food Fight",
+        "Youth-safe",
+        "Soundtrack"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": false,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-013",
+      "title": "Dr. J 2026 Track 013",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Reggae",
+        "Hip-Hop",
+        "Testimony"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": false,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-014",
+      "title": "Dr. J 2026 Track 014",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Great Food Fight",
+        "Youth-safe",
+        "Soundtrack"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": false,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-015",
+      "title": "Dr. J 2026 Track 015",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Reggae",
+        "Hip-Hop",
+        "Testimony"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": false,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-016",
+      "title": "Dr. J 2026 Track 016",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Great Food Fight",
+        "Youth-safe",
+        "Soundtrack"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": false,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-017",
+      "title": "Dr. J 2026 Track 017",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Reggae",
+        "Hip-Hop",
+        "Testimony"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": false,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-018",
+      "title": "Dr. J 2026 Track 018",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Great Food Fight",
+        "Youth-safe",
+        "Soundtrack"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": false,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-019",
+      "title": "Dr. J 2026 Track 019",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Reggae",
+        "Hip-Hop",
+        "Testimony"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": false,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "drj-2026-020",
+      "title": "Dr. J 2026 Track 020",
+      "artist": "Dr. Jawnkenstein / Iszzy Prodizzy",
+      "album": "2026 Album Stack",
+      "year": 2026,
+      "genre": [
+        "Great Food Fight",
+        "Youth-safe",
+        "Soundtrack"
+      ],
+      "mood": [
+        "Builder",
+        "Clean",
+        "Mission"
+      ],
+      "rights": "Artist-owned",
+      "clean": true,
+      "featured": false,
+      "links": {
+        "spotify": "",
+        "youtube": "",
+        "soundcloud": "",
+        "bandcamp": ""
+      },
+      "cover": ""
+    },
+    {
+      "id": "legacy-1985-001",
+      "title": "Legacy Archive Track 001",
+      "artist": "Family Music Company Legacy Archive",
+      "album": "Family Music Company Legacy Archive",
+      "year": "1985\u2013Present",
+      "genre": [
+        "Archive",
+        "Legacy",
+        "Positive Music"
+      ],
+      "mood": [
+        "History",
+        "Foundation"
+      ],
+      "rights": "Clear before public release",
+      "clean": true,
+      "featured": false,
+      "links": {},
+      "cover": ""
+    },
+    {
+      "id": "legacy-1985-002",
+      "title": "Legacy Archive Track 002",
+      "artist": "Family Music Company Legacy Archive",
+      "album": "Family Music Company Legacy Archive",
+      "year": "1985\u2013Present",
+      "genre": [
+        "Archive",
+        "Legacy",
+        "Positive Music"
+      ],
+      "mood": [
+        "History",
+        "Foundation"
+      ],
+      "rights": "Clear before public release",
+      "clean": true,
+      "featured": false,
+      "links": {},
+      "cover": ""
+    },
+    {
+      "id": "legacy-1985-003",
+      "title": "Legacy Archive Track 003",
+      "artist": "Family Music Company Legacy Archive",
+      "album": "Family Music Company Legacy Archive",
+      "year": "1985\u2013Present",
+      "genre": [
+        "Archive",
+        "Legacy",
+        "Positive Music"
+      ],
+      "mood": [
+        "History",
+        "Foundation"
+      ],
+      "rights": "Clear before public release",
+      "clean": true,
+      "featured": false,
+      "links": {},
+      "cover": ""
+    },
+    {
+      "id": "legacy-1985-004",
+      "title": "Legacy Archive Track 004",
+      "artist": "Family Music Company Legacy Archive",
+      "album": "Family Music Company Legacy Archive",
+      "year": "1985\u2013Present",
+      "genre": [
+        "Archive",
+        "Legacy",
+        "Positive Music"
+      ],
+      "mood": [
+        "History",
+        "Foundation"
+      ],
+      "rights": "Clear before public release",
+      "clean": true,
+      "featured": false,
+      "links": {},
+      "cover": ""
+    },
+    {
+      "id": "legacy-1985-005",
+      "title": "Legacy Archive Track 005",
+      "artist": "Family Music Company Legacy Archive",
+      "album": "Family Music Company Legacy Archive",
+      "year": "1985\u2013Present",
+      "genre": [
+        "Archive",
+        "Legacy",
+        "Positive Music"
+      ],
+      "mood": [
+        "History",
+        "Foundation"
+      ],
+      "rights": "Clear before public release",
+      "clean": true,
+      "featured": false,
+      "links": {},
+      "cover": ""
+    },
+    {
+      "id": "legacy-1985-006",
+      "title": "Legacy Archive Track 006",
+      "artist": "Family Music Company Legacy Archive",
+      "album": "Family Music Company Legacy Archive",
+      "year": "1985\u2013Present",
+      "genre": [
+        "Archive",
+        "Legacy",
+        "Positive Music"
+      ],
+      "mood": [
+        "History",
+        "Foundation"
+      ],
+      "rights": "Clear before public release",
+      "clean": true,
+      "featured": false,
+      "links": {},
+      "cover": ""
+    },
+    {
+      "id": "legacy-1985-007",
+      "title": "Legacy Archive Track 007",
+      "artist": "Family Music Company Legacy Archive",
+      "album": "Family Music Company Legacy Archive",
+      "year": "1985\u2013Present",
+      "genre": [
+        "Archive",
+        "Legacy",
+        "Positive Music"
+      ],
+      "mood": [
+        "History",
+        "Foundation"
+      ],
+      "rights": "Clear before public release",
+      "clean": true,
+      "featured": false,
+      "links": {},
+      "cover": ""
+    },
+    {
+      "id": "legacy-1985-008",
+      "title": "Legacy Archive Track 008",
+      "artist": "Family Music Company Legacy Archive",
+      "album": "Family Music Company Legacy Archive",
+      "year": "1985\u2013Present",
+      "genre": [
+        "Archive",
+        "Legacy",
+        "Positive Music"
+      ],
+      "mood": [
+        "History",
+        "Foundation"
+      ],
+      "rights": "Clear before public release",
+      "clean": true,
+      "featured": false,
+      "links": {},
+      "cover": ""
+    }
+  ]
+}
