@@ -1,0 +1,239 @@
+/* Common CSS for Jungle Star Games - Universal UI System */
+
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Safe area support for iOS notch */
+.safe {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) 
+             env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* Universal Back to Arcade Button */
+.back-btn {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 1000;
+    padding: 10px 14px;
+    border-radius: 9999px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+    user-select: none;
+}
+
+.back-btn:hover {
+    background: rgba(0, 0, 0, 0.9);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.back-btn:focus {
+    outline: 3px solid #4A90E2;
+    outline-offset: 2px;
+}
+
+.back-btn:active {
+    transform: translateY(0);
+}
+
+/* Screen system */
+.screen {
+    position: fixed;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #87CEEB 0%, #98FB98 25%, #90EE90 50%, #32CD32 75%, #228B22 100%);
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* Game root scaling system */
+.game-root {
+    width: 1280px;
+    height: 720px;
+    transform-origin: center center;
+    position: relative;
+    max-width: 100vw;
+    max-height: 100vh;
+}
+
+/* Z-index hierarchy */
+.game-canvas { z-index: 1; }
+.game-ui { z-index: 100; }
+.game-hud { z-index: 200; }
+.game-menu { z-index: 300; }
+.game-modal { z-index: 400; }
+.game-overlay { z-index: 500; }
+.back-btn { z-index: 1000; }
+
+/* Debug panels - hidden by default */
+.debug {
+    display: none !important;
+}
+
+.debug-enabled .debug {
+    display: block !important;
+}
+
+/* Responsive button styles */
+.btn {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    background: linear-gradient(45deg, #4CAF50, #8BC34A);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    margin: 10px;
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    user-select: none;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.btn:focus {
+    outline: 3px solid #4A90E2;
+    outline-offset: 2px;
+}
+
+.btn:active {
+    transform: translateY(-1px);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .back-btn {
+        top: 12px;
+        left: 12px;
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    .btn {
+        padding: 12px 24px;
+        font-size: 1em;
+        margin: 8px;
+    }
+}
+
+@media (max-width: 414px) {
+    .back-btn {
+        top: 8px;
+        left: 8px;
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9em;
+        margin: 6px;
+    }
+}
+
+/* Landscape mobile adjustments */
+@media (max-height: 500px) and (orientation: landscape) {
+    .back-btn {
+        top: 8px;
+        left: 8px;
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .back-btn {
+        border-width: 1px;
+    }
+}
+
+/* Focus management */
+.focus-trap {
+    position: relative;
+}
+
+.focus-trap:focus-within {
+    outline: none;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .back-btn {
+        background: black;
+        color: white;
+        border: 2px solid white;
+    }
+    
+    .btn {
+        background: black;
+        color: white;
+        border: 2px solid white;
+    }
+}
+
+/* Print styles */
+@media print {
+    .back-btn,
+    .game-ui,
+    .game-hud {
+        display: none !important;
+    }
+}

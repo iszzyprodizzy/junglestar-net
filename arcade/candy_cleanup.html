@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candy Cleanup - Jungle Star Games</title>
+    <script src="shared-systems.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 25%, #45B7D1 50%, #96CEB4 75%, #FFEAA7 100%);
+            min-height: 100vh;
+            color: white;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .game-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .title {
+            font-size: 2.5em;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(45deg, #FFD700, #FF6347, #32CD32);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .stat {
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .game-area {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sorting-bins {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 40px;
+        }
+
+        .bin {
+            width: 150px;
+            height: 120px;
+            border: 4px solid white;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .bin.fruit {
+            background: rgba(255, 99, 71, 0.8);
+        }
+
+        .bin.veggie {
+            background: rgba(50, 205, 50, 0.8);
+        }
+
+        .bin.sugar {
+            background: rgba(255, 192, 203, 0.8);
+        }
+
+        .bin.drag-over {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+            border-color: #FFD700;
+        }
+
+        .bin-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .falling-item {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            font-size: 3em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            transition: transform 0.2s ease;
+            filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+            z-index: 10;
+        }
+
+        .falling-item:hover {
+            transform: scale(1.1);
+        }
+
+        .falling-item.dragging {
+            cursor: grabbing;
+            transform: scale(1.2);
+            z-index: 100;
+        }
+
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .screen.hidden {
+            display: none;
+        }
+
+        .screen-title {
+            font-size: 4em;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(45deg, #FFD700, #FF6347, #32CD32, #4ECDC4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .screen-subtitle {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #E0E0E0;
+        }
+
+        .button {
+            padding: 15px 40px;
+            font-size: 1.5em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin: 10px;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .timer-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #4CAF50, #FFC107, #F44336);
+            transition: width 0.1s linear;
+            z-index: 5;
+        }
+
+        .combo-display {
+            position: absolute;
+            top: 100px;
+            right: 30px;
+            font-size: 2em;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.5s ease;
+        }
+
+        .combo-display.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #FFD700;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particle-float 1s ease-out forwards;
+        }
+
+        @keyframes particle-float {
+            0% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.5) translateY(-50px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 1.8em;
+            }
+            
+            .stats {
+                font-size: 1em;
+                gap: 15px;
+            }
+            
+            .sorting-bins {
+                gap: 20px;
+            }
+            
+            .bin {
+                width: 100px;
+                height: 80px;
+                font-size: 1em;
+            }
+            
+            .bin-icon {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="timer-bar" id="timerBar"></div>
+        
+        <div class="header">
+            <h1 class="title">🍬 Candy Cleanup 🍬</h1>
+            <div class="stats">
+                <div class="stat">
+                    <div>Score</div>
+                    <div id="score">0</div>
+                </div>
+                <div class="stat">
+                    <div>Level</div>
+                    <div id="level">1</div>
+                </div>
+                <div class="stat">
+                    <div>Lives</div>
+                    <div id="lives">3</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-area" id="gameArea">
+            <div class="sorting-bins">
+                <div class="bin fruit" data-type="fruit">
+                    <div class="bin-icon">🍎</div>
+                    <div>FRUITS</div>
+                </div>
+                <div class="bin veggie" data-type="veggie">
+                    <div class="bin-icon">🥕</div>
+                    <div>VEGGIES</div>
+                </div>
+                <div class="bin sugar" data-type="sugar">
+                    <div class="bin-icon">🍭</div>
+                    <div>SUGAR</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="combo-display" id="comboDisplay"></div>
+
+        <!-- Start Screen -->
+        <div class="screen" id="startScreen">
+            <h1 class="screen-title">🍬 Candy Cleanup 🍬</h1>
+            <p class="screen-subtitle">
+                Sort falling treats into the right bins!<br>
+                Drag fruits to Fruit bin, veggies to Veggie bin, sugar to Sugar bin.<br>
+                Quick reflexes and smart sorting required!
+            </p>
+            <button class="button" onclick="game.startGame()">🎮 START SORTING! 🎮</button>
+            <button class="button" onclick="window.location.href='index.html'">🏠 Back to Arcade</button>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div class="screen hidden" id="gameOverScreen">
+            <h1 class="screen-title">🎯 Cleanup Complete! 🎯</h1>
+            <p class="screen-subtitle">
+                Final Score: <span id="finalScore">0</span><br>
+                Level Reached: <span id="finalLevel">1</span><br>
+                Great sorting skills!
+            </p>
+            <button class="button" onclick="game.startGame()">🔄 Sort Again</button>
+            <button class="button" onclick="window.location.href='index.html'">🏠 Back to Arcade</button>
+        </div>
+    </div>
+
+    <script>
+        class CandyCleanup {
+            constructor() {
+                this.score = 0;
+                this.level = 1;
+                this.lives = 3;
+                this.gameRunning = false;
+                this.items = [];
+                this.spawnRate = 2000; // milliseconds
+                this.spawnTimer = null;
+                this.levelTimer = null;
+                this.combo = 0;
+                this.comboTimer = null;
+                
+                // Item types and their categories
+                this.itemTypes = {
+                    fruit: ['🍎', '🍊', '🍌', '🍇', '🍓', '🥝', '🍑', '🍒', '🥭', '🍍'],
+                    veggie: ['🥕', '🥬', '🥦', '🌽', '🍅', '🥒', '🥔', '🧄', '🧅', '🌶️'],
+                    sugar: ['🍭', '🍬', '🧁', '🍩', '🍪', '🎂', '🍰', '🍫', '🍯', '🧊']
+                };
+                
+                this.initializeEventListeners();
+            }
+
+            initializeEventListeners() {
+                // Drag and drop event listeners
+                document.addEventListener('dragstart', this.handleDragStart.bind(this));
+                document.addEventListener('dragover', this.handleDragOver.bind(this));
+                document.addEventListener('drop', this.handleDrop.bind(this));
+                document.addEventListener('dragend', this.handleDragEnd.bind(this));
+                
+                // Touch events for mobile
+                document.addEventListener('touchstart', this.handleTouchStart.bind(this));
+                document.addEventListener('touchmove', this.handleTouchMove.bind(this));
+                document.addEventListener('touchend', this.handleTouchEnd.bind(this));
+            }
+
+            startGame() {
+                this.score = 0;
+                this.level = 1;
+                this.lives = 3;
+                this.combo = 0;
+                this.spawnRate = 2000;
+                this.gameRunning = true;
+                
+                // Clear existing items
+                this.items.forEach(item => {
+                    if (item.element && item.element.parentNode) {
+                        item.element.parentNode.removeChild(item.element);
+                    }
+                });
+                this.items = [];
+                
+                // Hide screens
+                document.getElementById('startScreen').classList.add('hidden');
+                document.getElementById('gameOverScreen').classList.add('hidden');
+                
+                this.updateDisplay();
+                this.startSpawning();
+                this.startLevelProgression();
+            }
+
+            startSpawning() {
+                if (!this.gameRunning) return;
+                
+                this.spawnItem();
+                this.spawnTimer = setTimeout(() => {
+                    this.startSpawning();
+                }, this.spawnRate);
+            }
+
+            spawnItem() {
+                const categories = Object.keys(this.itemTypes);
+                const category = categories[Math.floor(Math.random() * categories.length)];
+                const items = this.itemTypes[category];
+                const emoji = items[Math.floor(Math.random() * items.length)];
+                
+                const item = {
+                    id: Date.now() + Math.random(),
+                    category: category,
+                    emoji: emoji,
+                    x: Math.random() * (window.innerWidth - 100) + 50,
+                    y: -60,
+                    speed: 1 + (this.level * 0.3),
+                    element: null
+                };
+                
+                this.createItemElement(item);
+                this.items.push(item);
+            }
+
+            createItemElement(item) {
+                const element = document.createElement('div');
+                element.className = 'falling-item';
+                element.textContent = item.emoji;
+                element.style.left = item.x + 'px';
+                element.style.top = item.y + 'px';
+                element.draggable = true;
+                element.dataset.itemId = item.id;
+                element.dataset.category = item.category;
+                
+                document.getElementById('gameArea').appendChild(element);
+                item.element = element;
+                
+                // Start falling animation
+                this.animateItem(item);
+            }
+
+            animateItem(item) {
+                if (!this.gameRunning || !item.element) return;
+                
+                item.y += item.speed;
+                item.element.style.top = item.y + 'px';
+                
+                // Check if item reached bottom
+                if (item.y > window.innerHeight - 200) {
+                    this.missedItem(item);
+                    return;
+                }
+                
+                requestAnimationFrame(() => this.animateItem(item));
+            }
+
+            missedItem(item) {
+                this.lives--;
+                this.combo = 0;
+                this.removeItem(item);
+                
+                if (this.lives <= 0) {
+                    this.gameOver();
+                } else {
+                    this.updateDisplay();
+                }
+            }
+
+            removeItem(item) {
+                if (item.element && item.element.parentNode) {
+                    item.element.parentNode.removeChild(item.element);
+                }
+                this.items = this.items.filter(i => i.id !== item.id);
+            }
+
+            handleDragStart(e) {
+                if (!e.target.classList.contains('falling-item')) return;
+                e.target.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', e.target.dataset.itemId);
+            }
+
+            handleDragOver(e) {
+                e.preventDefault();
+                if (e.target.classList.contains('bin') || e.target.closest('.bin')) {
+                    const bin = e.target.classList.contains('bin') ? e.target : e.target.closest('.bin');
+                    bin.classList.add('drag-over');
+                }
+            }
+
+            handleDrop(e) {
+                e.preventDefault();
+                const bin = e.target.classList.contains('bin') ? e.target : e.target.closest('.bin');
+                if (!bin) return;
+                
+                bin.classList.remove('drag-over');
+                
+                const itemId = e.dataTransfer.getData('text/plain');
+                const item = this.items.find(i => i.id == itemId);
+                
+                if (item) {
+                    this.sortItem(item, bin.dataset.type);
+                }
+            }
+
+            handleDragEnd(e) {
+                e.target.classList.remove('dragging');
+                document.querySelectorAll('.bin').forEach(bin => {
+                    bin.classList.remove('drag-over');
+                });
+            }
+
+            // Touch events for mobile support
+            handleTouchStart(e) {
+                if (!e.target.classList.contains('falling-item')) return;
+                e.preventDefault();
+                this.touchItem = {
+                    element: e.target,
+                    startX: e.touches[0].clientX,
+                    startY: e.touches[0].clientY
+                };
+                e.target.classList.add('dragging');
+            }
+
+            handleTouchMove(e) {
+                if (!this.touchItem) return;
+                e.preventDefault();
+                
+                const touch = e.touches[0];
+                this.touchItem.element.style.left = (touch.clientX - 30) + 'px';
+                this.touchItem.element.style.top = (touch.clientY - 30) + 'px';
+            }
+
+            handleTouchEnd(e) {
+                if (!this.touchItem) return;
+                e.preventDefault();
+                
+                const touch = e.changedTouches[0];
+                const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+                const bin = elementBelow?.classList.contains('bin') ? elementBelow : elementBelow?.closest('.bin');
+                
+                if (bin) {
+                    const itemId = this.touchItem.element.dataset.itemId;
+                    const item = this.items.find(i => i.id == itemId);
+                    if (item) {
+                        this.sortItem(item, bin.dataset.type);
+                    }
+                }
+                
+                this.touchItem.element.classList.remove('dragging');
+                this.touchItem = null;
+            }
+
+            sortItem(item, binType) {
+                const correct = item.category === binType;
+                
+                if (correct) {
+                    this.combo++;
+                    const points = 10 * this.combo;
+                    this.score += points;
+                    this.showCombo(points);
+                    this.createParticles(item.element);
+                } else {
+                    this.lives--;
+                    this.combo = 0;
+                }
+                
+                this.removeItem(item);
+                
+                if (this.lives <= 0) {
+                    this.gameOver();
+                } else {
+                    this.updateDisplay();
+                }
+            }
+
+            showCombo(points) {
+                const comboDisplay = document.getElementById('comboDisplay');
+                comboDisplay.textContent = `+${points} (${this.combo}x Combo!)`;
+                comboDisplay.classList.add('show');
+                
+                clearTimeout(this.comboTimer);
+                this.comboTimer = setTimeout(() => {
+                    comboDisplay.classList.remove('show');
+                }, 1500);
+            }
+
+            createParticles(element) {
+                const rect = element.getBoundingClientRect();
+                for (let i = 0; i < 8; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = (rect.left + rect.width / 2) + 'px';
+                    particle.style.top = (rect.top + rect.height / 2) + 'px';
+                    particle.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                    
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 1000);
+                }
+            }
+
+            startLevelProgression() {
+                this.levelTimer = setTimeout(() => {
+                    if (this.gameRunning) {
+                        this.level++;
+                        this.spawnRate = Math.max(800, this.spawnRate - 200);
+                        this.updateDisplay();
+                        this.startLevelProgression();
+                    }
+                }, 15000); // Level up every 15 seconds
+            }
+
+            updateDisplay() {
+                document.getElementById('score').textContent = this.score;
+                document.getElementById('level').textContent = this.level;
+                document.getElementById('lives').textContent = this.lives;
+            }
+
+            gameOver() {
+                this.gameRunning = false;
+                clearTimeout(this.spawnTimer);
+                clearTimeout(this.levelTimer);
+                
+                // Clear remaining items
+                this.items.forEach(item => {
+                    if (item.element && item.element.parentNode) {
+                        item.element.parentNode.removeChild(item.element);
+                    }
+                });
+                this.items = [];
+                
+                // Show game over screen
+                document.getElementById('finalScore').textContent = this.score;
+                document.getElementById('finalLevel').textContent = this.level;
+                document.getElementById('gameOverScreen').classList.remove('hidden');
+                
+                // Integrate with shared systems
+                if (typeof JungleStarSharedSystems !== 'undefined') {
+                    const sharedSystems = new JungleStarSharedSystems();
+                    
+                    // Save high score
+                    sharedSystems.saveHighScore('candy-cleanup', this.score);
+                    
+                    // Check for badge unlocks
+                    if (this.score >= 1000) {
+                        sharedSystems.unlockBadge('first-1000');
+                    }
+                    if (this.level >= 5) {
+                        sharedSystems.unlockBadge('level-crusher');
+                    }
+                    if (this.score >= 5000) {
+                        sharedSystems.unlockBadge('high-scorer');
+                    }
+                    
+                    // Game-specific badges
+                    sharedSystems.unlockBadge('cleanup-crew');
+                    if (this.level >= 10) {
+                        sharedSystems.unlockBadge('cleanup-master');
+                    }
+                    
+                    // Increment games played
+                    sharedSystems.incrementGamesPlayed();
+                }
+            }
+        }
+
+        // Initialize game
+        const game = new CandyCleanup();
+    </script>
+</body>
+</html>

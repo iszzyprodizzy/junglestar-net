@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Veggie Match-3 - Jungle Star Games</title>
+    <style>
+        /* Game-specific styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        .game-container {
+            background: linear-gradient(135deg, #87CEEB 0%, #98FB98 25%, #90EE90 50%, #32CD32 75%, #228B22 100%);
+            color: white;
+            user-select: none;
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .title {
+            font-size: 2.5em;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .stat {
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .game-area {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 10px;
+            position: relative;
+            min-height: 0;
+            overflow: hidden;
+            max-width: 100vw;
+        }
+        
+        .game-board-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            max-width: calc(100vw - 220px);
+            position: relative;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(8, 60px);
+            grid-template-rows: repeat(8, 60px);
+            gap: 2px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .cell {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .cell:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .cell.selected {
+            background: rgba(255, 215, 0, 0.5);
+            border-color: #FFD700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+        }
+
+        .cell.matched {
+            animation: match-pulse 0.5s ease-in-out;
+        }
+
+        .cell.falling {
+            animation: fall 0.5s ease-in;
+        }
+
+        @keyframes match-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); background: rgba(255, 215, 0, 0.8); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-300px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .side-panel {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            width: 200px;
+            max-height: 80vh;
+            overflow-y: auto;
+            margin-left: 10px;
+            align-self: flex-start;
+        }
+
+        .objectives {
+            margin-bottom: 20px;
+        }
+
+        .objective {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .objective.completed {
+            background: rgba(76, 175, 80, 0.3);
+            text-decoration: line-through;
+        }
+
+        .power-ups {
+            margin-bottom: 20px;
+        }
+
+        .power-up-button {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .power-up-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .power-up-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            transition: width 0.3s ease;
+        }
+
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .screen.hidden {
+            display: none;
+        }
+
+        .screen-title {
+            font-size: 4em;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .screen-subtitle {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #E0E0E0;
+            line-height: 1.6;
+        }
+
+        .controls {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #B0B0B0;
+        }
+
+        .button {
+            padding: 15px 40px;
+            font-size: 1.5em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin: 10px;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .combo-indicator {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2em;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            animation: combo-show 2s ease-out;
+            z-index: 500;
+        }
+
+        @keyframes combo-show {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+        
+        .level-rewards {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .reward-item {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: reward-glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes reward-glow {
+             0%, 100% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+             50% { text-shadow: 0 0 20px #FFD700, 2px 2px 4px rgba(0, 0, 0, 0.5); }
+         }
+         
+         /* ===== Veggie Match-3 Visual Polish Patch ===== */
+         :root{
+           --bg-1:#c3f7c8; --bg-2:#aeecc2; --bg-3:#8fdca8; --accent:#51d36b;
+           --ink:#0e1b12; --glass:rgba(255,255,255,.12); --glass-2:rgba(255,255,255,.22);
+           --gold:#ffd86b; --chip:#18251b; --chip-ink:#e7ffe8;
+         }
+         .game-container{
+           background:
+             radial-gradient(1200px 600px at 20% 0%, var(--bg-1), transparent 70%),
+             radial-gradient(1200px 800px at 120% 40%, var(--bg-2), transparent 70%),
+             linear-gradient(135deg, #9be8b2, #59d19a 60%, #29a86a);
+           color:#fff;
+         }
+         .stats{ gap:12px; }
+         .stat{
+           min-width:110px;
+           background:color-mix(in oklab, #000 12%, transparent);
+           border:1px solid color-mix(in oklab, #fff 12%, transparent);
+           padding:8px 14px; border-radius:999px;
+           display:flex; flex-direction:column; align-items:center;
+           backdrop-filter: blur(8px);
+         }
+         .stat div:first-child{ opacity:.8; font-size:.8em; letter-spacing:.02em; }
+         .stat div:last-child{ font-size:1.35em; line-height:1.2; }
+
+         .game-board{
+           gap:6px; padding:14px;
+           background:linear-gradient(180deg, rgba(0,0,0,.25), rgba(255,255,255,.04));
+           box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 10px 30px rgba(0,0,0,.25);
+         }
+
+         .cell{
+           border:0;
+           background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(0,0,0,.14));
+           box-shadow:
+             inset 0 6px 12px rgba(255,255,255,.06),
+             inset 0 -6px 12px rgba(0,0,0,.25),
+             0 2px 6px rgba(0,0,0,.2);
+           border-radius:12px;
+           transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+         }
+         .cell::before{
+           content:""; position:absolute; inset:0;
+           border-radius:12px;
+           background:linear-gradient(180deg, rgba(255,255,255,.35), transparent 55%);
+           opacity:.25; pointer-events:none;
+         }
+         .cell:hover{ transform: translateY(-2px) scale(1.03); filter:saturate(1.1); }
+         .cell.selected{
+           outline:3px solid color-mix(in oklab, var(--gold) 70%, #fff 30%);
+           box-shadow:0 0 18px rgba(255,216,107,.55);
+         }
+
+         @keyframes match-pulse{
+           0%{ transform:scale(1) }
+           55%{ transform:scale(1.18); filter:saturate(1.25) }
+           100%{ transform:scale(1) }
+         }
+         @keyframes fall{
+           0%{ transform:translateY(-18px); opacity:.2 }
+           100%{ transform:translateY(0); opacity:1 }
+         }
+
+         .progress-bar{ background:rgba(255,255,255,.18); }
+         .progress-fill{
+           background: repeating-linear-gradient(45deg,
+              #69e38f 0 12px, #5bd783 12px 24px);
+           animation: stripe 1s linear infinite;
+           border-right:2px solid rgba(255,255,255,.4);
+         }
+         @keyframes stripe{ to { background-position:24px 0; } }
+
+         .side-panel{
+           background:rgba(18, 37, 27, .85);
+           border:1px solid rgba(255,255,255,.08);
+         }
+         .objective,.power-up-button{
+           background:var(--glass);
+           border:1px solid var(--glass-2);
+         }
+
+         @keyframes nope{
+           0%,100%{ transform:translateX(0) }
+           25%{ transform:translateX(-6px) }
+           75%{ transform:translateX(6px) }
+         }
+         .cell.nope{ animation:nope .15s 2; }
+
+         .combo-indicator{
+           text-shadow: 0 2px 10px rgba(0,0,0,.6);
+           letter-spacing:.05em;
+         }
+         /* ===== End Visual Patch ===== */
+         
+         .auto-match-button {
+            position: relative;
+            margin: 10px;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-board-container .auto-match-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+        
+        .game-board-container .auto-match-button:nth-of-type(3) {
+            bottom: 70px;
+        }
+        
+        .auto-match-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .auto-match-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 1.8em;
+            }
+            
+            .stats {
+                font-size: 1em;
+                gap: 15px;
+            }
+            
+            .game-area {
+                flex-direction: column;
+                padding: 10px;
+            }
+            
+            .game-board {
+                grid-template-columns: repeat(8, 40px);
+                grid-template-rows: repeat(8, 40px);
+                gap: 1px;
+            }
+            
+            .cell {
+                width: 40px;
+                height: 40px;
+                font-size: 1.8em;
+            }
+            
+            .side-panel {
+                position: static;
+                transform: none;
+                width: 100%;
+                margin-top: 15px;
+            }
+            
+            .auto-match-button {
+                bottom: 10px;
+                right: 10px;
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .game-board {
+                grid-template-columns: repeat(8, 35px);
+                grid-template-rows: repeat(8, 35px);
+            }
+            
+            .cell {
+                width: 35px;
+                height: 35px;
+                font-size: 1.6em;
+            }
+            
+            .header {
+                padding: 10px;
+            }
+            
+            .title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-root">
+        <div class="game-container">
+        <div class="header">
+            <h1 class="title">🥬 Veggie Match-3 🥬</h1>
+            <div class="stats">
+                <div class="stat">
+                    <div>Score</div>
+                    <div id="score">0</div>
+                </div>
+                <div class="stat">
+                    <div>Level</div>
+                    <div id="level">1</div>
+                </div>
+                <div class="stat">
+                    <div>Moves</div>
+                    <div id="moves">30</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-area" id="gameArea">
+            <div class="game-board-container">
+                <div class="game-board" id="gameBoard"></div>
+                <button class="auto-match-button" id="autoMatchBtn" onclick="game.findPossibleMatches()" title="Find possible matches">
+                    🔍 Find Matches
+                </button>
+                <button class="auto-match-button" id="autoBurstBtn" onclick="game.toggleBurstMode()" title="Click matches to burst them" style="bottom: 70px;">
+                    💥 Burst Mode
+                </button>
+            </div>
+            
+            <div class="side-panel">
+                <div class="objectives">
+                    <h3>🎯 Objectives</h3>
+                    <div class="objective" id="obj1">
+                        <span>🥕 Carrots</span>
+                        <span id="carrotCount">0/10</span>
+                    </div>
+                    <div class="objective" id="obj2">
+                        <span>🥦 Broccoli</span>
+                        <span id="broccoliCount">0/8</span>
+                    </div>
+                    <div class="objective" id="obj3">
+                        <span>🌽 Corn</span>
+                        <span id="cornCount">0/6</span>
+                    </div>
+                </div>
+                
+                <div class="power-ups">
+                    <h3>⚡ Power-Ups</h3>
+                    <button class="power-up-button" id="bombPower" onclick="game.usePowerUp('bomb')">
+                        <span>💣 Bomb</span>
+                        <span id="bombCount">3</span>
+                    </button>
+                    <button class="power-up-button" id="rainbowPower" onclick="game.usePowerUp('rainbow')">
+                        <span>🌈 Rainbow</span>
+                        <span id="rainbowCount">2</span>
+                    </button>
+                    <button class="power-up-button" id="shufflePower" onclick="game.usePowerUp('shuffle')">
+                        <span>🔄 Shuffle</span>
+                        <span id="shuffleCount">1</span>
+                    </button>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" id="levelProgress"></div>
+                </div>
+                <div style="text-align: center; margin-top: 10px;">Level Progress</div>
+            </div>
+        </div>
+
+        <!-- Start Screen -->
+        <div class="screen" id="startScreen">
+            <h1 class="screen-title">🥬 Veggie Match-3 🥬</h1>
+            <p class="screen-subtitle">
+                Match 3 or more vegetables to clear them!<br>
+                Complete objectives within the move limit<br>
+                and use power-ups strategically.
+            </p>
+            <div class="controls">
+                <strong>How to Play:</strong><br>
+                🖱️ Click and drag to swap adjacent vegetables<br>
+                🎯 Complete all objectives to advance<br>
+                ⚡ Use power-ups when you're stuck<br>
+                🌟 Create special combos for bonus points
+            </div>
+            <button class="button" onclick="game.startGame()">🥕 START MATCHING! 🥕</button>
+        </div>
+
+        <!-- Level Complete Screen -->
+        <div class="screen hidden" id="levelCompleteScreen">
+            <h1 class="screen-title">🎉 Level Complete! 🎉</h1>
+            <p class="screen-subtitle">
+                Level <span id="completedLevel">1</span> Finished!<br>
+                Score: <span id="levelScore">0</span><br>
+                <span id="powerUpRewards" style="color: #FFD700;">Power-Up Rewards!</span>
+            </p>
+            <div class="level-rewards">
+                <div class="reward-item">💣 +1 Bomb</div>
+                <div class="reward-item" id="rainbowReward" style="display: none;">🌈 +1 Rainbow</div>
+                <div class="reward-item" id="shuffleReward" style="display: none;">🔄 +1 Shuffle</div>
+            </div>
+            <button class="button" onclick="game.continueToNextLevel()">➡️ Continue to Level <span id="nextLevelNumber">2</span></button>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div class="screen hidden" id="gameOverScreen">
+            <h1 class="screen-title">🏁 Game Complete! 🏁</h1>
+            <p class="screen-subtitle">
+                Level Reached: <span id="finalLevel">1</span><br>
+                Final Score: <span id="finalScore">0</span><br>
+                <span id="newRecord" style="color: #FFD700; display: none;">🏆 NEW RECORD! 🏆</span>
+            </p>
+            <button class="button" onclick="game.startGame()">🔄 Play Again</button>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        class VeggieMatch3 {
+            // Floating score pop
+            popScore(row, col, points){
+                const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                if(!cell) return;
+                const tag = document.createElement('div');
+                tag.textContent = `+${points}`;
+                Object.assign(tag.style,{
+                    position:'absolute', pointerEvents:'none', fontWeight:'800',
+                    color:'#ffd86b', textShadow:'0 2px 8px rgba(0,0,0,.6)',
+                    transform:'translateY(0)', transition:'transform .6s ease, opacity .6s ease',
+                });
+                cell.appendChild(tag);
+                requestAnimationFrame(()=>{ tag.style.transform='translateY(-26px)'; tag.style.opacity='0';});
+                setTimeout(()=>tag.remove(),650);
+            }
+            
+            constructor() {
+                this.score = 0;
+                this.level = 1;
+                this.moves = 30;
+                this.gameRunning = false;
+                this.selectedCell = null;
+                this.board = [];
+                this.boardSize = 8;
+                this.isProcessing = false; // Prevent multiple simultaneous match processing
+                
+                // Objectives
+                this.objectives = {
+                    carrot: { current: 0, target: 10 },
+                    broccoli: { current: 0, target: 8 },
+                    corn: { current: 0, target: 6 }
+                };
+                
+                // Power-ups
+                this.powerUps = {
+                    bomb: 3,
+                    rainbow: 2,
+                    shuffle: 1
+                };
+                
+                this.activePowerUp = null;
+                this.burstMode = false;
+                
+                // Vegetables with emojis
+                this.vegetables = {
+                    carrot: '🥕',
+                    broccoli: '🥦',
+                    corn: '🌽',
+                    tomato: '🍅',
+                    pepper: '🌶️',
+                    eggplant: '🍆',
+                    cucumber: '🥒',
+                    lettuce: '🥬'
+                };
+                
+                this.vegetableKeys = Object.keys(this.vegetables);
+                
+                this.initializeBoard();
+                this.updateDisplay();
+            }
+
+            initializeBoard() {
+                const gameBoard = document.getElementById('gameBoard');
+                gameBoard.innerHTML = '';
+                
+                this.board = [];
+                
+                for (let row = 0; row < this.boardSize; row++) {
+                    this.board[row] = [];
+                    for (let col = 0; col < this.boardSize; col++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'cell';
+                        cell.dataset.row = row;
+                        cell.dataset.col = col;
+                        
+                        // Generate random vegetable (avoiding initial matches)
+                        let veggie;
+                        let attempts = 0;
+                        do {
+                            veggie = this.getRandomVegetable();
+                            attempts++;
+                        } while (this.wouldCreateMatch(row, col, veggie) && attempts < 50);
+                        
+                        this.board[row][col] = veggie;
+                        cell.textContent = this.vegetables[veggie];
+                        
+                        cell.addEventListener('click', () => this.handleCellClick(row, col));
+                        gameBoard.appendChild(cell);
+                    }
+                }
+            }
+            
+            findPossibleMatches() {
+                if (this.isProcessing) return;
+                
+                const possibleMoves = [];
+                
+                for (let row = 0; row < this.boardSize; row++) {
+                    for (let col = 0; col < this.boardSize; col++) {
+                        // Check right swap
+                        if (col < this.boardSize - 1) {
+                            this.simulateSwap(row, col, row, col + 1, possibleMoves);
+                        }
+                        // Check down swap
+                        if (row < this.boardSize - 1) {
+                            this.simulateSwap(row, col, row + 1, col, possibleMoves);
+                        }
+                    }
+                }
+                
+                if (possibleMoves.length > 0) {
+                    // Highlight a random possible match
+                    const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+                    this.highlightPossibleMatch(randomMove);
+                } else {
+                    // No moves available, shuffle board
+                    this.shuffleBoard();
+                }
+            }
+            
+            simulateSwap(row1, col1, row2, col2, possibleMoves) {
+                // Temporarily swap
+                const temp = this.board[row1][col1];
+                this.board[row1][col1] = this.board[row2][col2];
+                this.board[row2][col2] = temp;
+                
+                // Check for matches
+                const matches = this.findMatches();
+                if (matches.length > 0) {
+                    possibleMoves.push({
+                        from: { row: row1, col: col1 },
+                        to: { row: row2, col: col2 },
+                        matches: matches.length
+                    });
+                }
+                
+                // Swap back
+                this.board[row2][col2] = this.board[row1][col1];
+                this.board[row1][col1] = temp;
+            }
+            
+            highlightPossibleMatch(move) {
+                const cell1 = document.querySelector(`[data-row="${move.from.row}"][data-col="${move.from.col}"]`);
+                const cell2 = document.querySelector(`[data-row="${move.to.row}"][data-col="${move.to.col}"]`);
+                
+                [cell1, cell2].forEach(cell => {
+                    if (cell) {
+                        cell.style.animation = 'match-pulse 1s ease-in-out 3';
+                        cell.style.border = '3px solid #FFD700';
+                    }
+                });
+                
+                setTimeout(() => {
+                    [cell1, cell2].forEach(cell => {
+                        if (cell) {
+                            cell.style.animation = '';
+                            cell.style.border = '2px solid rgba(255, 255, 255, 0.2)';
+                        }
+                    });
+                }, 3000);
+            }
+            
+            toggleBurstMode() {
+                if (this.isProcessing) return;
+                
+                this.burstMode = !this.burstMode;
+                const burstBtn = document.getElementById('autoBurstBtn');
+                const gameBoard = document.getElementById('gameBoard');
+                
+                if (this.burstMode) {
+                    burstBtn.style.background = 'linear-gradient(45deg, #FF6B6B, #FF8E53)';
+                    burstBtn.textContent = '💥 Burst ON';
+                    gameBoard.style.cursor = 'crosshair';
+                    this.highlightAllMatches();
+                } else {
+                    burstBtn.style.background = 'linear-gradient(45deg, #FF6B6B, #4ECDC4)';
+                    burstBtn.textContent = '💥 Burst Mode';
+                    gameBoard.style.cursor = 'default';
+                    this.clearHighlights();
+                }
+            }
+            
+            burstMatchesAt(row, col) {
+                if (this.isProcessing) return;
+                
+                const allMatches = this.findMatches();
+                const clickedMatches = allMatches.filter(match => match.row === row && match.col === col);
+                
+                if (clickedMatches.length > 0) {
+                    // Find all matches that include this cell
+                    const connectedMatches = this.getConnectedMatches(row, col, allMatches);
+                    if (connectedMatches.length >= 3) {
+                        this.processMatches(connectedMatches);
+                        this.moves--;
+                        this.updateDisplay();
+                    }
+                }
+            }
+            
+            getConnectedMatches(row, col, allMatches) {
+                const veggie = this.board[row][col];
+                const connected = [];
+                
+                // Check horizontal line through this cell
+                let horizontalMatches = [];
+                let count = 1;
+                
+                // Count left
+                for (let c = col - 1; c >= 0 && this.board[row][c] === veggie; c--) {
+                    count++;
+                    horizontalMatches.unshift({ row, col: c, veggie });
+                }
+                
+                // Add center
+                horizontalMatches.push({ row, col, veggie });
+                
+                // Count right
+                for (let c = col + 1; c < this.boardSize && this.board[row][c] === veggie; c++) {
+                    count++;
+                    horizontalMatches.push({ row, col: c, veggie });
+                }
+                
+                if (count >= 3) {
+                    connected.push(...horizontalMatches);
+                }
+                
+                // Check vertical line through this cell
+                let verticalMatches = [];
+                count = 1;
+                
+                // Count up
+                for (let r = row - 1; r >= 0 && this.board[r][col] === veggie; r--) {
+                    count++;
+                    verticalMatches.unshift({ row: r, col, veggie });
+                }
+                
+                // Add center (if not already added)
+                if (connected.length === 0) {
+                    verticalMatches.push({ row, col, veggie });
+                }
+                
+                // Count down
+                for (let r = row + 1; r < this.boardSize && this.board[r][col] === veggie; r++) {
+                    count++;
+                    verticalMatches.push({ row: r, col, veggie });
+                }
+                
+                if (count >= 3) {
+                    // Remove duplicates if both horizontal and vertical matches exist
+                    const uniqueVertical = verticalMatches.filter(vm => 
+                        !connected.some(cm => cm.row === vm.row && cm.col === vm.col)
+                    );
+                    connected.push(...uniqueVertical);
+                }
+                
+                return connected;
+            }
+            
+            highlightAllMatches() {
+                const matches = this.findMatches();
+                matches.forEach(match => {
+                    const cell = document.querySelector(`[data-row="${match.row}"][data-col="${match.col}"]`);
+                    if (cell) {
+                        cell.style.border = '3px solid #FF6B6B';
+                        cell.style.boxShadow = '0 0 10px #FF6B6B';
+                    }
+                });
+            }
+            
+            clearHighlights() {
+                document.querySelectorAll('.cell').forEach(cell => {
+                    cell.style.border = '2px solid rgba(255, 255, 255, 0.2)';
+                    cell.style.boxShadow = 'none';
+                });
+            }
+
+            getRandomVegetable() {
+                return this.vegetableKeys[Math.floor(Math.random() * this.vegetableKeys.length)];
+            }
+
+            wouldCreateMatch(row, col, veggie) {
+                // Check horizontal matches to the left
+                if (col >= 2 && 
+                    this.board[row] && this.board[row][col-1] === veggie && 
+                    this.board[row] && this.board[row][col-2] === veggie) {
+                    return true;
+                }
+                
+                // Check vertical matches above
+                if (row >= 2 && 
+                    this.board[row-1] && this.board[row-1][col] === veggie && 
+                    this.board[row-2] && this.board[row-2][col] === veggie) {
+                    return true;
+                }
+                
+                return false;
+            }
+
+            handleCellClick(row, col) {
+                if (!this.gameRunning || this.isProcessing) return;
+                
+                if (this.activePowerUp) {
+                    this.applyPowerUp(row, col);
+                    return;
+                }
+                
+                if (this.burstMode) {
+                    this.burstMatchesAt(row, col);
+                    return;
+                }
+                
+                const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                
+                if (this.selectedCell) {
+                    const selectedRow = parseInt(this.selectedCell.dataset.row);
+                    const selectedCol = parseInt(this.selectedCell.dataset.col);
+                    
+                    if (selectedRow === row && selectedCol === col) {
+                        // Deselect
+                        this.selectedCell.classList.remove('selected');
+                        this.selectedCell = null;
+                    } else if (this.areAdjacent(selectedRow, selectedCol, row, col)) {
+                        // Swap
+                        this.swapCells(selectedRow, selectedCol, row, col);
+                        this.selectedCell.classList.remove('selected');
+                        this.selectedCell = null;
+                    } else {
+                        // Select new cell
+                        this.selectedCell.classList.remove('selected');
+                        cell.classList.add('selected');
+                        this.selectedCell = cell;
+                    }
+                } else {
+                    // Select cell
+                    cell.classList.add('selected');
+                    this.selectedCell = cell;
+                }
+            }
+
+            areAdjacent(row1, col1, row2, col2) {
+                const rowDiff = Math.abs(row1 - row2);
+                const colDiff = Math.abs(col1 - col2);
+                return (rowDiff === 1 && colDiff === 0) || (rowDiff === 0 && colDiff === 1);
+            }
+
+            swapCells(row1, col1, row2, col2) {
+                if (!this.gameRunning || this.isProcessing) return;
+                
+                // Store original values for potential swap-back
+                const originalCell1 = this.board[row1][col1];
+                const originalCell2 = this.board[row2][col2];
+                
+                // Swap in board array
+                this.board[row1][col1] = originalCell2;
+                this.board[row2][col2] = originalCell1;
+                
+                // Update display
+                const cell1 = document.querySelector(`[data-row="${row1}"][data-col="${col1}"]`);
+                const cell2 = document.querySelector(`[data-row="${row2}"][data-col="${col2}"]`);
+                
+                if (cell1 && cell2) {
+                    cell1.textContent = this.vegetables[this.board[row1][col1]];
+                    cell2.textContent = this.vegetables[this.board[row2][col2]];
+                }
+                
+                // Check for matches
+                const matches = this.findMatches();
+                if (matches.length > 0) {
+                    this.moves--;
+                    this.processMatches(matches);
+                } else {
+                    // No matches, swap back to original positions
+                    setTimeout(() => {
+                        this.board[row1][col1] = originalCell1;
+                        this.board[row2][col2] = originalCell2;
+                        if (cell1 && cell2) {
+                            cell1.textContent = this.vegetables[originalCell1];
+                            cell2.textContent = this.vegetables[originalCell2];
+                        }
+                    }, 300);
+                }
+                
+                this.updateDisplay();
+            }
+
+            findMatches() {
+                const matches = [];
+                const matchSet = new Set();
+                
+                // Check horizontal matches
+                for (let row = 0; row < this.boardSize; row++) {
+                    let count = 1;
+                    let currentVeggie = this.board[row][0];
+                    
+                    for (let col = 1; col < this.boardSize; col++) {
+                        if (this.board[row][col] === currentVeggie) {
+                            count++;
+                        } else {
+                            if (count >= 3) {
+                                for (let i = col - count; i < col; i++) {
+                                    const key = `${row}-${i}`;
+                                    if (!matchSet.has(key)) {
+                                        matches.push({ row, col: i, veggie: currentVeggie });
+                                        matchSet.add(key);
+                                    }
+                                }
+                            }
+                            count = 1;
+                            currentVeggie = this.board[row][col];
+                        }
+                    }
+                    
+                    if (count >= 3) {
+                        for (let i = this.boardSize - count; i < this.boardSize; i++) {
+                            const key = `${row}-${i}`;
+                            if (!matchSet.has(key)) {
+                                matches.push({ row, col: i, veggie: currentVeggie });
+                                matchSet.add(key);
+                            }
+                        }
+                    }
+                }
+                
+                // Check vertical matches
+                for (let col = 0; col < this.boardSize; col++) {
+                    let count = 1;
+                    let currentVeggie = this.board[0][col];
+                    
+                    for (let row = 1; row < this.boardSize; row++) {
+                        if (this.board[row][col] === currentVeggie) {
+                            count++;
+                        } else {
+                            if (count >= 3) {
+                                for (let i = row - count; i < row; i++) {
+                                    const key = `${i}-${col}`;
+                                    if (!matchSet.has(key)) {
+                                        matches.push({ row: i, col, veggie: currentVeggie });
+                                        matchSet.add(key);
+                                    }
+                                }
+                            }
+                            count = 1;
+                            currentVeggie = this.board[row][col];
+                        }
+                    }
+                    
+                    if (count >= 3) {
+                        for (let i = this.boardSize - count; i < this.boardSize; i++) {
+                            const key = `${i}-${col}`;
+                            if (!matchSet.has(key)) {
+                                matches.push({ row: i, col, veggie: currentVeggie });
+                                matchSet.add(key);
+                            }
+                        }
+                    }
+                }
+                
+                return matches;
+            }
+
+            async processMatches(matches) {
+                if (matches.length === 0 || this.isProcessing) {
+                    this.checkGameState();
+                    return;
+                }
+                
+                this.isProcessing = true;
+                
+                // Animate matched cells
+                matches.forEach(match => {
+                    const cell = document.querySelector(`[data-row="${match.row}"][data-col="${match.col}"]`);
+                    if (cell) {
+                        cell.classList.add('matched');
+                        
+                        // Update objectives
+                        if (this.objectives[match.veggie]) {
+                            this.objectives[match.veggie].current++;
+                        }
+                    }
+                });
+                
+                // Update score
+                const basePoints = matches.length * 10;
+                const comboMultiplier = Math.max(1, Math.floor(matches.length / 3));
+                this.score += basePoints * comboMultiplier;
+                
+                // Show combo indicator
+                if (matches.length > 3) {
+                    this.showComboIndicator(matches.length);
+                }
+                
+                // Update display immediately
+                this.updateDisplay();
+                
+                // Wait for animation, then process
+                await this.delay(500);
+                
+                this.removeMatches(matches);
+                this.dropCells();
+                this.fillEmptyCells();
+                
+                // Wait for drop animation
+                await this.delay(300);
+                
+                // Check for cascading matches
+                const newMatches = this.findMatches();
+                if (newMatches.length > 0) {
+                    // Cascade bonus
+                    this.score += 50;
+                    this.updateDisplay();
+                    this.processMatches(newMatches);
+                } else {
+                    this.isProcessing = false;
+                    this.checkGameState();
+                }
+            }
+            
+            delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            removeMatches(matches) {
+                matches.forEach(match => {
+                    this.board[match.row][match.col] = null;
+                    const cell = document.querySelector(`[data-row="${match.row}"][data-col="${match.col}"]`);
+                    if (cell) {
+                        cell.textContent = '';
+                        cell.classList.remove('matched');
+                    }
+                });
+            }
+
+            dropCells() {
+                for (let col = 0; col < this.boardSize; col++) {
+                    let writeIndex = this.boardSize - 1;
+                    
+                    for (let row = this.boardSize - 1; row >= 0; row--) {
+                        if (this.board[row][col] !== null) {
+                            if (writeIndex !== row) {
+                                this.board[writeIndex][col] = this.board[row][col];
+                                this.board[row][col] = null;
+                                
+                                const fromCell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                                const toCell = document.querySelector(`[data-row="${writeIndex}"][data-col="${col}"]`);
+                                
+                                if (fromCell && toCell) {
+                                    toCell.textContent = this.vegetables[this.board[writeIndex][col]];
+                                    toCell.classList.add('falling');
+                                    fromCell.textContent = '';
+                                    
+                                    setTimeout(() => {
+                                        if (toCell) {
+                                            toCell.classList.remove('falling');
+                                        }
+                                    }, 500);
+                                }
+                            }
+                            writeIndex--;
+                        }
+                    }
+                }
+            }
+
+            fillEmptyCells() {
+                for (let row = 0; row < this.boardSize; row++) {
+                    for (let col = 0; col < this.boardSize; col++) {
+                        if (this.board[row][col] === null) {
+                            const veggie = this.getRandomVegetable();
+                            this.board[row][col] = veggie;
+                            
+                            const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                            if (cell) {
+                                cell.textContent = this.vegetables[veggie];
+                                cell.classList.add('falling');
+                                
+                                setTimeout(() => {
+                                    if (cell) {
+                                        cell.classList.remove('falling');
+                                    }
+                                }, 500);
+                            }
+                        }
+                    }
+                }
+                
+                // Simplified match check - remove the problematic auto-detection
+                setTimeout(() => {
+                    this.isProcessing = false;
+                    this.updateDisplay();
+                }, 600);
+            }
+
+            usePowerUp(type) {
+                if (this.powerUps[type] <= 0 || !this.gameRunning || this.isProcessing) return;
+                
+                this.activePowerUp = type;
+                document.getElementById('gameBoard').style.cursor = 'crosshair';
+                
+                // Visual feedback
+                document.querySelectorAll('.power-up-button').forEach(btn => {
+                    btn.style.opacity = '0.5';
+                });
+                const activeBtn = document.getElementById(type + 'Power');
+                if (activeBtn) {
+                    activeBtn.style.opacity = '1';
+                    activeBtn.style.background = 'rgba(255, 215, 0, 0.3)';
+                }
+            }
+
+            applyPowerUp(row, col) {
+                if (!this.activePowerUp || this.isProcessing) return;
+                
+                this.powerUps[this.activePowerUp]--;
+                
+                switch (this.activePowerUp) {
+                    case 'bomb':
+                        this.explodeBomb(row, col);
+                        break;
+                    case 'rainbow':
+                        this.activateRainbow(row, col);
+                        break;
+                    case 'shuffle':
+                        this.shuffleBoard();
+                        break;
+                }
+                
+                this.activePowerUp = null;
+                document.getElementById('gameBoard').style.cursor = 'default';
+                
+                // Reset button styles
+                document.querySelectorAll('.power-up-button').forEach(btn => {
+                    btn.style.opacity = '1';
+                    btn.style.background = 'rgba(255, 255, 255, 0.1)';
+                });
+                
+                this.updateDisplay();
+            }
+
+            explodeBomb(row, col) {
+                const matches = [];
+                
+                // 3x3 explosion around clicked cell
+                for (let r = Math.max(0, row - 1); r <= Math.min(this.boardSize - 1, row + 1); r++) {
+                    for (let c = Math.max(0, col - 1); c <= Math.min(this.boardSize - 1, col + 1); c++) {
+                        if (this.board[r] && this.board[r][c]) {
+                            matches.push({ row: r, col: c, veggie: this.board[r][c] });
+                        }
+                    }
+                }
+                
+                this.processMatches(matches);
+            }
+
+            activateRainbow(row, col) {
+                const targetVeggie = this.board[row][col];
+                const matches = [];
+                
+                // Remove all instances of the selected vegetable
+                for (let r = 0; r < this.boardSize; r++) {
+                    for (let c = 0; c < this.boardSize; c++) {
+                        if (this.board[r][c] === targetVeggie) {
+                            matches.push({ row: r, col: c, veggie: targetVeggie });
+                        }
+                    }
+                }
+                
+                this.processMatches(matches);
+            }
+
+            shuffleBoard() {
+                const vegetables = [];
+                
+                // Collect all vegetables
+                for (let row = 0; row < this.boardSize; row++) {
+                    for (let col = 0; col < this.boardSize; col++) {
+                        if (this.board[row][col]) {
+                            vegetables.push(this.board[row][col]);
+                        }
+                    }
+                }
+                
+                // Shuffle array
+                for (let i = vegetables.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [vegetables[i], vegetables[j]] = [vegetables[j], vegetables[i]];
+                }
+                
+                // Redistribute
+                let index = 0;
+                for (let row = 0; row < this.boardSize; row++) {
+                    for (let col = 0; col < this.boardSize; col++) {
+                        if (index < vegetables.length) {
+                            this.board[row][col] = vegetables[index++];
+                            const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                            if (cell) {
+                                cell.textContent = this.vegetables[this.board[row][col]];
+                            }
+                        }
+                    }
+                }
+            }
+
+            showComboIndicator(matchCount) {
+                const indicator = document.createElement('div');
+                indicator.className = 'combo-indicator';
+                indicator.textContent = `${matchCount} COMBO! +${matchCount * 10}`;
+                
+                const gameArea = document.getElementById('gameArea');
+                if (gameArea) {
+                    gameArea.appendChild(indicator);
+                    
+                    setTimeout(() => {
+                        if (indicator.parentNode) {
+                            indicator.parentNode.removeChild(indicator);
+                        }
+                    }, 2000);
+                }
+            }
+
+            checkGameState() {
+                // Check if objectives are completed
+                const allCompleted = Object.values(this.objectives).every(obj => obj.current >= obj.target);
+                
+                if (allCompleted) {
+                    this.nextLevel();
+                } else if (this.moves <= 0) {
+                    this.gameOver();
+                }
+            }
+
+            nextLevel() {
+                // Show level complete screen
+                this.showLevelCompleteScreen();
+            }
+            
+            showLevelCompleteScreen() {
+                // Update level complete screen info
+                document.getElementById('completedLevel').textContent = this.level;
+                document.getElementById('levelScore').textContent = this.score;
+                document.getElementById('nextLevelNumber').textContent = this.level + 1;
+                
+                // Show power-up rewards
+                const rainbowReward = document.getElementById('rainbowReward');
+                const shuffleReward = document.getElementById('shuffleReward');
+                
+                if ((this.level + 1) % 3 === 0) {
+                    rainbowReward.style.display = 'block';
+                } else {
+                    rainbowReward.style.display = 'none';
+                }
+                
+                if ((this.level + 1) % 5 === 0) {
+                    shuffleReward.style.display = 'block';
+                } else {
+                    shuffleReward.style.display = 'none';
+                }
+                
+                // Show the screen
+                document.getElementById('levelCompleteScreen').classList.remove('hidden');
+            }
+            
+            continueToNextLevel() {
+                // Hide level complete screen
+                document.getElementById('levelCompleteScreen').classList.add('hidden');
+                
+                // Advance to next level
+                this.level++;
+                this.moves = Math.max(20, 30 - this.level);
+                
+                // Increase objectives
+                Object.values(this.objectives).forEach(obj => {
+                    obj.current = 0;
+                    obj.target = Math.floor(obj.target * 1.2);
+                });
+                
+                // Add power-ups
+                this.powerUps.bomb = Math.min(5, this.powerUps.bomb + 1);
+                if (this.level % 3 === 0) this.powerUps.rainbow++;
+                if (this.level % 5 === 0) this.powerUps.shuffle++;
+                
+                this.initializeBoard();
+                this.updateDisplay();
+            }
+
+            startGame() {
+                this.score = 0;
+                this.level = 1;
+                this.moves = 30;
+                this.gameRunning = true;
+                this.isProcessing = false;
+                
+                // Reset objectives
+                this.objectives = {
+                    carrot: { current: 0, target: 10 },
+                    broccoli: { current: 0, target: 8 },
+                    corn: { current: 0, target: 6 }
+                };
+                
+                // Reset power-ups
+                this.powerUps = {
+                    bomb: 3,
+                    rainbow: 2,
+                    shuffle: 1
+                };
+                
+                this.selectedCell = null;
+                this.activePowerUp = null;
+                
+                // Hide screens
+                document.getElementById('startScreen').classList.add('hidden');
+                document.getElementById('gameOverScreen').classList.add('hidden');
+                
+                this.initializeBoard();
+                this.updateDisplay();
+            }
+
+            updateDisplay() {
+                document.getElementById('score').textContent = this.score;
+                document.getElementById('level').textContent = this.level;
+                document.getElementById('moves').textContent = this.moves;
+                
+                // Update objectives
+                document.getElementById('carrotCount').textContent = `${this.objectives.carrot.current}/${this.objectives.carrot.target}`;
+                document.getElementById('broccoliCount').textContent = `${this.objectives.broccoli.current}/${this.objectives.broccoli.target}`;
+                document.getElementById('cornCount').textContent = `${this.objectives.corn.current}/${this.objectives.corn.target}`;
+                
+                // Update objective completion status
+                ['carrot', 'broccoli', 'corn'].forEach((veggie, index) => {
+                    const obj = document.getElementById(`obj${index + 1}`);
+                    if (obj) {
+                        if (this.objectives[veggie].current >= this.objectives[veggie].target) {
+                            obj.classList.add('completed');
+                        } else {
+                            obj.classList.remove('completed');
+                        }
+                    }
+                });
+                
+                // Update power-up counts
+                document.getElementById('bombCount').textContent = this.powerUps.bomb;
+                document.getElementById('rainbowCount').textContent = this.powerUps.rainbow;
+                document.getElementById('shuffleCount').textContent = this.powerUps.shuffle;
+                
+                // Update power-up button states
+                Object.keys(this.powerUps).forEach(type => {
+                    const button = document.getElementById(type + 'Power');
+                    if (button) {
+                        button.disabled = this.powerUps[type] <= 0;
+                    }
+                });
+                
+                // Update level progress
+                const totalObjectives = Object.values(this.objectives).reduce((sum, obj) => sum + obj.target, 0);
+                const completedObjectives = Object.values(this.objectives).reduce((sum, obj) => sum + Math.min(obj.current, obj.target), 0);
+                const progress = (completedObjectives / totalObjectives) * 100;
+                const progressBar = document.getElementById('levelProgress');
+                if (progressBar) {
+                    progressBar.style.width = progress + '%';
+                }
+            }
+
+            gameOver() {
+                this.gameRunning = false;
+                this.isProcessing = false;
+                
+                // Check for new record
+                const highScore = localStorage.getItem('veggieMatch3HighScore') || 0;
+                const newRecord = this.score > highScore;
+                
+                if (newRecord) {
+                    localStorage.setItem('veggieMatch3HighScore', this.score);
+                    document.getElementById('newRecord').style.display = 'block';
+                } else {
+                    document.getElementById('newRecord').style.display = 'none';
+                }
+                
+                // Update final stats
+                document.getElementById('finalLevel').textContent = this.level;
+                document.getElementById('finalScore').textContent = this.score;
+                
+                // Show game over screen
+                document.getElementById('gameOverScreen').classList.remove('hidden');
+            }
+        }
+
+        // Global game instance
+        let game;
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            game = new VeggieMatch3();
+        });
+        
+        // Add a gentle shake to two cells (call this when a swap is invalid)
+        function vm3ShakeCells(cellA, cellB){
+            [cellA, cellB].forEach(c => { if(c){ c.classList.add('nope'); setTimeout(()=>c.classList.remove('nope'), 300); }});
+        }
+    </script>
+</body>
+</html>

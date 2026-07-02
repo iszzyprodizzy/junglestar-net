@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Water Malone Warriors - Jungle Star Games</title>
+    <link rel="stylesheet" href="common.css">
+    <script src="shared-systems.js"></script>
+    <script src="ui-utils.js"></script>
+    <style>
+        /* Game-specific styles */
+        .game-container {
+            background: linear-gradient(135deg, #87CEEB 0%, #98FB98 25%, #90EE90 50%, #32CD32 75%, #228B22 100%);
+            color: white;
+            user-select: none;
+        }
+
+        .game-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .title {
+            font-size: 2.5em;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .stat {
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .game-area {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100px;
+            background: linear-gradient(to bottom, #8B4513 0%, #654321 100%);
+            border-top: 5px solid #228B22;
+        }
+
+        .ground::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: repeating-linear-gradient(
+                90deg,
+                #32CD32 0px,
+                #32CD32 20px,
+                #228B22 20px,
+                #228B22 40px
+            );
+        }
+
+        .player {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            font-size: 3.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            z-index: 5;
+            filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+        }
+
+        .player.slicing {
+            animation: slice 0.4s ease-out;
+            transform: translateX(-50%) scale(1.2);
+        }
+
+        @keyframes slice {
+            0% { transform: translateX(-50%) scale(1) rotate(0deg); }
+            50% { transform: translateX(-50%) scale(1.3) rotate(-15deg); }
+            100% { transform: translateX(-50%) scale(1.2) rotate(0deg); }
+        }
+
+        .player.jumping {
+            animation: jump 0.6s ease-in-out;
+        }
+
+        .player.sliding {
+            animation: slide 0.8s ease-in-out;
+        }
+
+        @keyframes jump {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-120px) scale(1.1); }
+            100% { transform: translateY(0) scale(1); }
+        }
+
+        @keyframes slide {
+            0% { transform: translateY(0) scaleY(1); }
+            50% { transform: translateY(30px) scaleY(0.5); }
+            100% { transform: translateY(0) scaleY(1); }
+        }
+
+        .obstacle {
+            position: absolute;
+            bottom: 100px;
+            font-size: 3em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+            transition: all 0.3s ease;
+        }
+
+        .obstacle.high {
+            bottom: 180px;
+        }
+
+        .obstacle.low {
+            bottom: 100px;
+        }
+
+        .obstacle.rock {
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+            border-radius: 50%;
+            border: 3px solid #654321;
+            width: 60px;
+            height: 60px;
+        }
+
+        .obstacle.sticky-trap {
+            background: linear-gradient(45deg, #8B008B, #9932CC);
+            border-radius: 10px;
+            width: 80px;
+            height: 20px;
+            bottom: 100px;
+            animation: sticky-pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes sticky-pulse {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .obstacle.destroyed {
+            animation: destroy 0.5s ease-out forwards;
+        }
+
+        @keyframes destroy {
+            0% { transform: scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: scale(0.3) rotate(180deg); opacity: 0; }
+        }
+
+        .slash-effect {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, transparent 40%, #FFD700 45%, #FFA500 55%, transparent 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: slash-animation 0.4s ease-out forwards;
+            z-index: 10;
+        }
+
+        @keyframes slash-animation {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1.5) rotate(90deg); opacity: 0; }
+        }
+
+        .power-up {
+            position: absolute;
+            bottom: 150px;
+            font-size: 2.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 2s ease-in-out infinite;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .background-element {
+            position: absolute;
+            font-size: 2em;
+            opacity: 0.6;
+            animation: scroll-bg 8s linear infinite;
+        }
+
+        @keyframes scroll-bg {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100px); }
+        }
+
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .screen.hidden {
+            display: none;
+        }
+
+        .screen-title {
+            font-size: 4em;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .screen-subtitle {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #E0E0E0;
+            line-height: 1.6;
+        }
+
+        .controls {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #B0B0B0;
+        }
+
+        .button {
+            padding: 15px 40px;
+            font-size: 1.5em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin: 10px;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .speed-indicator {
+            position: absolute;
+            top: 100px;
+            right: 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #FFD700;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particle-burst 0.8s ease-out forwards;
+        }
+
+        @keyframes particle-burst {
+            0% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.3) translateY(-40px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 1.8em;
+            }
+            
+            .stats {
+                font-size: 1em;
+                gap: 15px;
+            }
+            
+            .player {
+                font-size: 2.5em;
+                width: 50px;
+                height: 50px;
+            }
+            
+            .obstacle {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-root">
+        <div class="game-container">
+        <div class="header">
+            <h1 class="title">🍉 Water Malone Warriors 🍉</h1>
+            <div class="stats">
+                <div class="stat">
+                    <div>Distance</div>
+                    <div id="distance">0m</div>
+                </div>
+                <div class="stat">
+                    <div>Score</div>
+                    <div id="score">0</div>
+                </div>
+                <div class="stat">
+                    <div>Best</div>
+                    <div id="bestScore">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-area" id="gameArea">
+            <div class="ground" id="ground"></div>
+            <div class="player" id="player">🍉</div>
+            <div class="speed-indicator" id="speedIndicator">Speed: 1.0x</div>
+        </div>
+
+        <!-- Start Screen -->
+        <div class="screen" id="startScreen">
+            <h1 class="screen-title">🍉 Water Malone Warriors 🍉</h1>
+            <p class="screen-subtitle">
+                Slice through obstacles in this endless runner!<br>
+                Jump and slide to dodge junk food enemies<br>
+                while collecting healthy power-ups.
+            </p>
+            <div class="controls">
+                <strong>Controls:</strong><br>
+                ⬆️ Arrow Up / W / Space - Jump<br>
+                ⬇️ Arrow Down / S - Slide<br>
+                ⬅️ Arrow Left / A - Move Left<br>
+                ➡️ Arrow Right / D - Move Right<br>
+                🗡️ X / Z - Slice Attack<br>
+                📱 Touch: Tap to Jump, Swipe to Move/Slice
+            </div>
+            <button class="button" onclick="game.startGame()">🏃 START RUNNING! 🏃</button>
+            <button class="button" onclick="uiUtils.goToArcade()">🏠 Back to Arcade</button>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div class="screen hidden" id="gameOverScreen">
+            <h1 class="screen-title">🏁 Run Complete! 🏁</h1>
+            <p class="screen-subtitle">
+                Distance: <span id="finalDistance">0m</span><br>
+                Final Score: <span id="finalScore">0</span><br>
+                <span id="newRecord" style="color: #FFD700; display: none;">🏆 NEW RECORD! 🏆</span>
+            </p>
+            <button class="button" onclick="game.startGame()">🔄 Run Again</button>
+            <button class="button" onclick="uiUtils.goToArcade()">🏠 Back to Arcade</button>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        class WaterMaloneWarriors {
+            constructor() {
+                this.score = 0;
+                this.distance = 0;
+                this.bestScore = parseInt(localStorage.getItem('waterMaloneWarriorsBest') || '0');
+                this.gameRunning = false;
+                this.gameSpeed = 2;
+                this.obstacles = [];
+                this.powerUps = [];
+                this.backgroundElements = [];
+                this.isJumping = false;
+                this.isSliding = false;
+                this.isSlicing = false;
+                this.groundOffset = 0;
+                this.playerX = 0; // -1 = left, 0 = center, 1 = right
+                this.isStuck = false;
+                this.stuckTimer = 0;
+                
+                // Game objects
+                this.junkFoodObstacles = ['🍟', '🍔', '🌭', '🍕', '🥤', '🍩', '🧁', '🍪'];
+                this.rockObstacles = ['🪨', '⛰️', '🗿'];
+                this.stickyTraps = ['🕸️', '🟣', '💜'];
+                this.healthyPowerUps = ['🥕', '🥦', '🍎', '🍊', '🥬', '🥒', '🍇', '🥝'];
+                this.backgroundItems = ['🌳', '🌲', '🏔️', '☁️', '🦋', '🌸', '🌺', '🌻'];
+                
+                this.initializeEventListeners();
+                this.updateDisplay();
+            }
+
+            initializeEventListeners() {
+                // Keyboard controls
+                document.addEventListener('keydown', (e) => {
+                    if (!this.gameRunning) return;
+                    
+                    switch(e.code) {
+                        case 'ArrowUp':
+                        case 'KeyW':
+                        case 'Space':
+                            e.preventDefault();
+                            this.jump();
+                            break;
+                        case 'ArrowDown':
+                        case 'KeyS':
+                            e.preventDefault();
+                            this.slide();
+                            break;
+                        case 'ArrowLeft':
+                        case 'KeyA':
+                            e.preventDefault();
+                            this.moveLeft();
+                            break;
+                        case 'ArrowRight':
+                        case 'KeyD':
+                            e.preventDefault();
+                            this.moveRight();
+                            break;
+                        case 'KeyX':
+                        case 'KeyZ':
+                            e.preventDefault();
+                            this.slice();
+                            break;
+                    }
+                });
+                
+                // Touch controls
+                let touchStartY = 0;
+                document.addEventListener('touchstart', (e) => {
+                    if (!this.gameRunning) return;
+                    touchStartY = e.touches[0].clientY;
+                });
+                
+                document.addEventListener('touchend', (e) => {
+                    if (!this.gameRunning) return;
+                    const touchEndY = e.changedTouches[0].clientY;
+                    const deltaY = touchStartY - touchEndY;
+                    
+                    if (Math.abs(deltaY) > 30) {
+                        if (deltaY > 0) {
+                            this.jump(); // Swipe up
+                        } else {
+                            this.slide(); // Swipe down
+                        }
+                    } else {
+                        this.jump(); // Tap
+                    }
+                });
+            }
+
+            startGame() {
+                this.score = 0;
+                this.distance = 0;
+                this.gameSpeed = 2;
+                this.gameRunning = true;
+                this.isJumping = false;
+                this.isSliding = false;
+                this.isSlicing = false;
+                this.groundOffset = 0;
+                this.playerX = 0;
+                this.isStuck = false;
+                this.stuckTimer = 0;
+                
+                // Reset player position and appearance
+                const player = document.getElementById('player');
+                player.style.left = '50%';
+                player.style.filter = 'drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3))';
+                
+                // Clear existing objects
+                this.obstacles = [];
+                this.powerUps = [];
+                this.backgroundElements = [];
+                
+                // Clear DOM elements
+                document.querySelectorAll('.obstacle, .power-up, .background-element').forEach(el => {
+                    if (el.parentNode) el.parentNode.removeChild(el);
+                });
+                
+                // Hide screens
+                document.getElementById('startScreen').classList.add('hidden');
+                document.getElementById('gameOverScreen').classList.add('hidden');
+                
+                this.updateDisplay();
+                this.gameLoop();
+                this.spawnLoop();
+                this.backgroundLoop();
+            }
+
+            jump() {
+                if (this.isJumping || this.isSliding) return;
+                
+                this.isJumping = true;
+                const player = document.getElementById('player');
+                player.classList.add('jumping');
+                
+                setTimeout(() => {
+                    this.isJumping = false;
+                    player.classList.remove('jumping');
+                }, 600);
+            }
+
+            slide() {
+                if (this.isJumping || this.isSliding) return;
+                
+                this.isSliding = true;
+                const player = document.getElementById('player');
+                player.classList.add('sliding');
+                
+                setTimeout(() => {
+                    this.isSliding = false;
+                    player.classList.remove('sliding');
+                }, 800);
+            }
+
+            moveLeft() {
+                if (this.isStuck) return;
+                this.playerX = Math.max(-1, this.playerX - 1);
+                this.updatePlayerPosition();
+            }
+
+            moveRight() {
+                if (this.isStuck) return;
+                this.playerX = Math.min(1, this.playerX + 1);
+                this.updatePlayerPosition();
+            }
+
+            updatePlayerPosition() {
+                const player = document.getElementById('player');
+                const offset = this.playerX * 150; // 150px spacing between lanes
+                player.style.left = `calc(50% + ${offset}px)`;
+            }
+
+            slice() {
+                if (this.isSlicing) return;
+                
+                this.isSlicing = true;
+                const player = document.getElementById('player');
+                player.classList.add('slicing');
+                
+                // Create slash effect
+                this.createSlashEffect();
+                
+                // Check for sliceable obstacles
+                this.checkSliceHit();
+                
+                setTimeout(() => {
+                    this.isSlicing = false;
+                    player.classList.remove('slicing');
+                }, 400);
+            }
+
+            createSlashEffect() {
+                const player = document.getElementById('player');
+                const playerRect = player.getBoundingClientRect();
+                
+                const slashEffect = document.createElement('div');
+                slashEffect.className = 'slash-effect';
+                slashEffect.style.left = (playerRect.left + playerRect.width/2 - 50) + 'px';
+                slashEffect.style.top = (playerRect.top + playerRect.height/2 - 50) + 'px';
+                
+                document.getElementById('gameArea').appendChild(slashEffect);
+                
+                setTimeout(() => {
+                    if (slashEffect.parentNode) {
+                        slashEffect.parentNode.removeChild(slashEffect);
+                    }
+                }, 400);
+            }
+
+            checkSliceHit() {
+                const player = document.getElementById('player');
+                const playerRect = player.getBoundingClientRect();
+                
+                this.obstacles.forEach((obstacle, index) => {
+                    if (obstacle.type === 'rock') {
+                        const obstacleRect = obstacle.element.getBoundingClientRect();
+                        
+                        // Check if obstacle is within slicing range
+                        if (Math.abs(obstacleRect.left - playerRect.left) < 100 && 
+                            Math.abs(obstacleRect.top - playerRect.top) < 100) {
+                            
+                            // Destroy the rock
+                            obstacle.element.classList.add('destroyed');
+                            this.score += 50; // Bonus points for slicing
+                            
+                            setTimeout(() => {
+                                if (obstacle.element.parentNode) {
+                                    obstacle.element.parentNode.removeChild(obstacle.element);
+                                }
+                                this.obstacles.splice(index, 1);
+                            }, 500);
+                        }
+                    }
+                });
+            }
+
+            gameLoop() {
+                if (!this.gameRunning) return;
+                
+                // Handle sticky trap effects
+                if (this.isStuck) {
+                    this.stuckTimer -= 16; // Assuming 60fps
+                    if (this.stuckTimer <= 0) {
+                        this.isStuck = false;
+                        const player = document.getElementById('player');
+                        player.style.filter = 'drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3))';
+                    }
+                }
+                
+                // Update distance and score (slower if stuck)
+                const speedMultiplier = this.isStuck ? 0.3 : 1;
+                this.distance += this.gameSpeed * 0.1 * speedMultiplier;
+                this.score = Math.floor(this.distance);
+                
+                // Increase speed over time
+                this.gameSpeed = Math.min(6, 2 + (this.distance / 500));
+                
+                // Move ground
+                this.groundOffset -= this.gameSpeed;
+                if (this.groundOffset <= -40) {
+                    this.groundOffset = 0;
+                }
+                
+                // Update obstacles
+                this.obstacles.forEach((obstacle, index) => {
+                    obstacle.x -= this.gameSpeed;
+                    obstacle.element.style.left = obstacle.x + 'px';
+                    
+                    // Check collision
+                    if (this.checkCollision(obstacle)) {
+                        if (obstacle.type === 'sticky-trap') {
+                            // Sticky trap slows player down
+                            this.isStuck = true;
+                            this.stuckTimer = 2000; // 2 seconds
+                            const player = document.getElementById('player');
+                            player.style.filter = 'drop-shadow(3px 3px 6px rgba(138, 43, 226, 0.8))';
+                            
+                            // Remove the trap
+                            if (obstacle.element.parentNode) {
+                                obstacle.element.parentNode.removeChild(obstacle.element);
+                            }
+                            this.obstacles.splice(index, 1);
+                        } else if (obstacle.type === 'rock' && !this.isSlicing) {
+                            // Rocks can only be destroyed by slicing
+                            this.gameOver();
+                            return;
+                        } else if (obstacle.type !== 'rock') {
+                            // Regular obstacles end the game
+                            this.gameOver();
+                            return;
+                        }
+                    }
+                    
+                    // Remove off-screen obstacles
+                    if (obstacle.x < -100) {
+                        if (obstacle.element.parentNode) {
+                            obstacle.element.parentNode.removeChild(obstacle.element);
+                        }
+                        this.obstacles.splice(index, 1);
+                    }
+                });
+                
+                // Update power-ups
+                this.powerUps.forEach((powerUp, index) => {
+                    powerUp.x -= this.gameSpeed;
+                    powerUp.element.style.left = powerUp.x + 'px';
+                    
+                    // Check collection
+                    if (this.checkPowerUpCollection(powerUp)) {
+                        this.collectPowerUp(powerUp);
+                        if (powerUp.element.parentNode) {
+                            powerUp.element.parentNode.removeChild(powerUp.element);
+                        }
+                        this.powerUps.splice(index, 1);
+                    }
+                    
+                    // Remove off-screen power-ups
+                    if (powerUp.x < -100) {
+                        if (powerUp.element.parentNode) {
+                            powerUp.element.parentNode.removeChild(powerUp.element);
+                        }
+                        this.powerUps.splice(index, 1);
+                    }
+                });
+                
+                // Update background elements
+                this.backgroundElements.forEach((bg, index) => {
+                    bg.x -= this.gameSpeed * 0.5;
+                    bg.element.style.left = bg.x + 'px';
+                    
+                    if (bg.x < -100) {
+                        if (bg.element.parentNode) {
+                            bg.element.parentNode.removeChild(bg.element);
+                        }
+                        this.backgroundElements.splice(index, 1);
+                    }
+                });
+                
+                this.updateDisplay();
+                requestAnimationFrame(() => this.gameLoop());
+            }
+
+            spawnLoop() {
+                if (!this.gameRunning) return;
+                
+                // Spawn obstacles
+                if (Math.random() < 0.02 + (this.gameSpeed / 1000)) {
+                    this.spawnObstacle();
+                }
+                
+                // Spawn power-ups (less frequent)
+                if (Math.random() < 0.005) {
+                    this.spawnPowerUp();
+                }
+                
+                setTimeout(() => this.spawnLoop(), 100);
+            }
+
+            backgroundLoop() {
+                if (!this.gameRunning) return;
+                
+                // Spawn background elements
+                if (Math.random() < 0.01) {
+                    this.spawnBackgroundElement();
+                }
+                
+                setTimeout(() => this.backgroundLoop(), 200);
+            }
+
+            spawnObstacle() {
+                const rand = Math.random();
+                let obstacle;
+                
+                if (rand < 0.4) {
+                    // Regular junk food obstacles
+                    obstacle = {
+                        x: window.innerWidth + 50,
+                        type: Math.random() < 0.5 ? 'low' : 'high',
+                        emoji: this.junkFoodObstacles[Math.floor(Math.random() * this.junkFoodObstacles.length)],
+                        element: null
+                    };
+                } else if (rand < 0.7) {
+                    // Rock obstacles (can be sliced)
+                    obstacle = {
+                        x: window.innerWidth + 50,
+                        type: 'rock',
+                        emoji: this.rockObstacles[Math.floor(Math.random() * this.rockObstacles.length)],
+                        element: null
+                    };
+                } else {
+                    // Sticky traps
+                    obstacle = {
+                        x: window.innerWidth + 50,
+                        type: 'sticky-trap',
+                        emoji: this.stickyTraps[Math.floor(Math.random() * this.stickyTraps.length)],
+                        element: null
+                    };
+                }
+                
+                const element = document.createElement('div');
+                element.className = `obstacle ${obstacle.type}`;
+                element.textContent = obstacle.emoji;
+                element.style.left = obstacle.x + 'px';
+                
+                // Position obstacles in different lanes
+                const laneOffset = (Math.floor(Math.random() * 3) - 1) * 150; // -150, 0, or 150px
+                element.style.transform = `translateX(${laneOffset}px)`;
+                
+                document.getElementById('gameArea').appendChild(element);
+                obstacle.element = element;
+                this.obstacles.push(obstacle);
+            }
+
+            spawnPowerUp() {
+                const powerUp = {
+                    x: window.innerWidth + 50,
+                    emoji: this.healthyPowerUps[Math.floor(Math.random() * this.healthyPowerUps.length)],
+                    element: null
+                };
+                
+                const element = document.createElement('div');
+                element.className = 'power-up';
+                element.textContent = powerUp.emoji;
+                element.style.left = powerUp.x + 'px';
+                
+                document.getElementById('gameArea').appendChild(element);
+                powerUp.element = element;
+                this.powerUps.push(powerUp);
+            }
+
+            spawnBackgroundElement() {
+                const bg = {
+                    x: window.innerWidth + 50,
+                    y: Math.random() * (window.innerHeight - 200) + 50,
+                    emoji: this.backgroundItems[Math.floor(Math.random() * this.backgroundItems.length)],
+                    element: null
+                };
+                
+                const element = document.createElement('div');
+                element.className = 'background-element';
+                element.textContent = bg.emoji;
+                element.style.left = bg.x + 'px';
+                element.style.top = bg.y + 'px';
+                
+                document.getElementById('gameArea').appendChild(element);
+                bg.element = element;
+                this.backgroundElements.push(bg);
+            }
+
+            checkCollision(obstacle) {
+                const player = document.getElementById('player');
+                const playerRect = player.getBoundingClientRect();
+                const obstacleRect = obstacle.element.getBoundingClientRect();
+                
+                // Check if player and obstacle are in the same lane (with some tolerance)
+                const playerCenterX = playerRect.left + playerRect.width / 2;
+                const obstacleCenterX = obstacleRect.left + obstacleRect.width / 2;
+                const laneWidth = 150;
+                
+                if (Math.abs(playerCenterX - obstacleCenterX) > laneWidth / 2) {
+                    return false; // Different lanes, no collision
+                }
+                
+                // Check vertical collision (jumping/sliding)
+                if (obstacle.type === 'high' && this.isSliding) {
+                    return false; // Can slide under high obstacles
+                }
+                if (obstacle.type === 'low' && this.isJumping) {
+                    return false; // Can jump over low obstacles
+                }
+                
+                // Simple collision detection for same lane
+                return (
+                    playerRect.left < obstacleRect.right &&
+                    playerRect.right > obstacleRect.left &&
+                    playerRect.top < obstacleRect.bottom &&
+                    playerRect.bottom > obstacleRect.top
+                );
+            }
+
+            checkPowerUpCollection(powerUp) {
+                const playerRect = {
+                    x: 100,
+                    y: this.isJumping ? 100 - 120 : (this.isSliding ? 130 : 100),
+                    width: 60,
+                    height: this.isSliding ? 30 : 60
+                };
+                
+                const powerUpRect = {
+                    x: powerUp.x,
+                    y: 50,
+                    width: 50,
+                    height: 50
+                };
+                
+                return playerRect.x < powerUpRect.x + powerUpRect.width &&
+                       playerRect.x + playerRect.width > powerUpRect.x &&
+                       playerRect.y < powerUpRect.y + powerUpRect.height &&
+                       playerRect.y + playerRect.height > powerUpRect.y;
+            }
+
+            collectPowerUp(powerUp) {
+                this.score += 50;
+                this.createParticles(powerUp.element);
+            }
+
+            createParticles(element) {
+                const rect = element.getBoundingClientRect();
+                for (let i = 0; i < 6; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = (rect.left + rect.width / 2) + 'px';
+                    particle.style.top = (rect.top + rect.height / 2) + 'px';
+                    particle.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                    
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 800);
+                }
+            }
+
+            updateDisplay() {
+                document.getElementById('distance').textContent = Math.floor(this.distance) + 'm';
+                document.getElementById('score').textContent = this.score;
+                document.getElementById('bestScore').textContent = this.bestScore;
+                document.getElementById('speedIndicator').textContent = `Speed: ${this.gameSpeed.toFixed(1)}x`;
+            }
+
+            gameOver() {
+                this.gameRunning = false;
+                
+                // Check for new record
+                const isNewRecord = this.score > this.bestScore;
+                if (isNewRecord) {
+                    this.bestScore = this.score;
+                    localStorage.setItem('waterMaloneWarriorsBest', this.bestScore.toString());
+                }
+                
+                // Clear remaining objects
+                this.obstacles.forEach(obstacle => {
+                    if (obstacle.element && obstacle.element.parentNode) {
+                        obstacle.element.parentNode.removeChild(obstacle.element);
+                    }
+                });
+                this.powerUps.forEach(powerUp => {
+                    if (powerUp.element && powerUp.element.parentNode) {
+                        powerUp.element.parentNode.removeChild(powerUp.element);
+                    }
+                });
+                this.backgroundElements.forEach(bg => {
+                    if (bg.element && bg.element.parentNode) {
+                        bg.element.parentNode.removeChild(bg.element);
+                    }
+                });
+                
+                // Show game over screen
+                document.getElementById('finalDistance').textContent = Math.floor(this.distance) + 'm';
+                document.getElementById('finalScore').textContent = this.score;
+                document.getElementById('newRecord').style.display = isNewRecord ? 'block' : 'none';
+                document.getElementById('gameOverScreen').classList.remove('hidden');
+                
+                // Integrate with shared systems
+                if (typeof JungleStarSharedSystems !== 'undefined') {
+                    const sharedSystems = new JungleStarSharedSystems();
+                    
+                    // Save high score
+                    sharedSystems.saveHighScore('water-malone-warriors', this.score);
+                    
+                    // Check for badge unlocks
+                    if (this.score >= 1000) {
+                        sharedSystems.unlockBadge('first-1000');
+                    }
+                    if (this.distance >= 1000) {
+                        sharedSystems.unlockBadge('distance-runner');
+                    }
+                    if (this.gameSpeed >= 2.0) {
+                        sharedSystems.unlockBadge('speed-demon');
+                    }
+                    if (this.score >= 5000) {
+                        sharedSystems.unlockBadge('high-scorer');
+                    }
+                    
+                    // Game-specific badges
+                    sharedSystems.unlockBadge('warrior-runner');
+                    if (this.distance >= 2000) {
+                        sharedSystems.unlockBadge('warrior-master');
+                    }
+                    
+                    // Increment games played
+                    sharedSystems.incrementGamesPlayed();
+                }
+            }
+        }
+
+        // Initialize game
+        const game = new WaterMaloneWarriors();
+    </script>
+</body>
+</html>

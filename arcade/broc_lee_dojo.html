@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Broc Lee Dojo - Jungle Star Games</title>
+    <link rel="stylesheet" href="common.css">
+    <script src="shared-systems.js"></script>
+    <script src="ui-utils.js"></script>
+    <style>
+        /* Game-specific styles */
+        .game-container {
+            background: linear-gradient(135deg, #2d5016 0%, #4a7c59 50%, #6b8e23 100%);
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .screen {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .title {
+            font-size: 3.5em;
+            font-weight: bold;
+            color: #90EE90;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            color: #98FB98;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #32CD32, #228B22);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .game-area {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            background: linear-gradient(180deg, #2d5016 0%, #1a3009 100%);
+        }
+        
+        .stats {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            z-index: 100;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .green-meter-container {
+            min-width: 150px;
+        }
+        
+        .green-meter {
+            width: 80px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        .green-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #32CD32 0%, #90EE90 100%);
+            transition: width 0.3s ease;
+            border-radius: 4px;
+            width: 0%;
+        }
+        
+        .dojo-arena {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 400px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 3px solid #90EE90;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .broc-lee {
+            width: 80px;
+            height: 80px;
+            background: #228B22;
+            border-radius: 50%;
+            position: relative;
+            margin-bottom: 30px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+        
+        .broc-lee.attacking {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px #90EE90;
+        }
+        
+        .combo-display {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #90EE90;
+        }
+        
+        .combo-sequence {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+        
+        .combo-key {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #90EE90;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+        
+        .combo-key.active {
+            background: #32CD32;
+            transform: scale(1.1);
+        }
+        
+        .combo-key.correct {
+            background: #90EE90;
+            color: #000;
+        }
+        
+        .combo-key.wrong {
+            background: #FF6B6B;
+            animation: shake 0.3s ease;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .timing-bar {
+            width: 300px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .timing-indicator {
+            width: 4px;
+            height: 100%;
+            background: #FFD700;
+            position: absolute;
+            top: 0;
+            animation: timing-sweep 3s linear infinite;
+        }
+        
+        .timing-zone {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            background: rgba(144, 238, 144, 0.5);
+            width: 60px;
+            left: 120px;
+        }
+        
+        @keyframes timing-sweep {
+            0% { left: 0; }
+            100% { left: calc(100% - 4px); }
+        }
+        
+        .message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 15px;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-align: center;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .home-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .dojo-arena {
+                width: 90%;
+                height: 300px;
+            }
+            
+            .title {
+                font-size: 2.5em;
+            }
+            
+            .stats {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-root">
+        <div class="game-container">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <h1 class="title">🥦 Broc Lee Dojo</h1>
+            <p class="subtitle">Master the art of timing and combos!</p>
+            <p style="color: #98FB98; text-align: center; margin-bottom: 20px;">
+                Use arrow keys and spacebar to execute combos<br>
+                Hit the timing zone to build your Green Meter!
+            </p>
+            <button class="btn" onclick="game.startGame()">Enter the Dojo</button>
+            <button class="btn" onclick="uiUtils.goToArcade()">🏠 Back to Arcade</button>
+        </div>
+        
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen">
+            <div class="game-area">
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-icon">🏆</span>
+                        <span id="score-count">0</span>
+                    </div>
+                    <div class="stat-item green-meter-container">
+                        <span class="stat-icon">⚡</span>
+                        <div class="green-meter">
+                            <div class="green-fill" id="green-fill"></div>
+                        </div>
+                        <span id="green-text">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">🔥</span>
+                        <span id="combo-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">🎯</span>
+                        <span id="accuracy">100%</span>
+                    </div>
+                </div>
+                
+                <div class="dojo-arena">
+                    <div class="broc-lee" id="broc-lee">🥦</div>
+                    
+                    <div class="combo-display">
+                        <div class="combo-sequence" id="combo-sequence"></div>
+                        <div class="timing-bar">
+                            <div class="timing-zone"></div>
+                            <div class="timing-indicator" id="timing-indicator"></div>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+        
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="screen">
+            <h1 class="title">Dojo Complete!</h1>
+            <div style="background: rgba(0,0,0,0.3); padding: 30px; border-radius: 20px; text-align: center;">
+                <p style="color: white; font-size: 1.3em; margin-bottom: 15px;">Final Score: <span id="final-score">0</span></p>
+                <p style="color: white; font-size: 1.1em; margin-bottom: 15px;">Best Combo: <span id="best-combo">0</span></p>
+                <p style="color: white; font-size: 1.1em; margin-bottom: 25px;">Accuracy: <span id="final-accuracy">100%</span></p>
+            </div>
+            <button class="btn" onclick="game.resetGame()">Train Again</button>
+            <button class="btn" onclick="uiUtils.goToArcade()">🏠 Back to Arcade</button>
+        </div>
+        
+        <div id="message" class="message"></div>
+        </div>
+    </div>
+    
+    <script>
+        class BrocLeeDojo {
+            constructor() {
+                this.score = 0;
+                this.greenMeter = 0;
+                this.maxGreenMeter = 100;
+                this.currentCombo = 0;
+                this.bestCombo = 0;
+                this.totalInputs = 0;
+                this.correctInputs = 0;
+                this.gameRunning = false;
+                this.gameStarted = false;
+                
+                this.currentSequence = [];
+                this.playerSequence = [];
+                this.sequenceIndex = 0;
+                this.timingActive = false;
+                
+                this.gameTimerId = null;
+                
+                this.keys = {
+                    up: false,
+                    down: false,
+                    left: false,
+                    right: false,
+                    space: false
+                };
+                
+                this.comboPatterns = [
+                    ['↑', '↓', '→', 'SPC'],
+                    ['←', '→', '↑', 'SPC'],
+                    ['↓', '←', '→', 'SPC'],
+                    ['→', '↓', '←', 'SPC'],
+                    ['↑', '→', '↓', 'SPC'],
+                    ['SPC', '↑', '↓', '→'],
+                    ['←', 'SPC', '→', '↑']
+                ];
+                
+                this.setupEventListeners();
+            }
+            
+            setupEventListeners() {
+                document.addEventListener('keydown', (e) => this.handleKeyDown(e));
+                document.addEventListener('keyup', (e) => this.handleKeyUp(e));
+            }
+            
+            handleKeyDown(e) {
+                if (!this.gameRunning) return;
+                
+                const codes = ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'];
+                if (codes.includes(e.code)) e.preventDefault();
+                
+                let key = null;
+                switch(e.code) {
+                    case 'ArrowUp': key = '↑'; this.keys.up = true; break;
+                    case 'ArrowDown': key = '↓'; this.keys.down = true; break;
+                    case 'ArrowLeft': key = '←'; this.keys.left = true; break;
+                    case 'ArrowRight': key = '→'; this.keys.right = true; break;
+                    case 'Space': key = 'SPC'; this.keys.space = true; break;
+                }
+                
+                if (key && this.timingActive) {
+                    this.processInput(key);
+                }
+            }
+            
+            handleKeyUp(e) {
+                switch(e.code) {
+                    case 'ArrowUp': this.keys.up = false; break;
+                    case 'ArrowDown': this.keys.down = false; break;
+                    case 'ArrowLeft': this.keys.left = false; break;
+                    case 'ArrowRight': this.keys.right = false; break;
+                    case 'Space': this.keys.space = false; break;
+                }
+            }
+            
+            getIndicatorLeftPx() {
+                const timingIndicator = document.getElementById('timing-indicator');
+                const cs = getComputedStyle(timingIndicator);
+                const left = parseFloat(cs.left || '0');
+                return isNaN(left) ? 0 : left;
+            }
+            
+            getTimingZoneBounds() {
+                const bar = document.querySelector('.timing-bar');
+                const zone = bar.querySelector('.timing-zone');
+                const cs = getComputedStyle(zone);
+                const left = parseFloat(cs.left || '0');
+                const width = parseFloat(cs.width || '0');
+                const start = isNaN(left) ? 0 : left;
+                const end = start + (isNaN(width) ? 0 : width);
+                return { start, end };
+            }
+            
+            setActiveKeyHighlight(index) {
+                const container = document.getElementById('combo-sequence');
+                const keys = container.querySelectorAll('.combo-key');
+                keys.forEach((el,i) => el.classList.toggle('active', i === index));
+            }
+            
+            processInput(key) {
+                this.totalInputs++;
+                
+                const expectedKey = this.currentSequence[this.sequenceIndex];
+                const indicatorPosition = this.getIndicatorLeftPx();
+                const { start, end } = this.getTimingZoneBounds();
+                
+                const inTimingZone = indicatorPosition >= start && indicatorPosition <= end;
+                
+                if (key === expectedKey && inTimingZone) {
+                    this.correctInputs++;
+                    this.sequenceIndex++;
+                    this.currentCombo++;
+                    this.greenMeter = Math.min(this.maxGreenMeter, this.greenMeter + 15);
+                    
+                    this.highlightComboKey(this.sequenceIndex - 1, 'correct');
+                    this.animateBrocLee();
+                    
+                    const timingCenter = (start + end) / 2;
+                    const dist = Math.abs(indicatorPosition - timingCenter);
+                    const precision = Math.max(0, 1 - (dist / ((end - start) / 2)));
+                    const timingBonus = Math.floor(25 + 75 * precision);
+                    this.score += timingBonus * (1 + this.currentCombo * 0.1);
+                    
+                    this.setActiveKeyHighlight(this.sequenceIndex);
+                    
+                    if (this.sequenceIndex >= this.currentSequence.length) {
+                        this.completeCombo();
+                    }
+                } else {
+                    this.highlightComboKey(this.sequenceIndex, 'wrong');
+                    this.currentCombo = 0;
+                    this.greenMeter = Math.max(0, this.greenMeter - 10);
+                    this.showMessage('Miss! 💥', 1000);
+                    
+                    setTimeout(() => {
+                        this.startNewSequence();
+                    }, 1000);
+                }
+                
+                this.updateDisplay();
+            }
+            
+            completeCombo() {
+                this.bestCombo = Math.max(this.bestCombo, this.currentCombo);
+                
+                if (this.greenMeter >= this.maxGreenMeter) {
+                    this.greenMeter = 0;
+                    this.score += 500;
+                    this.showMessage('🌟 SPECIAL ATTACK! 🌟', 1500);
+                } else {
+                    this.showMessage(`Combo ${this.currentCombo}! 🔥`, 1000);
+                }
+                
+                setTimeout(() => {
+                    this.startNewSequence();
+                }, 1500);
+            }
+            
+            startNewSequence() {
+                this.currentSequence = this.comboPatterns[Math.floor(Math.random() * this.comboPatterns.length)];
+                this.playerSequence = [];
+                this.sequenceIndex = 0;
+                this.timingActive = true;
+                
+                this.displayComboSequence();
+                this.resetTimingIndicator();
+                this.setActiveKeyHighlight(0);
+            }
+            
+            displayComboSequence() {
+                const container = document.getElementById('combo-sequence');
+                container.innerHTML = '';
+                
+                this.currentSequence.forEach((key, index) => {
+                    const keyElement = document.createElement('div');
+                    keyElement.className = 'combo-key';
+                    keyElement.textContent = key;
+                    keyElement.id = `combo-key-${index}`;
+                    container.appendChild(keyElement);
+                });
+            }
+            
+            highlightComboKey(index, type) {
+                const keyElement = document.getElementById(`combo-key-${index}`);
+                if (keyElement) {
+                    keyElement.classList.add(type);
+                    setTimeout(() => {
+                        keyElement.classList.remove(type);
+                    }, 500);
+                }
+            }
+            
+            animateBrocLee() {
+                const brocLee = document.getElementById('broc-lee');
+                brocLee.classList.add('attacking');
+                setTimeout(() => {
+                    brocLee.classList.remove('attacking');
+                }, 300);
+            }
+            
+            resetTimingIndicator() {
+                const indicator = document.getElementById('timing-indicator');
+                indicator.style.animation = 'none';
+                indicator.offsetHeight;
+                indicator.style.animation = 'timing-sweep 3s linear infinite';
+            }
+            
+            updateDisplay() {
+                document.getElementById('score-count').textContent = Math.floor(this.score);
+                document.getElementById('combo-count').textContent = this.currentCombo;
+                
+                const greenPercentage = (this.greenMeter / this.maxGreenMeter) * 100;
+                document.getElementById('green-fill').style.width = greenPercentage + '%';
+                document.getElementById('green-text').textContent = Math.floor(this.greenMeter);
+                
+                const accuracy = this.totalInputs > 0 ? (this.correctInputs / this.totalInputs * 100) : 100;
+                document.getElementById('accuracy').textContent = Math.floor(accuracy) + '%';
+            }
+            
+            showMessage(text, duration = 2000) {
+                const messageEl = document.getElementById('message');
+                messageEl.textContent = text;
+                messageEl.style.display = 'block';
+                
+                setTimeout(() => {
+                    messageEl.style.display = 'none';
+                }, duration);
+            }
+            
+            startGame() {
+                if (this.gameTimerId) {
+                    clearTimeout(this.gameTimerId);
+                    this.gameTimerId = null;
+                }
+                
+                this.gameRunning = true;
+                this.gameStarted = true;
+                this.score = 0;
+                this.greenMeter = 0;
+                this.currentCombo = 0;
+                this.bestCombo = 0;
+                this.totalInputs = 0;
+                this.correctInputs = 0;
+                
+                document.getElementById('start-screen').classList.remove('active');
+                document.getElementById('game-screen').classList.add('active');
+                
+                this.updateDisplay();
+                this.startNewSequence();
+                
+                this.gameTimerId = setTimeout(() => {
+                    if (this.gameRunning) {
+                        this.gameOver();
+                    }
+                }, 120000);
+            }
+            
+            gameOver() {
+                if (this.gameTimerId) {
+                    clearTimeout(this.gameTimerId);
+                    this.gameTimerId = null;
+                }
+                
+                this.gameRunning = false;
+                this.timingActive = false;
+                
+                document.getElementById('game-screen').classList.remove('active');
+                document.getElementById('game-over-screen').classList.add('active');
+                
+                document.getElementById('final-score').textContent = Math.floor(this.score);
+                document.getElementById('best-combo').textContent = this.bestCombo;
+                const finalAccuracy = this.totalInputs > 0 ? (this.correctInputs / this.totalInputs * 100) : 100;
+                document.getElementById('final-accuracy').textContent = Math.floor(finalAccuracy) + '%';
+                
+                if (this.score > 1000) {
+                    this.showMessage('🏆 Great job! Master level reached! 🏆', 3000);
+                }
+            }
+            
+            resetGame() {
+                if (this.gameTimerId) {
+                    clearTimeout(this.gameTimerId);
+                    this.gameTimerId = null;
+                }
+                
+                this.gameRunning = false;
+                this.gameStarted = false;
+                
+                document.getElementById('game-over-screen').classList.remove('active');
+                document.getElementById('start-screen').classList.add('active');
+            }
+            
+
+        }
+        
+        // Initialize game
+        const game = new BrocLeeDojo();
+    </script>
+</body>
+</html>

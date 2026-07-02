@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Kabob Slider - The Melodies of a Farmer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #87CEEB 0%, #98FB98 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .game-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            max-width: 900px;
+            width: 95%;
+            text-align: center;
+            border: 4px solid #4CAF50;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .title {
+            color: #2E7D32;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #558B2F;
+            font-size: 1.2em;
+            font-style: italic;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .stat-display {
+            background: #FFEB3B;
+            color: #E65100;
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: 2px solid #FFA000;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-area {
+            background: #E8F5E8;
+            border-radius: 15px;
+            padding: 20px;
+            border: 3px solid #4CAF50;
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .drop-zone {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(45deg, #F1F8E9, #E8F5E8);
+            border: 2px dashed #4CAF50;
+            border-radius: 10px;
+            position: relative;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .dropping-fruit {
+            position: absolute;
+            font-size: 3em;
+            background: rgba(255, 255, 255, 0.9);
+            border: 3px solid #4CAF50;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .dropping-fruit.super-fruit {
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
+            border: 3px solid #FF8C00;
+            box-shadow: 0 0 20px #FFD700;
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        
+        .dropping-fruit.harmful-item {
+            background: linear-gradient(45deg, #8B0000, #DC143C, #8B0000);
+            border: 3px solid #B22222;
+            box-shadow: 0 0 15px #DC143C;
+            animation: danger-pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 20px #FFD700;
+                transform: scale(1);
+            }
+            100% {
+                box-shadow: 0 0 30px #FFA500, 0 0 40px #FFD700;
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes danger-pulse {
+            0%, 100% {
+                box-shadow: 0 0 15px #DC143C;
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 25px #B22222, 0 0 35px #DC143C;
+                transform: scale(1.03);
+            }
+        }
+        
+        .dropping-fruit {
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.1s ease;
+            z-index: 10;
+        }
+
+        .kabob-display {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: left 0.1s ease;
+        }
+
+        .kabob-stick {
+            width: 12px;
+            background: linear-gradient(to bottom, #8D6E63, #6D4C41);
+            border-radius: 6px;
+            position: relative;
+            height: 150px;
+        }
+
+        .kabob-stack {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+        }
+
+        .stacked-fruit {
+            font-size: 2.2em;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #4CAF50;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: -3px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            animation: stackFruit 0.5s ease-out;
+            z-index: 5;
+        }
+
+        @keyframes stackFruit {
+            from {
+                transform: translateY(-50px) scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .catch-zone {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 60px;
+            background: rgba(76, 175, 80, 0.3);
+            border: 3px dashed #4CAF50;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            color: #2E7D32;
+            font-weight: bold;
+            transition: left 0.1s ease;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #45a049, #7CB342);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            color: #2E7D32;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-top: 15px;
+            min-height: 25px;
+        }
+
+        .rainbow-text {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #fab1a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbow 3s ease-in-out infinite;
+        }
+
+        @keyframes rainbow {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(180deg); }
+        }
+
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            border: 4px solid #F44336;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+        }
+
+        .celebration {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4em;
+            animation: celebrate 2s ease-in-out;
+            z-index: 50;
+        }
+
+        @keyframes celebrate {
+            0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) scale(1.2) rotate(180deg); }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(360deg); }
+        }
+
+        .instructions {
+            background: #FFF3E0;
+            border: 2px solid #FF9800;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #E65100;
+            font-weight: bold;
+        }
+        
+        .completed-kabobs {
+            background: #E8F5E8;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .completed-kabobs h3 {
+            color: #2E7D32;
+            margin-bottom: 10px;
+        }
+        
+        .kabob-display-area {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .mini-kabob {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            padding: 10px;
+            min-height: 120px;
+            width: 60px;
+        }
+        
+        .mini-kabob-slice {
+            font-size: 1.2em;
+            margin: 1px 0;
+        }
+        
+        .health-bar-container {
+            background: #FFF3E0;
+            border: 2px solid #FF9800;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .health-label {
+            color: #E65100;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .health-bar {
+            width: 100%;
+            height: 20px;
+            background: #ffcccc;
+            border: 2px solid #ff6666;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .health-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff4444 0%, #ff6666 50%, #ff8888 100%);
+            transition: width 0.3s ease;
+            width: 100%;
+        }
+        
+        .health-fill.low {
+            background: linear-gradient(90deg, #ff0000 0%, #ff3333 50%, #ff6666 100%);
+            animation: pulse-red 1s ease-in-out infinite;
+        }
+        
+        .health-fill.critical {
+            background: linear-gradient(90deg, #cc0000 0%, #ff0000 50%, #ff3333 100%);
+            animation: pulse-red 0.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-red {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2em;
+            }
+            
+            .game-stats {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+            
+            .controls {
+                gap: 10px;
+            }
+            
+            .btn {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1 class="title rainbow-text">🔪 Sliced Fruit Kabob 🔪</h1>
+            <p class="subtitle">From "The Melodies of a Farmer" Series</p>
+        </div>
+
+        <div class="instructions">
+            🎯 Sliced fruits drop from above! Use arrow keys to move your kabob and catch them! Get 12 for BONUS! 🎯
+        </div>
+
+        <div class="game-stats">
+            <div class="stat-display">Score: <span id="score">0</span></div>
+            <div class="stat-display">Level: <span id="level">1</span></div>
+            <div class="stat-display">Kabob: <span id="kabobProgress">0/8</span></div>
+            <div class="stat-display">Completed: <span id="completedCount">0/3</span></div>
+            <div class="stat-display">Lives: <span id="lives">3</span></div>
+        </div>
+        
+        <div class="health-bar-container">
+            <div class="health-label">Health: <span id="healthText">100/100</span></div>
+            <div class="health-bar">
+                <div class="health-fill" id="healthFill"></div>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <div class="drop-zone" id="dropZone">
+                <!-- Dropping fruits will appear here -->
+            </div>
+            
+            <div class="kabob-display" id="kabobDisplay">
+                <div class="kabob-stick">
+                    <div class="kabob-stack" id="kabobStack"></div>
+                </div>
+            </div>
+            
+            <div class="catch-zone" id="catchZone">
+                🎯 Catch Zone 🎯
+            </div>
+        </div>
+        
+        <div class="completed-kabobs" id="completedKabobs">
+            <h3>Completed Kabobs:</h3>
+            <div class="kabob-display-area" id="kabobDisplayArea"></div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" id="startBtn">▶️ Start Game</button>
+            <button class="btn" id="pauseBtn" disabled>⏸️ Pause</button>
+            <button class="btn" id="restartBtn">🔄 Restart</button>
+            <button class="btn" id="clearBtn">🗑️ Clear Kabob</button>
+        </div>
+
+        <div class="message" id="message">Click Start Game to begin your kabob adventure! 🚜</div>
+    </div>
+
+    <script>
+        class FruitKabobSlider {
+            constructor() {
+                this.score = 0;
+                this.fruitCount = 0;
+                this.lives = 3;
+                this.health = 100;
+                this.maxHealth = 100;
+                this.speed = 1;
+                this.level = 1;
+                this.gameActive = false;
+                this.isPaused = false;
+                this.currentKabob = [];
+                this.completedKabobs = [];
+                this.activeFruits = [];
+                this.gameLoop = null;
+                this.spawnTimer = null;
+                this.kabobPosition = 50; // Percentage from left
+                this.keys = { left: false, right: false };
+                this.maxSlicesPerKabob = 8;
+                this.kalobsNeededForLevel = 3;
+                
+                this.fruits = [
+                    { emoji: '🍎', points: 10, name: 'Apple Slice', slice: '🔴', type: 'fruit', health: 0 },
+                    { emoji: '🍌', points: 15, name: 'Banana Slice', slice: '🟡', type: 'fruit', health: 0 },
+                    { emoji: '🍓', points: 20, name: 'Strawberry Slice', slice: '🔺', type: 'fruit', health: 0 },
+                    { emoji: '🍇', points: 25, name: 'Grape Slice', slice: '🟣', type: 'fruit', health: 0 },
+                    { emoji: '🍊', points: 12, name: 'Orange Slice', slice: '🟠', type: 'fruit', health: 0 },
+                    { emoji: '🥝', points: 30, name: 'Kiwi Slice', slice: '🟢', type: 'fruit', health: 0 },
+                    { emoji: '🍑', points: 18, name: 'Cherry Slice', slice: '🔴', type: 'fruit', health: 0 },
+                    { emoji: '🥭', points: 22, name: 'Mango Slice', slice: '🟡', type: 'fruit', health: 0 },
+                    { emoji: '🍍', points: 35, name: 'Pineapple Slice', slice: '🟨', type: 'fruit', health: 0 }
+                ];
+                
+                this.superFruits = [
+                    { emoji: '✨🍎✨', points: 50, name: 'Super Apple', slice: '🌟', type: 'super', health: 25 },
+                    { emoji: '✨🍓✨', points: 60, name: 'Super Strawberry', slice: '⭐', type: 'super', health: 30 },
+                    { emoji: '✨🍇✨', points: 70, name: 'Super Grapes', slice: '💫', type: 'super', health: 35 }
+                ];
+                
+                this.harmfulItems = [
+                    { emoji: '🤢🍎', points: -20, name: 'Rotten Apple', slice: '💀', type: 'rotten', health: -15 },
+                    { emoji: '🤮🍌', points: -15, name: 'Rotten Banana', slice: '☠️', type: 'rotten', health: -10 },
+                    { emoji: '🍭', points: -10, name: 'Sugar Candy', slice: '🚫', type: 'sugar', health: -8 },
+                    { emoji: '🍰', points: -25, name: 'Sugar Cake', slice: '⚠️', type: 'sugar', health: -12 },
+                    { emoji: '🧁', points: -18, name: 'Sugar Cupcake', slice: '❌', type: 'sugar', health: -10 }
+                ];
+                
+                this.messages = [
+                    "Great catch! Keep it up! 🌟",
+                    "Perfect timing! 🎯",
+                    "Your kabob is looking delicious! 🤤",
+                    "The farmer is proud! 👨‍🌾",
+                    "Amazing reflexes! ⚡",
+                    "Stack those healthy fruits! 💪"
+                ];
+                
+                this.initializeGame();
+            }
+
+            initializeGame() {
+                this.bindEvents();
+                this.updateDisplay();
+            }
+
+            bindEvents() {
+                document.getElementById('startBtn').addEventListener('click', () => this.startGame());
+                document.getElementById('pauseBtn').addEventListener('click', () => this.togglePause());
+                document.getElementById('restartBtn').addEventListener('click', () => this.restartGame());
+                document.getElementById('clearBtn').addEventListener('click', () => this.clearKabob());
+                
+                // Arrow key controls
+                document.addEventListener('keydown', (e) => this.handleKeyDown(e));
+                document.addEventListener('keyup', (e) => this.handleKeyUp(e));
+            }
+
+            handleKeyDown(event) {
+                if (!this.gameActive || this.isPaused) return;
+                
+                switch(event.key) {
+                    case 'ArrowLeft':
+                        this.keys.left = true;
+                        event.preventDefault();
+                        break;
+                    case 'ArrowRight':
+                        this.keys.right = true;
+                        event.preventDefault();
+                        break;
+                }
+            }
+
+            handleKeyUp(event) {
+                switch(event.key) {
+                    case 'ArrowLeft':
+                        this.keys.left = false;
+                        event.preventDefault();
+                        break;
+                    case 'ArrowRight':
+                        this.keys.right = false;
+                        event.preventDefault();
+                        break;
+                }
+            }
+
+            startGame() {
+                if (this.gameActive && !this.isPaused) return;
+                
+                this.gameActive = true;
+                this.isPaused = false;
+                
+                document.getElementById('startBtn').disabled = true;
+                document.getElementById('pauseBtn').disabled = false;
+                
+                this.showMessage("Game started! Catch those sliding fruits! 🏃‍♂️💨");
+                
+                this.startSpawning();
+                this.gameLoop = setInterval(() => this.updateGame(), 50);
+            }
+
+            togglePause() {
+                if (!this.gameActive) return;
+                
+                this.isPaused = !this.isPaused;
+                const pauseBtn = document.getElementById('pauseBtn');
+                
+                if (this.isPaused) {
+                    pauseBtn.textContent = '▶️ Resume';
+                    this.showMessage("Game paused. Click Resume to continue! ⏸️");
+                } else {
+                    pauseBtn.textContent = '⏸️ Pause';
+                    this.showMessage("Game resumed! Keep catching! 🏃‍♂️");
+                }
+            }
+
+            restartGame() {
+                this.stopGame();
+                this.score = 0;
+                this.fruitCount = 0;
+                this.lives = 3;
+                this.health = 100;
+                this.speed = 1;
+                this.level = 1;
+                this.kabobPosition = 50;
+                this.keys = { left: false, right: false };
+                this.currentKabob = [];
+                this.completedKabobs = [];
+                this.clearAllFruits();
+                document.getElementById('kabobStack').innerHTML = '';
+                document.getElementById('kabobDisplayArea').innerHTML = '';
+                
+                // Reset kabob and catch zone positions
+                document.getElementById('kabobDisplay').style.left = '50%';
+                document.getElementById('catchZone').style.left = '50%';
+                
+                this.updateDisplay();
+                this.showMessage("Ready for a new kabob adventure! Watch your health! 🌟");
+                
+                document.getElementById('startBtn').disabled = false;
+                document.getElementById('pauseBtn').disabled = true;
+            }
+
+            stopGame() {
+                this.gameActive = false;
+                this.isPaused = false;
+                
+                if (this.gameLoop) {
+                    clearInterval(this.gameLoop);
+                    this.gameLoop = null;
+                }
+                
+                if (this.spawnTimer) {
+                    clearInterval(this.spawnTimer);
+                    this.spawnTimer = null;
+                }
+                
+                document.getElementById('startBtn').disabled = false;
+                document.getElementById('pauseBtn').disabled = true;
+            }
+
+            startSpawning() {
+                const spawnRate = Math.max(1000 - (this.speed * 100), 300);
+                this.spawnTimer = setInterval(() => {
+                    if (!this.isPaused && this.gameActive) {
+                        this.spawnFruit();
+                    }
+                }, spawnRate);
+            }
+
+            spawnFruit() {
+                let item;
+                const rand = Math.random();
+                
+                if (rand < 0.05) {
+                    // 5% chance for super fruit
+                    item = this.superFruits[Math.floor(Math.random() * this.superFruits.length)];
+                } else if (rand < 0.2) {
+                    // 15% chance for harmful item
+                    item = this.harmfulItems[Math.floor(Math.random() * this.harmfulItems.length)];
+                } else {
+                    // 80% chance for regular fruit
+                    item = this.fruits[Math.floor(Math.random() * this.fruits.length)];
+                }
+                
+                const fruitElement = document.createElement('div');
+                fruitElement.className = 'dropping-fruit';
+                
+                // Add special styling for different item types
+                if (item.type === 'super') {
+                    fruitElement.classList.add('super-fruit');
+                } else if (item.type === 'rotten' || item.type === 'sugar') {
+                    fruitElement.classList.add('harmful-item');
+                }
+                
+                fruitElement.textContent = item.emoji;
+                
+                // Random horizontal position
+                const randomX = Math.random() * (document.getElementById('dropZone').offsetWidth - 70);
+                fruitElement.style.left = randomX + 'px';
+                fruitElement.style.top = '-80px';
+                
+                fruitElement.dataset.points = item.points;
+                fruitElement.dataset.name = item.name;
+                fruitElement.dataset.emoji = item.emoji;
+                fruitElement.dataset.type = item.type;
+                fruitElement.dataset.health = item.health;
+                
+                document.getElementById('dropZone').appendChild(fruitElement);
+                this.activeFruits.push({
+                    element: fruitElement,
+                    x: randomX,
+                    y: -80,
+                    caught: false,
+                    ...item
+                });
+            }
+
+            updateGame() {
+                if (this.isPaused || !this.gameActive) return;
+                
+                // Update kabob position based on key presses
+                this.updateKabobPosition();
+                
+                const dropZoneHeight = document.getElementById('dropZone').offsetHeight;
+                const fallSpeed = 1.5 + (this.speed * 0.3); // Slower falling speed
+                
+                this.activeFruits.forEach((fruit, index) => {
+                    if (!fruit.caught) {
+                        fruit.y += fallSpeed;
+                        fruit.element.style.top = fruit.y + 'px';
+                        
+                        // Check for collision with kabob
+                        if (this.checkCollision(fruit)) {
+                            this.catchFruit(index);
+                            return;
+                        }
+                        
+                        // Check if fruit has fallen past the bottom
+                        if (fruit.y > dropZoneHeight + 80) {
+                            this.missFruit(index);
+                        }
+                    }
+                });
+                
+                // Increase speed every 10 fruits
+                const newSpeed = Math.floor(this.fruitCount / 10) + 1;
+                if (newSpeed !== this.speed) {
+                    this.speed = newSpeed;
+                    this.updateDisplay();
+                    this.showMessage(`Speed increased to ${this.speed}! 🚀`);
+                    
+                    // Restart spawning with new speed
+                    if (this.spawnTimer) {
+                        clearInterval(this.spawnTimer);
+                        this.startSpawning();
+                    }
+                }
+            }
+
+            updateKabobPosition() {
+                const moveSpeed = 2;
+                
+                if (this.keys.left && this.kabobPosition > 0) {
+                    this.kabobPosition = Math.max(0, this.kabobPosition - moveSpeed);
+                }
+                if (this.keys.right && this.kabobPosition < 100) {
+                    this.kabobPosition = Math.min(100, this.kabobPosition + moveSpeed);
+                }
+                
+                // Update kabob and catch zone positions
+                const kabobDisplay = document.getElementById('kabobDisplay');
+                const catchZone = document.getElementById('catchZone');
+                
+                kabobDisplay.style.left = this.kabobPosition + '%';
+                catchZone.style.left = this.kabobPosition + '%';
+            }
+
+            checkCollision(fruit) {
+                const gameArea = document.querySelector('.game-area');
+                const gameAreaRect = gameArea.getBoundingClientRect();
+                const dropZoneHeight = document.getElementById('dropZone').offsetHeight;
+                
+                // Check if fruit is at the bottom of the drop zone (near kabob level)
+                const fruitBottomY = fruit.y + 70; // fruit height
+                const kabobTopY = dropZoneHeight - 20; // kabob is 20px from bottom
+                
+                if (fruitBottomY >= kabobTopY && fruitBottomY <= kabobTopY + 40) {
+                    // Check horizontal collision
+                    const gameAreaWidth = gameArea.offsetWidth;
+                    const kabobCenterX = (this.kabobPosition / 100) * gameAreaWidth;
+                    const fruitCenterX = fruit.x + 35; // half fruit width
+                    
+                    const distance = Math.abs(kabobCenterX - fruitCenterX);
+                    return distance < 60; // collision threshold
+                }
+                
+                return false;
+            }
+
+
+
+            catchFruit(fruitIndex) {
+                const item = this.activeFruits[fruitIndex];
+                if (item.caught) return;
+                
+                item.caught = true;
+                item.element.style.transform = 'scale(1.5)';
+                
+                // Handle different item types
+                if (item.type === 'super') {
+                    item.element.style.background = '#FFD700';
+                    this.health = Math.min(this.maxHealth, this.health + item.health);
+                    this.showMessage(`Super Fruit! +${item.health} Health! ✨`);
+                } else if (item.type === 'rotten' || item.type === 'sugar') {
+                    item.element.style.background = '#8B0000';
+                    this.health = Math.max(0, this.health + item.health); // item.health is negative
+                    this.showMessage(`${item.name}! ${item.health} Health! 💀`);
+                    
+                    // Check for game over due to health
+                    if (this.health <= 0) {
+                        setTimeout(() => {
+                            this.gameOver();
+                        }, 500);
+                    }
+                } else {
+                    item.element.style.background = '#4CAF50';
+                }
+                
+                setTimeout(() => {
+                    item.element.remove();
+                }, 300);
+                
+                // Only add to kabob if it's a fruit (not harmful items)
+                if (item.type === 'fruit' || item.type === 'super') {
+                    this.currentKabob.push(item);
+                    
+                    // Create stacked fruit slice element
+                    const stackedFruit = document.createElement('div');
+                    stackedFruit.className = 'stacked-fruit';
+                    stackedFruit.textContent = item.slice; // Use slice emoji
+                    
+                    document.getElementById('kabobStack').appendChild(stackedFruit);
+                    
+                    // Check if kabob is complete
+                    if (this.currentKabob.length >= this.maxSlicesPerKabob) {
+                        this.completeKabob();
+                    }
+                }
+                
+                this.score += item.points;
+                this.fruitCount++;
+                
+                this.updateDisplay();
+                
+                // Remove from active fruits
+                this.activeFruits.splice(fruitIndex, 1);
+            }
+            
+            completeKabob() {
+                // Add completed kabob to collection
+                this.completedKabobs.push([...this.currentKabob]);
+                
+                // Display completed kabob
+                this.displayCompletedKabob(this.currentKabob);
+                
+                // Clear current kabob
+                this.currentKabob = [];
+                document.getElementById('kabobStack').innerHTML = '';
+                
+                // Check for level completion
+                if (this.completedKabobs.length >= this.kalobsNeededForLevel) {
+                    this.completeLevel();
+                } else {
+                    this.showMessage(`Kabob complete! ${this.kalobsNeededForLevel - this.completedKabobs.length} more needed for next level! 🎉`);
+                }
+                
+                this.updateDisplay();
+            }
+            
+            displayCompletedKabob(kabob) {
+                const miniKabob = document.createElement('div');
+                miniKabob.className = 'mini-kabob';
+                
+                kabob.forEach(fruit => {
+                    const slice = document.createElement('div');
+                    slice.className = 'mini-kabob-slice';
+                    slice.textContent = fruit.slice;
+                    miniKabob.appendChild(slice);
+                });
+                
+                document.getElementById('kabobDisplayArea').appendChild(miniKabob);
+            }
+            
+            completeLevel() {
+                this.level++;
+                this.completedKabobs = [];
+                this.speed = Math.min(5, this.speed + 0.5);
+                document.getElementById('kabobDisplayArea').innerHTML = '';
+                
+                this.showMessage(`🎉 LEVEL ${this.level} COMPLETE! 🎉 Speed increased!`);
+                
+                // Restart spawning with new speed
+                if (this.spawnTimer) {
+                    clearInterval(this.spawnTimer);
+                    this.startSpawning();
+                }
+                
+                this.updateDisplay();
+            }
+
+            missFruit(fruitIndex) {
+                const fruit = this.activeFruits[fruitIndex];
+                fruit.element.remove();
+                this.activeFruits.splice(fruitIndex, 1);
+                
+                this.lives--;
+                this.updateDisplay();
+                
+                if (this.lives <= 0) {
+                    this.gameOver();
+                } else {
+                    this.showMessage(`Missed! ${this.lives} lives left! 💔`);
+                }
+            }
+
+            gameOver() {
+                this.stopGame();
+                this.clearAllFruits();
+                
+                const gameOverDiv = document.createElement('div');
+                gameOverDiv.className = 'game-over';
+                gameOverDiv.innerHTML = `
+                    <h2 style="color: #F44336; margin-bottom: 15px;">🎮 Game Over! 🎮</h2>
+                    <p style="font-size: 1.2em; margin-bottom: 10px;">Final Score: <strong>${this.score}</strong></p>
+                    <p style="margin-bottom: 15px;">Fruits Stacked: <strong>${this.fruitCount}</strong></p>
+                    <p style="color: #2E7D32;">Great job creating your kabob! 🍢</p>
+                    <button class="btn" onclick="this.parentElement.remove(); game.restartGame()" style="margin-top: 15px;">
+                        🔄 Play Again
+                    </button>
+                `;
+                
+                document.querySelector('.game-area').appendChild(gameOverDiv);
+                this.showMessage("Game Over! Click Play Again for another round! 🔄");
+            }
+
+            clearKabob() {
+                this.currentKabob = [];
+                document.getElementById('kabobStack').innerHTML = '';
+                this.showMessage("Current kabob cleared! Continue catching slices! 🆕");
+                this.updateDisplay();
+            }
+
+            clearAllFruits() {
+                this.activeFruits.forEach(fruit => {
+                    if (fruit.element && fruit.element.parentNode) {
+                        fruit.element.remove();
+                    }
+                });
+                this.activeFruits = [];
+            }
+
+            updateDisplay() {
+                try {
+                    document.getElementById('score').textContent = this.score;
+                    document.getElementById('level').textContent = this.level;
+                    document.getElementById('kabobProgress').textContent = `${this.currentKabob.length}/${this.maxSlicesPerKabob}`;
+                    document.getElementById('completedCount').textContent = `${this.completedKabobs.length}/${this.kalobsNeededForLevel}`;
+                    document.getElementById('lives').textContent = this.lives;
+                    
+                    // Update health bar
+                    document.getElementById('healthText').textContent = `${this.health}/${this.maxHealth}`;
+                    const healthPercentage = (this.health / this.maxHealth) * 100;
+                    const healthFill = document.getElementById('healthFill');
+                    healthFill.style.width = healthPercentage + '%';
+                    
+                    // Update health bar color based on health level
+                    healthFill.classList.remove('low', 'critical');
+                    if (this.health <= 20) {
+                        healthFill.classList.add('critical');
+                    } else if (this.health <= 50) {
+                        healthFill.classList.add('low');
+                    }
+                } catch (error) {
+                    console.error('Error updating display:', error);
+                }
+            }
+
+            showMessage(message) {
+                try {
+                    const messageElement = document.getElementById('message');
+                    if (messageElement) {
+                        messageElement.textContent = message;
+                        messageElement.style.animation = 'none';
+                        setTimeout(() => {
+                            messageElement.style.animation = 'rainbow 2s ease-in-out';
+                        }, 10);
+                    }
+                } catch (error) {
+                    console.error('Error showing message:', error);
+                }
+            }
+
+            getRandomMessage() {
+                return this.messages[Math.floor(Math.random() * this.messages.length)];
+            }
+
+            showCelebration() {
+                const celebration = document.createElement('div');
+                celebration.className = 'celebration';
+                celebration.textContent = '🎉✨🎊';
+                document.querySelector('.game-area').appendChild(celebration);
+                
+                setTimeout(() => {
+                    celebration.remove();
+                }, 2000);
+            }
+        }
+
+        // Global game instance
+        let game;
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            game = new FruitKabobSlider();
+        });
+    </script>
+</body>
+</html>

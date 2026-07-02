@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sugar Monster Defense - Jungle Star Games</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow: hidden;
+            height: 100%;
+            position: fixed;
+            width: 100%;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #87CEEB 0%, #E6E6FA 50%, #FFB6C1 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .game-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            max-width: 900px;
+            width: 95%;
+            max-height: 95vh;
+            text-align: center;
+            border: 4px solid #FF69B4;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .title {
+            color: #8B0000;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #FF69B4, #FF1493, #DC143C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #8B0000;
+            font-size: 1.2em;
+            font-style: italic;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .stat-display {
+            background: #FFB6C1;
+            color: #8B0000;
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: 2px solid #FF69B4;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .health-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 140px;
+        }
+        
+        .health-bar {
+            width: 60px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #8B0000;
+        }
+        
+        .health-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff4444 0%, #ffaa00 50%, #44ff44 100%);
+            transition: width 0.3s ease;
+            border-radius: 3px;
+            width: 100%;
+        }
+        
+        #health-text {
+            font-size: 0.9em;
+            min-width: 25px;
+            text-align: center;
+        }
+
+        .game-area {
+            background: linear-gradient(180deg, #E6E6FA 0%, #F0F8FF 100%);
+            border-radius: 15px;
+            border: 3px solid #FF69B4;
+            width: 800px;
+            height: 600px;
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .pomegranate {
+            position: absolute;
+            bottom: 20px;
+            width: 60px;
+            height: 60px;
+            font-size: 3em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: left 0.1s ease;
+            z-index: 10;
+        }
+
+        .sugar-monster {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+
+        .cotton-candy-cloud {
+            position: absolute;
+            top: 20px;
+            width: 80px;
+            height: 50px;
+            font-size: 3em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .seed {
+            position: absolute;
+            width: 8px;
+            height: 12px;
+            background: #8B4513;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            z-index: 8;
+        }
+
+        .explosion {
+            position: absolute;
+            font-size: 2em;
+            animation: explode 0.5s ease-out;
+            z-index: 15;
+        }
+
+        @keyframes explode {
+            0% { transform: scale(0.5); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #FF69B4, #FF1493);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #FF1493, #DC143C);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            color: #8B0000;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-top: 15px;
+            min-height: 25px;
+        }
+
+        .instructions {
+            background: #FFF0F5;
+            border: 2px solid #FF69B4;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #8B0000;
+            font-weight: bold;
+        }
+
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            border: 4px solid #FF1493;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+        }
+
+        @media (max-width: 768px) {
+            .game-area {
+                width: 100%;
+                height: 500px;
+            }
+            
+            .title {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1 class="title">🍭 Sugar Monster Defense 🍭</h1>
+            <p class="subtitle">Pomegranate vs Cotton Candy Invasion!</p>
+        </div>
+
+        <div class="instructions">
+            🎯 Use arrow keys to move! Press SPACE or LEFT-CLICK to shoot seeds at sugar monsters! 🎯
+        </div>
+
+        <div class="game-stats">
+            <div class="stat-display">Score: <span id="score">0</span></div>
+            <div class="stat-display">Lives: <span id="lives">3</span></div>
+            <div class="stat-display health-bar-container">
+                Health: 
+                <div class="health-bar">
+                    <div class="health-fill" id="health-fill"></div>
+                </div>
+                <span id="health-text">100</span>
+            </div>
+            <div class="stat-display">Wave: <span id="wave">1</span></div>
+            <div class="stat-display">Monsters: <span id="monstersLeft">15</span></div>
+        </div>
+
+        <div class="game-area" id="gameArea">
+            <div class="pomegranate" id="pomegranate">🍎</div>
+            <!-- Cotton candy clouds will be spawned here -->
+            <!-- Sugar monsters will be spawned here -->
+            <!-- Seeds will be spawned here -->
+        </div>
+
+        <div class="controls">
+            <button class="btn" id="startBtn">▶️ Start Game</button>
+            <button class="btn" id="pauseBtn" disabled>⏸️ Pause</button>
+            <button class="btn" id="restartBtn">🔄 Restart</button>
+            <button class="btn" onclick="window.location.href='index.html'">🏠 Home</button>
+        </div>
+
+        <div class="message" id="message">Click Start Game to defend against the sugar monsters! 🍎</div>
+    </div>
+
+    <script>
+        class SugarMonsterDefense {
+            constructor() {
+                this.score = 0;
+                this.lives = 3;
+                this.maxHealth = 100;
+                this.currentHealth = 100;
+                this.wave = 1;
+                this.gameActive = false;
+                this.isPaused = false;
+                this.pomegranatePosition = 370; // Center of 800px width
+                this.sugarMonsters = [];
+                this.seeds = [];
+                this.cottonCandyClouds = [];
+                this.gameLoop = null;
+                this.spawnTimer = null;
+                this.monstersInWave = 15;
+                this.monstersSpawned = 0;
+                this.baseMonsterSpeed = 3;
+                this.currentMonsterSpeed = 3;
+                this.baseSpawnRate = 2000;
+                this.currentSpawnRate = 2000;
+                this.keys = { left: false, right: false, space: false };
+                
+                this.initializeGame();
+            }
+
+            initializeGame() {
+                this.bindEvents();
+                this.updateDisplay();
+                this.createCottonCandyClouds();
+            }
+
+            bindEvents() {
+                document.getElementById('startBtn').addEventListener('click', () => this.startGame());
+                document.getElementById('pauseBtn').addEventListener('click', () => this.togglePause());
+                document.getElementById('restartBtn').addEventListener('click', () => this.restartGame());
+                
+                // Keyboard controls
+                document.addEventListener('keydown', (e) => this.handleKeyDown(e));
+                document.addEventListener('keyup', (e) => this.handleKeyUp(e));
+                
+                // Mouse controls
+                document.getElementById('gameArea').addEventListener('click', () => this.shoot());
+            }
+
+            handleKeyDown(event) {
+                if (!this.gameActive || this.isPaused) return;
+                
+                switch(event.key) {
+                    case 'ArrowLeft':
+                        this.keys.left = true;
+                        event.preventDefault();
+                        break;
+                    case 'ArrowRight':
+                        this.keys.right = true;
+                        event.preventDefault();
+                        break;
+                    case ' ':
+                        this.keys.space = true;
+                        this.shoot();
+                        event.preventDefault();
+                        break;
+                }
+            }
+
+            handleKeyUp(event) {
+                switch(event.key) {
+                    case 'ArrowLeft':
+                        this.keys.left = false;
+                        event.preventDefault();
+                        break;
+                    case 'ArrowRight':
+                        this.keys.right = false;
+                        event.preventDefault();
+                        break;
+                    case ' ':
+                        this.keys.space = false;
+                        event.preventDefault();
+                        break;
+                }
+            }
+
+            startGame() {
+                if (this.gameActive && !this.isPaused) return;
+                
+                this.gameActive = true;
+                this.isPaused = false;
+                this.maxHealth = 100;
+                this.currentHealth = 100;
+                
+                document.getElementById('startBtn').disabled = true;
+                document.getElementById('pauseBtn').disabled = false;
+                
+                this.showMessage("Defend against the sugar monsters! 🍎💪");
+                
+                this.startSpawning();
+                this.gameLoop = setInterval(() => this.updateGame(), 50);
+            }
+
+            togglePause() {
+                if (!this.gameActive) return;
+                
+                this.isPaused = !this.isPaused;
+                const pauseBtn = document.getElementById('pauseBtn');
+                
+                if (this.isPaused) {
+                    pauseBtn.textContent = '▶️ Resume';
+                    this.showMessage("Game paused. Click Resume to continue! ⏸️");
+                } else {
+                    pauseBtn.textContent = '⏸️ Pause';
+                    this.showMessage("Game resumed! Keep defending! 🍎");
+                }
+            }
+
+            restartGame() {
+                this.stopGame();
+                this.score = 0;
+                this.lives = 3;
+                this.maxHealth = 100;
+                this.currentHealth = 100;
+                this.wave = 1;
+                this.pomegranatePosition = 370;
+                this.monstersInWave = 15;
+                this.monstersSpawned = 0;
+                this.baseMonsterSpeed = 3;
+                this.currentMonsterSpeed = 3;
+                this.baseSpawnRate = 2000;
+                this.currentSpawnRate = 2000;
+                this.keys = { left: false, right: false, space: false };
+                this.clearAllEntities();
+                this.createCottonCandyClouds();
+                this.updateDisplay();
+                this.showMessage("Ready to defend again! Click Start! 🌟");
+                
+                document.getElementById('startBtn').disabled = false;
+                document.getElementById('pauseBtn').disabled = true;
+            }
+
+            stopGame() {
+                this.gameActive = false;
+                this.isPaused = false;
+                
+                if (this.gameLoop) {
+                    clearInterval(this.gameLoop);
+                    this.gameLoop = null;
+                }
+                
+                if (this.spawnTimer) {
+                    clearInterval(this.spawnTimer);
+                    this.spawnTimer = null;
+                }
+                
+                document.getElementById('startBtn').disabled = false;
+                document.getElementById('pauseBtn').disabled = true;
+            }
+
+            createCottonCandyClouds() {
+                const gameArea = document.getElementById('gameArea');
+                const numClouds = 5;
+                
+                for (let i = 0; i < numClouds; i++) {
+                    const cloud = document.createElement('div');
+                    cloud.className = 'cotton-candy-cloud';
+                    cloud.textContent = '☁️';
+                    cloud.style.left = (i * 150 + 50) + 'px';
+                    cloud.style.animationDelay = (i * 0.5) + 's';
+                    gameArea.appendChild(cloud);
+                    this.cottonCandyClouds.push({
+                        element: cloud,
+                        x: i * 150 + 50,
+                        lastSpawn: 0
+                    });
+                }
+            }
+
+            startSpawning() {
+                this.updateWaveParameters();
+                this.spawnTimer = setInterval(() => {
+                    if (!this.isPaused && this.gameActive && this.monstersSpawned < this.monstersInWave) {
+                        this.spawnSugarMonster();
+                    }
+                }, this.currentSpawnRate);
+            }
+
+            updateWaveParameters() {
+                // Increase monster speed by 0.4 each wave, capped at 4.0
+                this.currentMonsterSpeed = Math.min(this.baseMonsterSpeed + (this.wave - 1) * 0.4, 4.0);
+                
+                // Decrease spawn rate by 150ms each wave, minimum 600ms
+                this.currentSpawnRate = Math.max(this.baseSpawnRate - (this.wave - 1) * 150, 600);
+                
+                // Increase monsters per wave by 3 every 2 waves
+                this.monstersInWave = 15 + Math.floor((this.wave - 1) / 2) * 3;
+            }
+
+            spawnSugarMonster() {
+                if (this.monstersSpawned >= this.monstersInWave) return;
+                
+                const cloudIndex = Math.floor(Math.random() * this.cottonCandyClouds.length);
+                const cloud = this.cottonCandyClouds[cloudIndex];
+                
+                const monster = document.createElement('div');
+                monster.className = 'sugar-monster';
+                monster.textContent = '🍬';
+                monster.style.left = cloud.x + 'px';
+                monster.style.top = '80px';
+                
+                document.getElementById('gameArea').appendChild(monster);
+                this.sugarMonsters.push({
+                    element: monster,
+                    x: cloud.x,
+                    y: 80,
+                    speed: this.currentMonsterSpeed
+                });
+                
+                this.monstersSpawned++;
+                this.updateDisplay();
+            }
+
+            updateGame() {
+                if (this.isPaused || !this.gameActive) return;
+                
+                this.updatePomegranatePosition();
+                this.updateSugarMonsters();
+                this.updateSeeds();
+                this.checkCollisions();
+                this.checkWaveComplete();
+            }
+
+            updatePomegranatePosition() {
+                // Calculate fair move speed: ensure player can cross screen before fastest monster reaches bottom
+                // Monster falls 470px (80 to 550) at max 4.0 speed = 117.5 frames
+                // Player needs to cross 740px in 117.5 frames = 6.3px per frame minimum
+                const moveSpeed = Math.max(8, Math.ceil(740 / (470 / Math.max(this.currentMonsterSpeed, 4.0))));
+                
+                if (this.keys.left && this.pomegranatePosition > 0) {
+                    this.pomegranatePosition = Math.max(0, this.pomegranatePosition - moveSpeed);
+                }
+                if (this.keys.right && this.pomegranatePosition < 740) {
+                    this.pomegranatePosition = Math.min(740, this.pomegranatePosition + moveSpeed);
+                }
+                
+                document.getElementById('pomegranate').style.left = this.pomegranatePosition + 'px';
+            }
+
+            updateSugarMonsters() {
+                this.sugarMonsters.forEach((monster, index) => {
+                    monster.y += monster.speed;
+                    monster.element.style.top = monster.y + 'px';
+                    
+                    // Check if monster reached bottom
+                    if (monster.y > 550) {
+                        this.monsterReachedBottom(index);
+                    }
+                });
+            }
+
+            updateSeeds() {
+                this.seeds.forEach((seed, index) => {
+                    seed.y -= seed.speed;
+                    seed.element.style.top = seed.y + 'px';
+                    
+                    // Remove seeds that go off screen
+                    if (seed.y < 0) {
+                        seed.element.remove();
+                        this.seeds.splice(index, 1);
+                    }
+                });
+            }
+
+            shoot() {
+                if (!this.gameActive || this.isPaused) return;
+                
+                const seed = document.createElement('div');
+                seed.className = 'seed';
+                seed.style.left = (this.pomegranatePosition + 26) + 'px';
+                seed.style.top = '520px';
+                
+                document.getElementById('gameArea').appendChild(seed);
+                this.seeds.push({
+                    element: seed,
+                    x: this.pomegranatePosition + 26,
+                    y: 520,
+                    speed: 8
+                });
+            }
+
+            checkCollisions() {
+                this.seeds.forEach((seed, seedIndex) => {
+                    this.sugarMonsters.forEach((monster, monsterIndex) => {
+                        const dx = seed.x - (monster.x + 20);
+                        const dy = seed.y - (monster.y + 20);
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 25) {
+                            this.destroyMonster(monsterIndex);
+                            this.destroySeed(seedIndex);
+                            this.score += 10 * this.wave;
+                            this.updateDisplay();
+                        }
+                    });
+                });
+            }
+
+            destroyMonster(index) {
+                if (index >= 0 && index < this.sugarMonsters.length) {
+                    const monster = this.sugarMonsters[index];
+                    this.createExplosion(monster.x + 20, monster.y + 20);
+                    monster.element.remove();
+                    this.sugarMonsters.splice(index, 1);
+                }
+            }
+
+            destroySeed(index) {
+                if (index >= 0 && index < this.seeds.length) {
+                    const seed = this.seeds[index];
+                    seed.element.remove();
+                    this.seeds.splice(index, 1);
+                }
+            }
+
+            createExplosion(x, y) {
+                const explosion = document.createElement('div');
+                explosion.className = 'explosion';
+                explosion.textContent = '💥';
+                explosion.style.left = x + 'px';
+                explosion.style.top = y + 'px';
+                
+                document.getElementById('gameArea').appendChild(explosion);
+                
+                setTimeout(() => {
+                    explosion.remove();
+                }, 500);
+            }
+
+            monsterReachedBottom(index) {
+                const monster = this.sugarMonsters[index];
+                monster.element.remove();
+                this.sugarMonsters.splice(index, 1);
+                
+                // Reduce health by 25 points
+                this.currentHealth = Math.max(0, this.currentHealth - 25);
+                
+                // If health reaches 0, lose a life and reset health
+                if (this.currentHealth <= 0) {
+                    this.lives--;
+                    this.currentHealth = this.maxHealth;
+                    
+                    if (this.lives <= 0) {
+                        this.gameOver();
+                        return;
+                    } else {
+                        this.showMessage(`Life lost! ${this.lives} lives remaining! 💔`);
+                    }
+                } else {
+                    this.showMessage(`Health: ${this.currentHealth}/${this.maxHealth} - Monster got through! 💔`);
+                }
+                
+                this.updateDisplay();
+            }
+
+            checkWaveComplete() {
+                if (this.monstersSpawned >= this.monstersInWave && this.sugarMonsters.length === 0) {
+                    this.wave++;
+                    this.monstersSpawned = 0;
+                    
+                    // Show wave completion message with speed info
+                    const speedInfo = this.currentMonsterSpeed > 3 ? " (MAX SPEED!)" : ` (Speed: ${this.currentMonsterSpeed.toFixed(1)}x)`;
+                    this.showMessage(`Wave ${this.wave} incoming!${speedInfo} 🌊`);
+                    this.updateDisplay();
+                    
+                    // Restart spawning for new wave with updated parameters
+                    if (this.spawnTimer) {
+                        clearInterval(this.spawnTimer);
+                        this.startSpawning();
+                    }
+                }
+            }
+
+            gameOver() {
+                this.stopGame();
+                this.clearAllEntities();
+                
+                const gameOverDiv = document.createElement('div');
+                gameOverDiv.className = 'game-over';
+                gameOverDiv.innerHTML = `
+                    <h2 style="color: #FF1493; margin-bottom: 15px;">🎮 Game Over! 🎮</h2>
+                    <p style="font-size: 1.2em; margin-bottom: 10px;">Final Score: <strong>${this.score}</strong></p>
+                    <p style="margin-bottom: 15px;">Wave Reached: <strong>${this.wave}</strong></p>
+                    <p style="margin-bottom: 15px;">Max Speed: <strong>${this.currentMonsterSpeed.toFixed(1)}x</strong></p>
+                    <p style="color: #8B0000;">The sugar monsters overwhelmed your defenses! 🍬</p>
+                    <button class="btn" onclick="this.parentElement.remove(); game.restartGame()" style="margin-top: 15px;">
+                        🔄 Play Again
+                    </button>
+                `;
+                
+                document.getElementById('gameArea').appendChild(gameOverDiv);
+                this.showMessage("Game Over! Click Play Again for another battle! 🔄");
+            }
+
+            clearAllEntities() {
+                this.sugarMonsters.forEach(monster => {
+                    if (monster.element && monster.element.parentNode) {
+                        monster.element.remove();
+                    }
+                });
+                this.sugarMonsters = [];
+                
+                this.seeds.forEach(seed => {
+                    if (seed.element && seed.element.parentNode) {
+                        seed.element.remove();
+                    }
+                });
+                this.seeds = [];
+                
+                this.cottonCandyClouds.forEach(cloud => {
+                    if (cloud.element && cloud.element.parentNode) {
+                        cloud.element.remove();
+                    }
+                });
+                this.cottonCandyClouds = [];
+            }
+
+            updateDisplay() {
+                try {
+                    document.getElementById('score').textContent = this.score;
+                    document.getElementById('lives').textContent = this.lives;
+                    document.getElementById('wave').textContent = this.wave;
+                    document.getElementById('monstersLeft').textContent = Math.max(0, this.monstersInWave - this.monstersSpawned + this.sugarMonsters.length);
+                    
+                    // Update health bar
+                    const healthPercentage = (this.currentHealth / this.maxHealth) * 100;
+                    const healthFill = document.getElementById('health-fill');
+                    const healthText = document.getElementById('health-text');
+                    
+                    if (healthFill) {
+                        healthFill.style.width = healthPercentage + '%';
+                        
+                        // Change color based on health level
+                        if (healthPercentage > 60) {
+                            healthFill.style.background = '#44ff44';
+                        } else if (healthPercentage > 30) {
+                            healthFill.style.background = '#ffaa00';
+                        } else {
+                            healthFill.style.background = '#ff4444';
+                        }
+                    }
+                    
+                    if (healthText) {
+                        healthText.textContent = this.currentHealth;
+                    }
+                } catch (error) {
+                    console.error('Error updating display:', error);
+                }
+            }
+
+            showMessage(message) {
+                try {
+                    const messageElement = document.getElementById('message');
+                    if (messageElement) {
+                        messageElement.textContent = message;
+                    }
+                } catch (error) {
+                    console.error('Error showing message:', error);
+                }
+            }
+        }
+
+        // Global game instance
+        let game;
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            game = new SugarMonsterDefense();
+        });
+    </script>
+</body>
+</html>

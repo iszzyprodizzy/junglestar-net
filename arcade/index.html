@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jungle Star Games - Adventure Awaits!</title>
+    <script src="shared-systems.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #1a5f1a 0%, #2d8f2d 25%, #4CAF50 50%, #66BB6A 75%, #81C784 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: #FFD700;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 0;
+        }
+
+        .logo {
+            font-size: 4em;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FF6347, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbow-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes rainbow-glow {
+            0%, 100% { filter: hue-rotate(0deg) drop-shadow(0 0 20px rgba(255, 215, 0, 0.8)); }
+            25% { filter: hue-rotate(90deg) drop-shadow(0 0 20px rgba(255, 165, 0, 0.8)); }
+            50% { filter: hue-rotate(180deg) drop-shadow(0 0 20px rgba(255, 99, 71, 0.8)); }
+            75% { filter: hue-rotate(270deg) drop-shadow(0 0 20px rgba(255, 215, 0, 0.8)); }
+        }
+
+        .tagline {
+            font-size: 1.5em;
+            color: #E8F5E8;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #C8E6C9;
+            font-style: italic;
+        }
+
+        .games-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            color: #2E7D32;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid #4CAF50;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .game-title {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            color: #1B5E20;
+            text-align: center;
+        }
+
+        .game-description {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .game-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature {
+            background: #E8F5E8;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #4CAF50;
+        }
+
+        .feature-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .play-button {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 1.3em;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .play-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(45deg, #45a049, #7CB342);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 50px;
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .footer-text {
+            font-size: 1.1em;
+            color: #C8E6C9;
+            margin-bottom: 10px;
+        }
+
+        .jungle-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .leaf {
+            position: absolute;
+            font-size: 2em;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* Player Profile Styles */
+        .player-profile {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .profile-header h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FF8C00, #FF6347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .stat-label {
+            font-size: 1.1em;
+            color: #E0E0E0;
+            margin-top: 5px;
+        }
+        
+        .profile-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .badges-section, .merch-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .badges-section h3, .merch-section h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #FFD700;
+            font-size: 1.5em;
+        }
+        
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+        
+        .badge-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .badge-item.unlocked {
+            border-color: #FFD700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        .badge-item.locked {
+            opacity: 0.5;
+        }
+        
+        .badge-icon {
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+        
+        .badge-name {
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .badge-rarity {
+            font-size: 0.8em;
+            padding: 2px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+        }
+        
+        .badge-rarity.common {
+            background: #9E9E9E;
+            color: white;
+        }
+        
+        .badge-rarity.rare {
+            background: #2196F3;
+            color: white;
+        }
+        
+        .badge-rarity.epic {
+            background: #9C27B0;
+            color: white;
+        }
+        
+        .badge-rarity.legendary {
+            background: #FF9800;
+            color: white;
+        }
+        
+        .merch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .merch-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .merch-item:hover {
+            transform: translateY(-3px);
+            border-color: #FFD700;
+        }
+        
+        .merch-image {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .merch-name {
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .merch-price {
+            color: #4CAF50;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .merch-button {
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .merch-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+        
+        .profile-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: black;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .profile-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5em;
+            }
+            
+            .tagline {
+                font-size: 1.2em;
+            }
+            
+            .game-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .player-profile {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .profile-header h2 {
+                font-size: 2em;
+            }
+            
+            .profile-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .profile-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .badges-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+            
+            .merch-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+            
+            .profile-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="jungle-elements" id="jungle"></div>
+    
+    <div class="container">
+        <header class="header">
+            <h1 class="logo">🌟 JUNGLE STAR GAMES 🌟</h1>
+            <p class="tagline">Adventure Awaits in Every Game!</p>
+            <p class="subtitle">Where Fun Meets the Wild Side of Gaming</p>
+        </header>
+        
+        <!-- Profile Toggle Button -->
+        <button class="profile-toggle" onclick="toggleProfile()">👤 Profile</button>
+
+        <!-- Player Profile Section -->
+        <section class="player-profile" id="playerProfile" style="display: none;">
+            <div class="profile-header">
+                <h2>🌟 Player Profile 🌟</h2>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <div class="stat-value" id="badgeCount">0</div>
+                        <div class="stat-label">Badges</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="gamesPlayed">0</div>
+                        <div class="stat-label">Games Played</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="merchUnlocked">0</div>
+                        <div class="stat-label">Merch Unlocked</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="profile-content">
+                <div class="badges-section">
+                    <h3>🏆 Recent Badges</h3>
+                    <div class="badges-grid" id="badgesGrid"></div>
+                </div>
+                
+                <div class="merch-section">
+                    <h3>🛍️ Unlocked Merchandise</h3>
+                    <div class="merch-grid" id="merchGrid"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="games-section">
+            <h2 class="section-title">🎮 Jungle Star Games Arcade 🎮</h2>
+            
+            <!-- Original Games -->
+            <div class="game-card">
+                <h3 class="game-title">🍓 Fruit Kabob Slider 🍓</h3>
+                <p class="game-description">
+                    From "The Melodies of a Farmer" Series - Experience the thrill of catching falling fruits 
+                    with your moving kabob! Use arrow keys to navigate and build the most delicious fruit kabob 
+                    while testing your reflexes and timing.
+                </p>
+                
+                <div class="game-features">
+                    <div class="feature">
+                        <div class="feature-icon">🍎</div>
+                        <strong>Fruit Dropping Action</strong><br>
+                        Catch colorful fruits falling from above!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">⬅️➡️</div>
+                        <strong>Arrow Key Controls</strong><br>
+                        Smooth kabob movement with responsive controls!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🎯</div>
+                        <strong>Dynamic Gameplay</strong><br>
+                        Increasing speed and challenging mechanics!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🏆</div>
+                        <strong>Score System</strong><br>
+                        Build high scores and unlock achievements!
+                    </div>
+                </div>
+                
+                <a href="fruit_kabob_game.html" class="play-button">🎮 PLAY NOW! 🎮</a>
+            </div>
+            
+            <div class="game-card">
+                <h3 class="game-title">🍭 Sugar Monster Defense 🍭</h3>
+                <p class="game-description">
+                    Defend as a brave pomegranate! Shoot seeds at sugar monsters dropped by cotton candy clouds. 
+                    Use arrow keys to move and spacebar/click to shoot in this exciting tower defense adventure!
+                </p>
+                
+                <div class="game-features">
+                    <div class="feature">
+                        <div class="feature-icon">🍭</div>
+                        <strong>Monster Defense</strong><br>
+                        Battle against sugar monsters from the sky!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🎯</div>
+                        <strong>Shooting Action</strong><br>
+                        Use spacebar or click to shoot seeds!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">⬅️➡️</div>
+                        <strong>Movement Controls</strong><br>
+                        Navigate with arrow keys for strategic positioning!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🏆</div>
+                        <strong>Defense Strategy</strong><br>
+                        Protect your territory and achieve high scores!
+                    </div>
+                </div>
+                
+                <a href="sugar_monster_defense.html" class="play-button">🎮 PLAY NOW! 🎮</a>
+            </div>
+
+            <!-- New Games -->
+            <div class="game-card">
+                <h3 class="game-title">🥦 Broc Lee Dojo 🥦</h3>
+                <p class="game-description">
+                    Master the art of timing in this rhythm fighter! Hit arrow key combos on beat to build your Green Meter 
+                    and unleash powerful special moves. Channel your inner martial artist!
+                </p>
+                
+                <div class="game-features">
+                    <div class="feature">
+                        <div class="feature-icon">⬅️⬆️⬇️➡️</div>
+                        <strong>Combo System</strong><br>
+                        Master arrow key sequences!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🟢</div>
+                        <strong>Green Meter</strong><br>
+                        Build energy for special attacks!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🎵</div>
+                        <strong>Rhythm Gameplay</strong><br>
+                        Hit combos on the beat!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🥋</div>
+                        <strong>Martial Arts</strong><br>
+                        Become a veggie warrior!
+                    </div>
+                </div>
+                
+                <a href="broc_lee_dojo.html" class="play-button">🎮 PLAY NOW! 🎮</a>
+            </div>
+
+            <div class="game-card">
+                <h3 class="game-title">🌈 Rainbow Smoothie Lab 🌈</h3>
+                <p class="game-description">
+                    Test your memory skills in this colorful pattern game! Watch the fruit sequence, then repeat it back 
+                    under pressure. How many smoothie recipes can you remember?
+                </p>
+                
+                <div class="game-features">
+                    <div class="feature">
+                        <div class="feature-icon">🧠</div>
+                        <strong>Memory Challenge</strong><br>
+                        Remember fruit sequences!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">⏱️</div>
+                        <strong>Time Pressure</strong><br>
+                        Beat the countdown timer!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🍓🥭🍇</div>
+                        <strong>Colorful Fruits</strong><br>
+                        Beautiful smoothie ingredients!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📈</div>
+                        <strong>Progressive Difficulty</strong><br>
+                        Longer sequences each level!
+                    </div>
+                </div>
+                
+                <a href="rainbow_smoothie_lab.html" class="play-button">🎮 PLAY NOW! 🎮</a>
+            </div>
+
+            <div class="game-card">
+                <h3 class="game-title">🍬 Candy Cleanup 🍬</h3>
+                <p class="game-description">
+                    Sort falling treats into the right bins! Drag fruits to the Fruit bin, veggies to Veggie bin, 
+                    and sugary treats to Sugar bin. Quick reflexes and smart sorting required!
+                </p>
+                
+                <div class="game-features">
+                    <div class="feature">
+                        <div class="feature-icon">🗂️</div>
+                        <strong>Sorting Challenge</strong><br>
+                        Categorize falling items!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🖱️</div>
+                        <strong>Drag & Drop</strong><br>
+                        Intuitive mouse controls!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">⚡</div>
+                        <strong>Fast-Paced Action</strong><br>
+                        Quick decisions needed!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🎯</div>
+                        <strong>Accuracy Matters</strong><br>
+                        Sort correctly for points!
+                    </div>
+                </div>
+                
+                <a href="candy_cleanup.html" class="play-button">🎮 PLAY NOW! 🎮</a>
+            </div>
+
+            <div class="game-card">
+                <h3 class="game-title">🍉 Water Malone Warriors 🍉</h3>
+                <p class="game-description">
+                    Slice through obstacles in this endless runner! Jump and slide to dodge junk food enemies 
+                    while collecting healthy power-ups. How far can you run?
+                </p>
+                
+                <div class="game-features">
+                    <div class="feature">
+                        <div class="feature-icon">🏃</div>
+                        <strong>Endless Runner</strong><br>
+                        Non-stop action adventure!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">⬆️⬇️</div>
+                        <strong>Jump & Slide</strong><br>
+                        Dodge obstacles with style!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🚫🍟</div>
+                        <strong>Avoid Junk Food</strong><br>
+                        Stay healthy, avoid the bad stuff!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">💨</div>
+                        <strong>Speed Increases</strong><br>
+                        Faster and more challenging!
+                    </div>
+                </div>
+                
+                <a href="water_malone_warriors.html" class="play-button">🎮 PLAY NOW! 🎮</a>
+            </div>
+
+            <div class="game-card">
+                <h3 class="game-title">🌱 Protect the Garden 🌱</h3>
+                <p class="game-description">
+                    Defend your garden in this 3-lane tower defense! Place veggie turrets strategically to stop 
+                    waves of sugar invaders. Plan your defense and save the harvest!
+                </p>
+                
+                <div class="game-features">
+                    <div class="feature">
+                        <div class="feature-icon">🏰</div>
+                        <strong>Tower Defense</strong><br>
+                        Strategic turret placement!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🥕🌽🥬</div>
+                        <strong>Veggie Turrets</strong><br>
+                        Unique vegetable defenders!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">3️⃣</div>
+                        <strong>3-Lane System</strong><br>
+                        Multiple attack paths!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🌊</div>
+                        <strong>Wave Survival</strong><br>
+                        Increasingly difficult enemies!
+                    </div>
+                </div>
+                
+                <a href="protect_the_garden.html" class="play-button">🎮 PLAY NOW! 🎮</a>
+            </div>
+
+            <div class="game-card">
+                <h3 class="game-title">🔗 Veggie Match-3 🔗</h3>
+                <p class="game-description">
+                    Classic match-3 puzzle with Jungle Star characters! Match vegetables to clear the board 
+                    and unlock powerful character abilities. Strategic matching meets veggie power!
+                </p>
+                
+                <div class="game-features">
+                    <div class="feature">
+                        <div class="feature-icon">🧩</div>
+                        <strong>Match-3 Puzzle</strong><br>
+                        Classic gameplay mechanics!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">⭐</div>
+                        <strong>Character Powers</strong><br>
+                        Jungle Star special abilities!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">💥</div>
+                        <strong>Power-up Combos</strong><br>
+                        Chain reactions and explosions!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🎯</div>
+                        <strong>Strategic Depth</strong><br>
+                        Plan your moves carefully!
+                    </div>
+                </div>
+                
+                <a href="veggie_match3.html" class="play-button">🎮 PLAY NOW! 🎮</a>
+            </div>
+
+            <div class="game-card">
+                <h3 class="game-title">🌰 Seed Slinger 🌰</h3>
+                <p class="game-description">
+                    Top-down arena shooter! Use WASD to move and auto-shoot seeds at waves of sugar enemies. 
+                    Survive the onslaught and become the ultimate seed slinger!
+                </p>
+                
+                <div class="game-features">
+                    <div class="feature">
+                        <div class="feature-icon">🎯</div>
+                        <strong>Auto-Shooting</strong><br>
+                        Focus on movement and strategy!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🕹️</div>
+                        <strong>WASD Controls</strong><br>
+                        Smooth arena movement!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🌊</div>
+                        <strong>Enemy Waves</strong><br>
+                        Survive increasing hordes!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">⚡</div>
+                        <strong>Fast-Paced Action</strong><br>
+                        Non-stop shooting excitement!
+                    </div>
+                </div>
+                
+                <a href="seed_slinger.html" class="play-button">🎮 PLAY NOW! 🎮</a>
+            </div>
+
+            <div class="game-card">
+                <h3 class="game-title">🚜 Farmer's Market Tycoon 🚜</h3>
+                <p class="game-description">
+                    Build your farming empire! Click to harvest, sell produce, upgrade equipment, and hire helpers. 
+                    Watch your farm grow even when you're away with offline earnings!
+                </p>
+                
+                <div class="game-features">
+                    <div class="feature">
+                        <div class="feature-icon">👆</div>
+                        <strong>Idle Clicker</strong><br>
+                        Click to grow your farm!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">⬆️</div>
+                        <strong>Upgrades System</strong><br>
+                        Improve tools and efficiency!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">👥</div>
+                        <strong>NPC Helpers</strong><br>
+                        Hire workers to automate!
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">💰</div>
+                        <strong>Offline Earnings</strong><br>
+                        Progress continues when away!
+                    </div>
+                </div>
+                
+                <a href="farmers_market_tycoon.html" class="play-button">🎮 PLAY NOW! 🎮</a>
+            </div>
+        </section>
+
+        <section class="games-section">
+            <h2 class="section-title">🌟 About Jungle Star Games 🌟</h2>
+            <div class="game-card">
+                <p class="game-description">
+                    Welcome to Jungle Star Games, where we create immersive gaming experiences that blend 
+                    fun, challenge, and creativity. Our games are designed to bring joy and excitement to 
+                    players of all ages, featuring vibrant graphics, engaging gameplay, and memorable characters.
+                </p>
+                <p class="game-description">
+                    From farming adventures to arcade-style challenges, we're committed to delivering 
+                    high-quality entertainment that keeps you coming back for more. Join our gaming jungle 
+                    and discover your next favorite game!
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p class="footer-text">🌟 Jungle Star Games - Making Gaming Wild Since 2024 🌟</p>
+        <p class="footer-text">Adventure • Fun • Excellence</p>
+    </footer>
+
+    <script>
+        // Create animated stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numStars = 50;
+            
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = star.style.height = (Math.random() * 3 + 2) + 'px';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Create floating jungle elements
+        function createJungleElements() {
+            const jungleContainer = document.getElementById('jungle');
+            const elements = ['🍃', '🌿', '🦋', '🌺'];
+            const numElements = 15;
+            
+            for (let i = 0; i < numElements; i++) {
+                const element = document.createElement('div');
+                element.className = 'leaf';
+                element.textContent = elements[Math.floor(Math.random() * elements.length)];
+                element.style.left = Math.random() * 100 + '%';
+                element.style.top = Math.random() * 100 + '%';
+                element.style.animationDelay = Math.random() * 6 + 's';
+                element.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                jungleContainer.appendChild(element);
+            }
+        }
+
+        // Initialize animations
+        window.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            createJungleElements();
+        });
+
+        // Add some interactivity
+        document.addEventListener('mousemove', (e) => {
+            const stars = document.querySelectorAll('.star');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            stars.forEach((star, index) => {
+                const speed = (index % 3 + 1) * 0.5;
+                const x = (mouseX - 0.5) * speed;
+                const y = (mouseY - 0.5) * speed;
+                star.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+        
+        // Initialize Shared Systems
+        let sharedSystems;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            sharedSystems = new JungleStarSharedSystems();
+            updateProfileDisplay();
+        });
+        
+        function toggleProfile() {
+            const profile = document.getElementById('playerProfile');
+            if (profile.style.display === 'none' || profile.style.display === '') {
+                profile.style.display = 'block';
+                updateProfileDisplay();
+            } else {
+                profile.style.display = 'none';
+            }
+        }
+        
+        function updateProfileDisplay() {
+            if (!sharedSystems) return;
+            
+            const playerData = sharedSystems.getPlayerData();
+            
+            // Update stats
+            document.getElementById('badgeCount').textContent = playerData.badges.length;
+            document.getElementById('gamesPlayed').textContent = playerData.gamesPlayed;
+            document.getElementById('merchUnlocked').textContent = playerData.merchUnlocked.length;
+            
+            // Update badges display
+            const badgesGrid = document.getElementById('badgesGrid');
+            badgesGrid.innerHTML = '';
+            
+            const allBadges = sharedSystems.getAllBadges();
+            allBadges.forEach(badge => {
+                const isUnlocked = playerData.badges.includes(badge.id);
+                const badgeElement = document.createElement('div');
+                badgeElement.className = `badge-item ${isUnlocked ? 'unlocked' : 'locked'}`;
+                badgeElement.innerHTML = `
+                    <div class="badge-icon">${badge.icon}</div>
+                    <div class="badge-name">${badge.name}</div>
+                    <div class="badge-rarity ${badge.rarity}">${badge.rarity}</div>
+                `;
+                badgesGrid.appendChild(badgeElement);
+            });
+            
+            // Update merch display
+            const merchGrid = document.getElementById('merchGrid');
+            merchGrid.innerHTML = '';
+            
+            const merchItems = sharedSystems.getMerchItems();
+            merchItems.forEach(item => {
+                const merchElement = document.createElement('div');
+                merchElement.className = 'merch-item';
+                merchElement.innerHTML = `
+                    <div class="merch-image">${item.image}</div>
+                    <div class="merch-name">${item.name}</div>
+                    <div class="merch-price">$${item.price}</div>
+                    <button class="merch-button" onclick="sharedSystems.trackMerchInterest('${item.id}')">
+                        ${playerData.merchUnlocked.includes(item.id) ? 'Unlocked!' : 'Get This!'}
+                    </button>
+                `;
+                merchGrid.appendChild(merchElement);
+            });
+        }
+    </script>
+</body>
+</html>
