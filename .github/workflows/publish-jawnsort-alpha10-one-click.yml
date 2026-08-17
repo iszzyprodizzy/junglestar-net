@@ -1,0 +1,90 @@
+name: Publish JawnSort Alpha10 One Click
+
+on:
+  push:
+    branches:
+      - system/jawnsort-approved-update-feed
+    paths:
+      - .github/workflows/publish-jawnsort-alpha10-one-click.yml
+
+permissions:
+  contents: write
+
+jobs:
+  publish-approved-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: system/jawnsort-approved-update-feed
+
+      - name: Download exact promoted artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location 'https://sdmntprnorthcentralus.oaiusercontent.com/files/00000000-7338-822f-8f87-a69fc19ea78c/raw?se=2026-08-17T11%3A52%3A23Z&sp=r&sv=2026-02-06&sr=b&scid=4da561c7-39a4-558f-8229-a1cf3705b25f&skoid=fae15675-a81a-44b5-9d8c-d8445a7c26a2&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-16T20%3A21%3A39Z&ske=2026-08-17T20%3A21%3A39Z&sks=b&skv=2026-02-06&sig=H%2BEmGqBdkWwqY5S0mdaodlW03Cl/s7xW0Ww/3xyGmeM%3D' -o artifact.zip
+          mkdir artifact
+          unzip -q artifact.zip -d artifact
+          test -f artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.10-one-click-update.1.exe
+
+      - name: Verify exact promoted installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.10-one-click-update.1.exe'
+          actual="$(sha256sum "$installer" | awk '{print $1}')"
+          expected='fe437a4c0c5619b4e611410866d1801a519eb79119958b96f3f2dd2ab0d4b771'
+          test "$actual" = "$expected"
+          echo 'PROMOTED_INSTALLER_HASH=PASS'
+
+      - name: Publish public update asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag='jawnsort-0.1.0-alpha.10-one-click-update.1'
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.10-one-click-update.1.exe'
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$installer" --clobber
+          else
+            gh release create "$tag" "$installer" --title 'JawnSort Pro Update' --notes 'Approved JawnSort Pro interaction correction: one update decision from Founder Home, using the existing verified updater. Alpha9 remains rollback until Founder acceptance.'
+          fi
+
+      - name: Publish approved update feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          payload = {
+              'schema': 'jawnsort-approved-update-feed-v1',
+              'channel': 'approved-windows',
+              'status': 'PROMOTED',
+              'product': 'JawnSort Pro',
+              'version': '0.1.0-alpha.10-one-click-update.1',
+              'candidate_id': 'RELEASE-ONE-CLICK-UPDATE-001',
+              'commit': '99d2f56db1497230098377b0883bdd871097bac4',
+              'installer_sha256': 'fe437a4c0c5619b4e611410866d1801a519eb79119958b96f3f2dd2ab0d4b771',
+              'installer_url': 'https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.10-one-click-update.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.10-one-click-update.1.exe',
+              'promoted_at_utc': datetime.now(timezone.utc).isoformat(),
+              'glitchbot_decision': 'PROMOTE',
+              'promotion_receipt': 'RELEASE_ONE_CLICK_UPDATE_001_PROMOTION_RECEIPT.json',
+              'notes': 'Approved for Founder one-click update acceptance test. Existing updater engine preserved. Alpha9 remains rollback until Founder human acceptance.'
+          }
+          path = Path('jawnsort/approved-windows.json')
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          PY
+          git config user.name 'GlitchBot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add jawnsort/approved-windows.json
+          if git diff --cached --quiet; then
+            echo 'Feed already current.'
+          else
+            git commit -m 'promote(jawnsort): publish one-click update correction'
+            git push origin HEAD:system/jawnsort-approved-update-feed
+          fi
