@@ -1,0 +1,80 @@
+name: Publish JawnSort Creator Harvest 002
+
+on:
+  push:
+    branches:
+      - system/jawnsort-approved-update-feed
+    paths:
+      - .github/workflows/publish-jawnsort-creator-harvest-002.yml
+
+permissions:
+  contents: write
+
+jobs:
+  publish-approved-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: system/jawnsort-approved-update-feed
+      - name: Download exact promoted artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location 'https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-39a0-81f7-8992-47e587e45894/raw?se=2026-08-17T18%3A03%3A18Z&sp=r&sv=2026-02-06&sr=b&scid=3d59be7d-a195-55b0-a666-af049320a327&skoid=c953efd6-2ae8-41b4-a6d6-34b1475ac07c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-17T12%3A32%3A16Z&ske=2026-08-18T12%3A32%3A16Z&sks=b&skv=2026-02-06&sig=C55QkEyXH9ZzlRokSazUpZhVAIvTSKok2tILkQ%2BzQAY%3D' -o artifact.zip
+          mkdir artifact
+          unzip -q artifact.zip -d artifact
+          test -f artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.19-creator-harvest-auto-scan.1.exe
+      - name: Verify exact promoted installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.19-creator-harvest-auto-scan.1.exe'
+          actual="$(sha256sum "$installer" | awk '{print $1}')"
+          expected='d8fe4b02afe98128da6e9c3d3aeac932ffb099f5826169acdf5701257c6b499c'
+          test "$actual" = "$expected"
+      - name: Publish public update asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag='jawnsort-0.1.0-alpha.19-creator-harvest-auto-scan.1'
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.19-creator-harvest-auto-scan.1.exe'
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$installer" --clobber
+          else
+            gh release create "$tag" "$installer" --title 'JawnSort Pro Update' --notes 'Creator Harvest 002: JawnSort automatically presses its existing governed creator scan only for already-approved source locations. No wider machine crawl, no upload, no publish, no original-file changes. Alpha18 remains rollback.'
+          fi
+      - name: Publish approved update feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+          payload = {
+              'schema': 'jawnsort-approved-update-feed-v1',
+              'channel': 'approved-windows',
+              'status': 'PROMOTED',
+              'product': 'JawnSort Pro',
+              'version': '0.1.0-alpha.19-creator-harvest-auto-scan.1',
+              'candidate_id': 'CREATOR-HARVEST-002',
+              'commit': '831230a01b7839ede0689c83f8c09a3bc11bfafe',
+              'installer_sha256': 'd8fe4b02afe98128da6e9c3d3aeac932ffb099f5826169acdf5701257c6b499c',
+              'installer_url': 'https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.19-creator-harvest-auto-scan.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.19-creator-harvest-auto-scan.1.exe',
+              'promoted_at_utc': datetime.now(timezone.utc).isoformat(),
+              'glitchbot_decision': 'PROMOTE',
+              'promotion_receipt': 'CREATOR_HARVEST_002_PROMOTION_RECEIPT.json',
+              'notes': 'Automatic governed discovery from previously approved creator sources. Alpha18 remains rollback; visual review queued nonblocking.'
+          }
+          path = Path('jawnsort/approved-windows.json')
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          PY
+          git config user.name 'GlitchBot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add jawnsort/approved-windows.json
+          git commit -m 'promote(jawnsort): Creator Harvest automatic discovery' || true
+          git push origin HEAD:system/jawnsort-approved-update-feed
