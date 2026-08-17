@@ -3,13 +3,13 @@
   "channel": "approved-windows",
   "status": "PROMOTED",
   "product": "JawnSort Pro",
-  "version": "0.1.0-alpha.16-cargo-yard-desk-clearing.1",
-  "candidate_id": "CARGO-YARD-DESK-CLEARING",
-  "commit": "19740b592dec177e8d62ca5ad52bc24dfbd6d7a6",
-  "installer_sha256": "b597a803ecb787b4366ad750fd33ce2d0da195be297aa5e8b426265ea079631c",
-  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.16-cargo-yard-desk-clearing.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.16-cargo-yard-desk-clearing.1.exe",
-  "promoted_at_utc": "2026-08-17T15:45:51.522166+00:00",
+  "version": "0.1.0-alpha.17-desk-clearing-feedback.1",
+  "candidate_id": "CARGO-YARD-DESK-CLEARING-FEEDBACK",
+  "commit": "31277b3cbdb72f41e54152ff2a9808deee2e81af",
+  "installer_sha256": "ba6d620c6e0bde9253be0ab428e5c41134936b31fe037a77427c584f0eb4ca4e",
+  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.17-desk-clearing-feedback.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.17-desk-clearing-feedback.1.exe",
+  "promoted_at_utc": "2026-08-17T16:41:27.269025+00:00",
   "glitchbot_decision": "PROMOTE",
-  "promotion_receipt": "CARGO_YARD_DESK_CLEARING_PROMOTION_RECEIPT.json",
-  "notes": "Cargo Yard desk-clearing Founder proof target. Cargo Yard is the loading dock, not the warehouse. Alpha 15 remains rollback until one real installed clear/archive recovery proof passes."
+  "promotion_receipt": "CARGO_YARD_DESK_CLEARING_FEEDBACK_PROMOTION_RECEIPT.json",
+  "notes": "Desk-clearing plus immediate update-click feedback Founder proof target. Alpha 15 remains accepted rollback until human proof passes."
 }
