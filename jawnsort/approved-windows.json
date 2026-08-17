@@ -3,13 +3,13 @@
   "channel": "approved-windows",
   "status": "PROMOTED",
   "product": "JawnSort Pro",
-  "version": "0.1.0-alpha.13-cargo-yard-dropbox.1",
-  "candidate_id": "CARGO-YARD-002",
-  "commit": "fe4a102cd3b0498adf59ceede33212e25b211b8a",
-  "installer_sha256": "71fd5f3c5e5030f4866358715c6a48b5b6f8553a089d5b4196cd944798ce15a6",
-  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.13-cargo-yard-dropbox.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.13-cargo-yard-dropbox.1.exe",
-  "promoted_at_utc": "2026-08-17T13:54:00+00:00",
-  "glitchbot_decision": "ROLLBACK_TO_PREVIOUS_PROMOTED",
-  "promotion_receipt": "CARGO_YARD_002_PROMOTION_RECEIPT.json",
-  "notes": "Cargo Yard 002A was removed from the approved feed after Founder human proof found semantic continuity-selection failure. Cargo Yard 002 remains the approved rollback target while 002B is validated. Installed 002A systems are not force-downgraded."
+  "version": "0.1.0-alpha.15-cargo-yard-handoff-selection.1",
+  "candidate_id": "CARGO-YARD-002B",
+  "commit": "d67ad7c92da5a7997bb0be661e52365da053e8d2",
+  "installer_sha256": "74c51e4ca8f508704d68268cf8869f456c5388b27e638ff71a744b76cbb64f2d",
+  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.15-cargo-yard-handoff-selection.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.15-cargo-yard-handoff-selection.1.exe",
+  "promoted_at_utc": "2026-08-17T13:58:01.353503+00:00",
+  "glitchbot_decision": "PROMOTE",
+  "promotion_receipt": "CARGO_YARD_002B_PROMOTION_RECEIPT.json",
+  "notes": "Cargo Yard 002B fresh-chat Founder retest target. Fixes only latest-handoff current-state selection. Cargo Yard 002 remains rollback until human acceptance passes."
 }
