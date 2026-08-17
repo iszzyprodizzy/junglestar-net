@@ -1,0 +1,97 @@
+name: Publish JawnSort Front Door Windows 001
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/publish-jawnsort-front-door-windows-001.yml
+
+permissions:
+  contents: write
+
+env:
+  VERSION: 0.1.0-alpha.22-front-door-windows.1
+  TAG: jawnsort-0.1.0-alpha.22-front-door-windows.1
+  INSTALLER: JawnSort-Pro-Desktop-Windows-0.1.0-alpha.22-front-door-windows.1.exe
+  SHA256: 557bb834bd5034c0a89fb27fd74867969ccdaca2fb56a19b82f251b22a8698b8
+  CANDIDATE_ID: FRONT-DOOR-WINDOWS-001
+  SOURCE_COMMIT: 8e84b244e5cd7d49e8f2199a0db31f9f14acc7de
+  ARTIFACT_TRANSPORT_URL: 'https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-8b10-81f7-a0d7-da86ab08e7d4/raw?se=2026-08-17T21%3A44%3A36Z&sp=r&sv=2026-02-06&sr=b&scid=110f083b-183e-5ed3-8ee4-a900f8d02065&skoid=add8ee7d-5fc7-451e-b06e-a82b2276cf62&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-17T21%3A35%3A20Z&ske=2026-08-18T21%3A35%3A20Z&sks=b&skv=2026-02-06&sig=pZc2t/l/6IR%2BnLBMuBxZ3kyNxthTcEBERQMb7rdjeEI%3D'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Retrieve exact promoted private candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 "$ARTIFACT_TRANSPORT_URL" -o "$RUNNER_TEMP/candidate.zip"
+          mkdir -p "$RUNNER_TEMP/candidate"
+          unzip -q "$RUNNER_TEMP/candidate.zip" -d "$RUNNER_TEMP/candidate"
+          test -f "$RUNNER_TEMP/candidate/$INSTALLER"
+          actual="$(sha256sum "$RUNNER_TEMP/candidate/$INSTALLER" | awk '{print $1}')"
+          test "$actual" = "$SHA256"
+          grep -q 'FRONT_DOOR_WINDOWS_001=AUTOMATED_CANDIDATE_PASS' "$RUNNER_TEMP/candidate/FRONT_DOOR_WINDOWS_001_RECEIPT.txt"
+          grep -q 'GLITCHBOT_DECISION=CANDIDATE' "$RUNNER_TEMP/candidate/FRONT_DOOR_WINDOWS_001_GLITCHBOT_OUTPUT.txt"
+      - name: Publish exact installer release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release delete "$TAG" --yes --cleanup-tag 2>/dev/null || true
+          gh release create "$TAG" "$RUNNER_TEMP/candidate/$INSTALLER" --title 'JawnSort Pro Update' --notes 'Front Door Windows 001: the already-built creator-room front door is now on the Windows product line. Founder Home exposes the creator rooms; GrooveBot and PressForge accept one real local project; engine-room machinery remains behind Deep Street. Alpha19 remains rollback pending the real Founder vertical-slice proof.' --target main
+      - name: Publish approved Windows feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          git switch system/jawnsort-approved-update-feed
+          mkdir -p jawnsort
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          v=os.environ['VERSION']; installer=os.environ['INSTALLER']
+          feed={
+            'schema':'jawnsort-approved-update-feed-v1',
+            'channel':'approved-windows',
+            'status':'PROMOTED',
+            'product':'JawnSort Pro',
+            'version':v,
+            'candidate_id':os.environ['CANDIDATE_ID'],
+            'commit':os.environ['SOURCE_COMMIT'],
+            'installer_sha256':os.environ['SHA256'],
+            'installer_url':f"https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-{v}/{installer}",
+            'promoted_at_utc':datetime.now(timezone.utc).isoformat(),
+            'glitchbot_decision':'PROMOTE',
+            'promotion_receipt':'FRONT_DOOR_WINDOWS_001_PROMOTION_RECEIPT.json',
+            'notes':'Windows Founder Home creator-room proof target. Same Alpha22 front door previously built for Mac, now packaged for Windows. Alpha19 remains rollback pending real Founder acceptance.'
+          }
+          Path('jawnsort/approved-windows.json').write_text(json.dumps(feed,indent=2)+'\n',encoding='utf-8')
+          PY
+          git config user.name 'JawnSort Update Relay'
+          git config user.email 'actions@users.noreply.github.com'
+          git add jawnsort/approved-windows.json
+          git commit -m 'publish(jawnsort): front door Windows 001' || true
+          git push origin HEAD:system/jawnsort-approved-update-feed
+      - name: Verify public release and feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 5 "https://github.com/iszzyprodizzy/junglestar-net/releases/download/$TAG/$INSTALLER" -o "$RUNNER_TEMP/public.exe"
+          actual="$(sha256sum "$RUNNER_TEMP/public.exe" | awk '{print $1}')"
+          test "$actual" = "$SHA256"
+          curl --fail --location --retry 5 "https://raw.githubusercontent.com/iszzyprodizzy/junglestar-net/system/jawnsort-approved-update-feed/jawnsort/approved-windows.json" -o "$RUNNER_TEMP/feed.json"
+          python - <<'PY'
+          import json, os
+          data=json.load(open(os.environ['RUNNER_TEMP']+'/feed.json'))
+          assert data['status']=='PROMOTED'
+          assert data['glitchbot_decision']=='PROMOTE'
+          assert data['version']==os.environ['VERSION']
+          assert data['installer_sha256']==os.environ['SHA256']
+          print('PUBLIC_FRONT_DOOR_WINDOWS_001=PASS')
+          PY
