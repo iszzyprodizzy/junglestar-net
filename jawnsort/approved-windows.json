@@ -3,13 +3,13 @@
   "channel": "approved-windows",
   "status": "PROMOTED",
   "product": "JawnSort Pro",
-  "version": "0.1.0-alpha.15-cargo-yard-handoff-selection.1",
-  "candidate_id": "CARGO-YARD-002B",
-  "commit": "d67ad7c92da5a7997bb0be661e52365da053e8d2",
-  "installer_sha256": "74c51e4ca8f508704d68268cf8869f456c5388b27e638ff71a744b76cbb64f2d",
-  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.15-cargo-yard-handoff-selection.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.15-cargo-yard-handoff-selection.1.exe",
-  "promoted_at_utc": "2026-08-17T13:58:01.353503+00:00",
+  "version": "0.1.0-alpha.16-cargo-yard-desk-clearing.1",
+  "candidate_id": "CARGO-YARD-DESK-CLEARING",
+  "commit": "19740b592dec177e8d62ca5ad52bc24dfbd6d7a6",
+  "installer_sha256": "b597a803ecb787b4366ad750fd33ce2d0da195be297aa5e8b426265ea079631c",
+  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.16-cargo-yard-desk-clearing.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.16-cargo-yard-desk-clearing.1.exe",
+  "promoted_at_utc": "2026-08-17T15:45:51.522166+00:00",
   "glitchbot_decision": "PROMOTE",
-  "promotion_receipt": "CARGO_YARD_002B_PROMOTION_RECEIPT.json",
-  "notes": "Cargo Yard 002B fresh-chat Founder retest target. Fixes only latest-handoff current-state selection. Cargo Yard 002 remains rollback until human acceptance passes."
+  "promotion_receipt": "CARGO_YARD_DESK_CLEARING_PROMOTION_RECEIPT.json",
+  "notes": "Cargo Yard desk-clearing Founder proof target. Cargo Yard is the loading dock, not the warehouse. Alpha 15 remains rollback until one real installed clear/archive recovery proof passes."
 }
