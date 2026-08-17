@@ -1,0 +1,15 @@
+{
+  "schema": "jawnsort-approved-update-feed-v1",
+  "channel": "approved-windows",
+  "status": "PROMOTED",
+  "product": "JawnSort Pro",
+  "version": "0.1.0-alpha.6-memory-recovery.1",
+  "candidate_id": "FOUNDER-MEMORY-RECOVERY-RUN-002",
+  "commit": "25ba7def5c9c8ba238d007952dd84822a18fc518",
+  "installer_sha256": "9cf09307718465c04b041bdaf1be4d5bb8423d4ac393056b29230bbdd03c8e84",
+  "installer_url": null,
+  "promoted_at_utc": "2026-08-17T05:19:13.512034+00:00",
+  "glitchbot_decision": "PROMOTE",
+  "promotion_receipt": "FOUNDER_MEMORY_RECOVERY_RUN_002_PROMOTION_RECEIPT.json",
+  "notes": "Only GlitchBot-promoted builds belong in this feed. installer_url remains null until an approved public binary distribution endpoint exists."
+}
