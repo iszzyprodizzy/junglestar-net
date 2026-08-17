@@ -1,0 +1,90 @@
+name: Publish JawnSort Cargo Yard 002B
+
+on:
+  push:
+    branches:
+      - system/jawnsort-approved-update-feed
+    paths:
+      - .github/workflows/publish-jawnsort-cargo-yard-002b.yml
+
+permissions:
+  contents: write
+
+jobs:
+  publish-approved-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: system/jawnsort-approved-update-feed
+
+      - name: Download exact promoted artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location 'https://sdmntpreastus2.oaiusercontent.com/files/00000000-de4c-81f6-af1f-f7e92735410a/raw?se=2026-08-17T13%3A59%3A42Z&sp=r&sv=2026-02-06&sr=b&scid=afd86f8a-3f2e-560b-bfed-99fd24f5670c&skoid=dd316919-ffbf-4550-9c54-dfc99f412009&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-17T12%3A23%3A19Z&ske=2026-08-18T12%3A23%3A19Z&sks=b&skv=2026-02-06&sig=OalYGKNp9Kn2Q7/Wht%2BsTe5tdshDBL0rcMstJAMt67U%3D' -o artifact.zip
+          mkdir artifact
+          unzip -q artifact.zip -d artifact
+          test -f artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.15-cargo-yard-handoff-selection.1.exe
+
+      - name: Verify exact promoted installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.15-cargo-yard-handoff-selection.1.exe'
+          actual="$(sha256sum "$installer" | awk '{print $1}')"
+          expected='74c51e4ca8f508704d68268cf8869f456c5388b27e638ff71a744b76cbb64f2d'
+          test "$actual" = "$expected"
+          echo 'PROMOTED_INSTALLER_HASH=PASS'
+
+      - name: Publish public update asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag='jawnsort-0.1.0-alpha.15-cargo-yard-handoff-selection.1'
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.15-cargo-yard-handoff-selection.1.exe'
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$installer" --clobber
+          else
+            gh release create "$tag" "$installer" --title 'JawnSort Pro Update' --notes 'Approved Cargo Yard 002B fresh-chat retest target. Fixes semantic selection in LATEST_GPT_HANDOFF after Founder proof caught stale acceptance-test cargo being treated as the current mission. Preserves the Cargo Yard Dropbox, copy/open handoff controls, external fresh ChatGPT action, updater, Work Pad/Gandalf, CUZ, Transfer Tank, and persisted state. No embedded GPT or OpenAI API integration.'
+          fi
+
+      - name: Publish approved update feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          payload = {
+              'schema': 'jawnsort-approved-update-feed-v1',
+              'channel': 'approved-windows',
+              'status': 'PROMOTED',
+              'product': 'JawnSort Pro',
+              'version': '0.1.0-alpha.15-cargo-yard-handoff-selection.1',
+              'candidate_id': 'CARGO-YARD-002B',
+              'commit': 'd67ad7c92da5a7997bb0be661e52365da053e8d2',
+              'installer_sha256': '74c51e4ca8f508704d68268cf8869f456c5388b27e638ff71a744b76cbb64f2d',
+              'installer_url': 'https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.15-cargo-yard-handoff-selection.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.15-cargo-yard-handoff-selection.1.exe',
+              'promoted_at_utc': datetime.now(timezone.utc).isoformat(),
+              'glitchbot_decision': 'PROMOTE',
+              'promotion_receipt': 'CARGO_YARD_002B_PROMOTION_RECEIPT.json',
+              'notes': 'Cargo Yard 002B fresh-chat Founder retest target. Fixes only latest-handoff current-state selection. Cargo Yard 002 remains rollback until human acceptance passes.'
+          }
+          path = Path('jawnsort/approved-windows.json')
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          PY
+          git config user.name 'GlitchBot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add jawnsort/approved-windows.json
+          if git diff --cached --quiet; then
+            echo 'Feed already current.'
+          else
+            git commit -m 'promote(jawnsort): publish Cargo Yard 002B handoff selection fix'
+            git push origin HEAD:system/jawnsort-approved-update-feed
+          fi
