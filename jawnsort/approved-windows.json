@@ -3,13 +3,13 @@
   "channel": "approved-windows",
   "status": "PROMOTED",
   "product": "JawnSort Pro",
-  "version": "0.1.0-alpha.17-desk-clearing-feedback.1",
-  "candidate_id": "CARGO-YARD-DESK-CLEARING-FEEDBACK",
-  "commit": "31277b3cbdb72f41e54152ff2a9808deee2e81af",
-  "installer_sha256": "ba6d620c6e0bde9253be0ab428e5c41134936b31fe037a77427c584f0eb4ca4e",
-  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.17-desk-clearing-feedback.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.17-desk-clearing-feedback.1.exe",
-  "promoted_at_utc": "2026-08-17T16:41:27.269025+00:00",
+  "version": "0.1.0-alpha.18-creator-road-conveyor.1",
+  "candidate_id": "CREATOR-ROAD-CONVEYOR-001",
+  "commit": "f1f46591f9dcc3e4b70f2405d1a54da9fed2f879",
+  "installer_sha256": "71f38239a356f768f28d098cdcac8e50b24c9f2277fa781ac7d6f03dd0567c82",
+  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.18-creator-road-conveyor.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.18-creator-road-conveyor.1.exe",
+  "promoted_at_utc": "2026-08-17T17:17:05.691638+00:00",
   "glitchbot_decision": "PROMOTE",
-  "promotion_receipt": "CARGO_YARD_DESK_CLEARING_FEEDBACK_PROMOTION_RECEIPT.json",
-  "notes": "Desk-clearing plus immediate update-click feedback Founder proof target. Alpha 15 remains accepted rollback until human proof passes."
+  "promotion_receipt": "CREATOR_ROAD_CONVEYOR_001_PROMOTION_RECEIPT.json",
+  "notes": "Creator Road Conveyor 001 governed Windows target. Alpha17 remains rollback. Visual review is queued and non-blocking; external publish and money movement remain Founder-controlled."
 }
