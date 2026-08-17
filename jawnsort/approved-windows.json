@@ -3,13 +3,13 @@
   "channel": "approved-windows",
   "status": "PROMOTED",
   "product": "JawnSort Pro",
-  "version": "0.1.0-alpha.9-max-window.1",
-  "candidate_id": "RELEASE-MAX-WINDOW-001",
-  "commit": "059a6bc55a40706a83020c5e19a4d7a61512e58f",
-  "installer_sha256": "04da42919841fa83ab7336569b5ec5758eed430281222a730a77b0e04246a886",
-  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.9-max-window.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.9-max-window.1.exe",
-  "promoted_at_utc": "2026-08-17T11:32:31.772346+00:00",
+  "version": "0.1.0-alpha.10-one-click-update.1",
+  "candidate_id": "RELEASE-ONE-CLICK-UPDATE-001",
+  "commit": "99d2f56db1497230098377b0883bdd871097bac4",
+  "installer_sha256": "fe437a4c0c5619b4e611410866d1801a519eb79119958b96f3f2dd2ab0d4b771",
+  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.10-one-click-update.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.10-one-click-update.1.exe",
+  "promoted_at_utc": "2026-08-17T11:49:03.384586+00:00",
   "glitchbot_decision": "PROMOTE",
-  "promotion_receipt": "RELEASE_MAX_WINDOW_001_PROMOTION_RECEIPT.json",
-  "notes": "Approved after Founder-authorized maximized-startup test. Alpha8 release UI remains rollback target."
+  "promotion_receipt": "RELEASE_ONE_CLICK_UPDATE_001_PROMOTION_RECEIPT.json",
+  "notes": "Approved for Founder one-click update acceptance test. Existing updater engine preserved. Alpha9 remains rollback until Founder human acceptance."
 }
