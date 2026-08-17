@@ -3,13 +3,13 @@
   "channel": "approved-windows",
   "status": "PROMOTED",
   "product": "JawnSort Pro",
-  "version": "0.1.0-alpha.19-creator-harvest-auto-scan.1",
-  "candidate_id": "CREATOR-HARVEST-002",
-  "commit": "831230a01b7839ede0689c83f8c09a3bc11bfafe",
-  "installer_sha256": "d8fe4b02afe98128da6e9c3d3aeac932ffb099f5826169acdf5701257c6b499c",
-  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.19-creator-harvest-auto-scan.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.19-creator-harvest-auto-scan.1.exe",
-  "promoted_at_utc": "2026-08-17T18:01:50.130061+00:00",
+  "version": "0.1.0-alpha.22-front-door-windows.1",
+  "candidate_id": "FRONT-DOOR-WINDOWS-001",
+  "commit": "8e84b244e5cd7d49e8f2199a0db31f9f14acc7de",
+  "installer_sha256": "557bb834bd5034c0a89fb27fd74867969ccdaca2fb56a19b82f251b22a8698b8",
+  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.22-front-door-windows.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.22-front-door-windows.1.exe",
+  "promoted_at_utc": "2026-08-17T21:42:54.153471+00:00",
   "glitchbot_decision": "PROMOTE",
-  "promotion_receipt": "CREATOR_HARVEST_002_PROMOTION_RECEIPT.json",
-  "notes": "Automatic governed discovery from previously approved creator sources. Alpha18 remains rollback; visual review queued nonblocking."
+  "promotion_receipt": "FRONT_DOOR_WINDOWS_001_PROMOTION_RECEIPT.json",
+  "notes": "Windows Founder Home creator-room proof target. Same Alpha22 front door previously built for Mac, now packaged for Windows. Alpha19 remains rollback pending real Founder acceptance."
 }
