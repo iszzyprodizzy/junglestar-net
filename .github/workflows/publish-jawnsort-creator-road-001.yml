@@ -1,0 +1,89 @@
+name: Publish JawnSort Creator Road Conveyor 001
+
+on:
+  push:
+    branches:
+      - system/jawnsort-approved-update-feed
+    paths:
+      - .github/workflows/publish-jawnsort-creator-road-001.yml
+
+permissions:
+  contents: write
+
+jobs:
+  publish-approved-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: system/jawnsort-approved-update-feed
+
+      - name: Download exact promoted artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location 'https://sdmntprsoutheastus3.oaiusercontent.com/files/00000000-2188-820c-af48-e6829f5c762f/raw?se=2026-08-17T17%3A20%3A22Z&sp=r&sv=2026-02-06&sr=b&scid=c89c1361-a38a-5c2b-96e7-952dd4ef4b5b&skoid=de71a0d5-fb02-4fce-be69-9296aced242b&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-17T11%3A36%3A01Z&ske=2026-08-18T11%3A36%3A01Z&sks=b&skv=2026-02-06&sig=fLmRVt3GDKHXPw%2B2dsXOuPeuqtArrELuyqXwF9QqFXk%3D' -o artifact.zip
+          mkdir artifact
+          unzip -q artifact.zip -d artifact
+          test -f artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.18-creator-road-conveyor.1.exe
+
+      - name: Verify exact promoted installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.18-creator-road-conveyor.1.exe'
+          actual="$(sha256sum "$installer" | awk '{print $1}')"
+          expected='71f38239a356f768f28d098cdcac8e50b24c9f2277fa781ac7d6f03dd0567c82'
+          test "$actual" = "$expected"
+          echo 'PROMOTED_INSTALLER_HASH=PASS'
+
+      - name: Publish public update asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag='jawnsort-0.1.0-alpha.18-creator-road-conveyor.1'
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.18-creator-road-conveyor.1.exe'
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$installer" --clobber
+          else
+            gh release create "$tag" "$installer" --title 'JawnSort Pro Update' --notes 'Approved Creator Road Conveyor 001 target. Adds the Founder-visible Creator Road, real-evidence recovery/sort/project/package lanes, and Founder Visual Review Queue while preserving Cargo Yard, Work Pad/Gandalf, CUZ, Transfer Tank evidence, updater and originals. External publishing and money movement remain off.'
+          fi
+
+      - name: Publish approved update feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+          payload = {
+              'schema': 'jawnsort-approved-update-feed-v1',
+              'channel': 'approved-windows',
+              'status': 'PROMOTED',
+              'product': 'JawnSort Pro',
+              'version': '0.1.0-alpha.18-creator-road-conveyor.1',
+              'candidate_id': 'CREATOR-ROAD-CONVEYOR-001',
+              'commit': 'f1f46591f9dcc3e4b70f2405d1a54da9fed2f879',
+              'installer_sha256': '71f38239a356f768f28d098cdcac8e50b24c9f2277fa781ac7d6f03dd0567c82',
+              'installer_url': 'https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.18-creator-road-conveyor.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.18-creator-road-conveyor.1.exe',
+              'promoted_at_utc': datetime.now(timezone.utc).isoformat(),
+              'glitchbot_decision': 'PROMOTE',
+              'promotion_receipt': 'CREATOR_ROAD_CONVEYOR_001_PROMOTION_RECEIPT.json',
+              'notes': 'Creator Road Conveyor 001 governed Windows target. Alpha17 remains rollback. Visual review is queued and non-blocking; external publish and money movement remain Founder-controlled.'
+          }
+          path = Path('jawnsort/approved-windows.json')
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          PY
+          git config user.name 'GlitchBot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add jawnsort/approved-windows.json
+          if git diff --cached --quiet; then
+            echo 'Feed already current.'
+          else
+            git commit -m 'promote(jawnsort): publish Creator Road Conveyor 001'
+            git push origin HEAD:system/jawnsort-approved-update-feed
+          fi
