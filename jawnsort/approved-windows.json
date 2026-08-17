@@ -3,13 +3,13 @@
   "channel": "approved-windows",
   "status": "PROMOTED",
   "product": "JawnSort Pro",
-  "version": "0.1.0-alpha.6-memory-recovery.1",
-  "candidate_id": "FOUNDER-MEMORY-RECOVERY-RUN-002",
-  "commit": "25ba7def5c9c8ba238d007952dd84822a18fc518",
-  "installer_sha256": "9cf09307718465c04b041bdaf1be4d5bb8423d4ac393056b29230bbdd03c8e84",
-  "installer_url": null,
-  "promoted_at_utc": "2026-08-17T05:19:13.512034+00:00",
+  "version": "0.1.0-alpha.9-max-window.1",
+  "candidate_id": "RELEASE-MAX-WINDOW-001",
+  "commit": "059a6bc55a40706a83020c5e19a4d7a61512e58f",
+  "installer_sha256": "04da42919841fa83ab7336569b5ec5758eed430281222a730a77b0e04246a886",
+  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.9-max-window.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.9-max-window.1.exe",
+  "promoted_at_utc": "2026-08-17T11:32:31.772346+00:00",
   "glitchbot_decision": "PROMOTE",
-  "promotion_receipt": "FOUNDER_MEMORY_RECOVERY_RUN_002_PROMOTION_RECEIPT.json",
-  "notes": "Only GlitchBot-promoted builds belong in this feed. installer_url remains null until an approved public binary distribution endpoint exists."
+  "promotion_receipt": "RELEASE_MAX_WINDOW_001_PROMOTION_RECEIPT.json",
+  "notes": "Approved after Founder-authorized maximized-startup test. Alpha8 release UI remains rollback target."
 }
