@@ -1,0 +1,90 @@
+name: Publish JawnSort Cargo Yard 001
+
+on:
+  push:
+    branches:
+      - system/jawnsort-approved-update-feed
+    paths:
+      - .github/workflows/publish-jawnsort-cargo-yard-001.yml
+
+permissions:
+  contents: write
+
+jobs:
+  publish-approved-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: system/jawnsort-approved-update-feed
+
+      - name: Download exact promoted artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location 'https://sdmntprwestcentralus.oaiusercontent.com/files/00000000-98c8-81fb-add1-8c3db683ad43/raw?se=2026-08-17T12%3A35%3A45Z&sp=r&sv=2026-02-06&sr=b&scid=5b1b02d3-c4cc-5703-b3ae-08a7b49cc17c&skoid=e9d2f8b1-028a-4cff-8eb1-d0e66fbefcca&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-16T20%3A36%3A37Z&ske=2026-08-17T20%3A36%3A37Z&sks=b&skv=2026-02-06&sig=4P7R9eUn3TeaD6SfYBBPjzaA8g3waLrvdJAsIiWqFcU%3D' -o artifact.zip
+          mkdir artifact
+          unzip -q artifact.zip -d artifact
+          test -f artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.12-cargo-yard.1.exe
+
+      - name: Verify exact promoted installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.12-cargo-yard.1.exe'
+          actual="$(sha256sum "$installer" | awk '{print $1}')"
+          expected='ba38a50c9d26b023ef6824cc08b928857fffe3cc07df11a16f49f43ad36fdf08'
+          test "$actual" = "$expected"
+          echo 'PROMOTED_INSTALLER_HASH=PASS'
+
+      - name: Publish public update asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag='jawnsort-0.1.0-alpha.12-cargo-yard.1'
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.12-cargo-yard.1.exe'
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$installer" --clobber
+          else
+            gh release create "$tag" "$installer" --title 'JawnSort Pro Update' --notes 'Approved JawnSort Pro Cargo Yard 001 Founder acceptance target. Adds the Founder-visible Cargo Yard over existing persisted Work Pad, Transfer Tank, CUZ/Chat Archiver, and creator-discovery state. Existing updater engine preserved.'
+          fi
+
+      - name: Publish approved update feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          payload = {
+              'schema': 'jawnsort-approved-update-feed-v1',
+              'channel': 'approved-windows',
+              'status': 'PROMOTED',
+              'product': 'JawnSort Pro',
+              'version': '0.1.0-alpha.12-cargo-yard.1',
+              'candidate_id': 'CARGO-YARD-001',
+              'commit': '641a3a72ebcbb36905fdbbffa67992f1f2fe79b8',
+              'installer_sha256': 'ba38a50c9d26b023ef6824cc08b928857fffe3cc07df11a16f49f43ad36fdf08',
+              'installer_url': 'https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.12-cargo-yard.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.12-cargo-yard.1.exe',
+              'promoted_at_utc': datetime.now(timezone.utc).isoformat(),
+              'glitchbot_decision': 'PROMOTE',
+              'promotion_receipt': 'CARGO_YARD_001_PROMOTION_RECEIPT.json',
+              'notes': 'Cargo Yard 001 Founder-visible acceptance target. Existing updater engine, Work Pad/Gandalf, Transfer Tank, CUZ inventory, and persisted data boundaries preserved. Alpha11 remains rollback until Founder human acceptance.'
+          }
+          path = Path('jawnsort/approved-windows.json')
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          PY
+          git config user.name 'GlitchBot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add jawnsort/approved-windows.json
+          if git diff --cached --quiet; then
+            echo 'Feed already current.'
+          else
+            git commit -m 'promote(jawnsort): publish Cargo Yard acceptance target'
+            git push origin HEAD:system/jawnsort-approved-update-feed
+          fi
