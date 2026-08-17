@@ -1,0 +1,90 @@
+name: Publish JawnSort Desk Clearing + Update Feedback
+
+on:
+  push:
+    branches:
+      - system/jawnsort-approved-update-feed
+    paths:
+      - .github/workflows/publish-jawnsort-desk-clearing-feedback.yml
+
+permissions:
+  contents: write
+
+jobs:
+  publish-approved-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: system/jawnsort-approved-update-feed
+
+      - name: Download exact promoted artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location 'https://sdmntprnorthcentralus.oaiusercontent.com/files/00000000-71a0-822f-a8b4-3e9fc5d274cc/raw?se=2026-08-17T16%3A43%3A49Z&sp=r&sv=2026-02-06&sr=b&scid=0295af0a-8bde-5500-9e2d-d0ad453e83bf&skoid=de71a0d5-fb02-4fce-be69-9296aced242b&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-17T11%3A36%3A04Z&ske=2026-08-18T11%3A36%3A04Z&sks=b&skv=2026-02-06&sig=eJrMHab10kbSVNGcWhfBAs/IAk5dAsNk80jsmlWLqsE%3D' -o artifact.zip
+          mkdir artifact
+          unzip -q artifact.zip -d artifact
+          test -f artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.17-desk-clearing-feedback.1.exe
+
+      - name: Verify exact promoted installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.17-desk-clearing-feedback.1.exe'
+          actual="$(sha256sum "$installer" | awk '{print $1}')"
+          expected='ba6d620c6e0bde9253be0ab428e5c41134936b31fe037a77427c584f0eb4ca4e'
+          test "$actual" = "$expected"
+          echo 'PROMOTED_INSTALLER_HASH=PASS'
+
+      - name: Publish public update asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag='jawnsort-0.1.0-alpha.17-desk-clearing-feedback.1'
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.17-desk-clearing-feedback.1.exe'
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$installer" --clobber
+          else
+            gh release create "$tag" "$installer" --title 'JawnSort Pro Update' --notes 'Approved Founder proof target combining Cargo Yard desk clearing with immediate visual acknowledgement when Update available is clicked. The visible control changes to Updating JawnSort immediately while the existing updater engine remains unchanged. Alpha 15 remains the accepted rollback until human proof passes.'
+          fi
+
+      - name: Publish approved update feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          payload = {
+              'schema': 'jawnsort-approved-update-feed-v1',
+              'channel': 'approved-windows',
+              'status': 'PROMOTED',
+              'product': 'JawnSort Pro',
+              'version': '0.1.0-alpha.17-desk-clearing-feedback.1',
+              'candidate_id': 'CARGO-YARD-DESK-CLEARING-FEEDBACK',
+              'commit': '31277b3cbdb72f41e54152ff2a9808deee2e81af',
+              'installer_sha256': 'ba6d620c6e0bde9253be0ab428e5c41134936b31fe037a77427c584f0eb4ca4e',
+              'installer_url': 'https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.17-desk-clearing-feedback.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.17-desk-clearing-feedback.1.exe',
+              'promoted_at_utc': datetime.now(timezone.utc).isoformat(),
+              'glitchbot_decision': 'PROMOTE',
+              'promotion_receipt': 'CARGO_YARD_DESK_CLEARING_FEEDBACK_PROMOTION_RECEIPT.json',
+              'notes': 'Desk-clearing plus immediate update-click feedback Founder proof target. Alpha 15 remains accepted rollback until human proof passes.'
+          }
+          path = Path('jawnsort/approved-windows.json')
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          PY
+          git config user.name 'GlitchBot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add jawnsort/approved-windows.json
+          if git diff --cached --quiet; then
+            echo 'Feed already current.'
+          else
+            git commit -m 'promote(jawnsort): publish desk-clearing + update feedback target'
+            git push origin HEAD:system/jawnsort-approved-update-feed
+          fi
