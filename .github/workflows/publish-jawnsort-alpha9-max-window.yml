@@ -1,0 +1,90 @@
+name: Publish JawnSort Alpha9 Max Window
+
+on:
+  push:
+    branches:
+      - system/jawnsort-approved-update-feed
+    paths:
+      - .github/workflows/publish-jawnsort-alpha9-max-window.yml
+
+permissions:
+  contents: write
+
+jobs:
+  publish-approved-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: system/jawnsort-approved-update-feed
+
+      - name: Download exact promoted artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location 'https://sdmntprnorthcentralus.oaiusercontent.com/files/00000000-8920-822f-b025-b19c8fe23326/raw?se=2026-08-17T11%3A37%3A03Z&sp=r&sv=2026-02-06&sr=b&scid=a1bfe33e-9b62-5a40-83c2-dba9f1159998&skoid=fae15675-a81a-44b5-9d8c-d8445a7c26a2&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-17T09%3A13%3A11Z&ske=2026-08-18T09%3A13%3A11Z&sks=b&skv=2026-02-06&sig=WvLE6NlS6uXyd8TUKzqBNL/8%2Bz6pnPH4UeBZ6ZL7UnY%3D' -o artifact.zip
+          mkdir artifact
+          unzip -q artifact.zip -d artifact
+          test -f artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.9-max-window.1.exe
+
+      - name: Verify exact promoted installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.9-max-window.1.exe'
+          actual="$(sha256sum "$installer" | awk '{print $1}')"
+          expected='04da42919841fa83ab7336569b5ec5758eed430281222a730a77b0e04246a886'
+          test "$actual" = "$expected"
+          echo 'PROMOTED_INSTALLER_HASH=PASS'
+
+      - name: Publish public update asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag='jawnsort-0.1.0-alpha.9-max-window.1'
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.9-max-window.1.exe'
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$installer" --clobber
+          else
+            gh release create "$tag" "$installer" --title 'JawnSort Pro Update' --notes 'Approved JawnSort Pro update: opens the app maximized while preserving the existing update engine and user state.'
+          fi
+
+      - name: Publish approved update feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          payload = {
+              'schema': 'jawnsort-approved-update-feed-v1',
+              'channel': 'approved-windows',
+              'status': 'PROMOTED',
+              'product': 'JawnSort Pro',
+              'version': '0.1.0-alpha.9-max-window.1',
+              'candidate_id': 'RELEASE-MAX-WINDOW-001',
+              'commit': '059a6bc55a40706a83020c5e19a4d7a61512e58f',
+              'installer_sha256': '04da42919841fa83ab7336569b5ec5758eed430281222a730a77b0e04246a886',
+              'installer_url': 'https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.9-max-window.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.9-max-window.1.exe',
+              'promoted_at_utc': datetime.now(timezone.utc).isoformat(),
+              'glitchbot_decision': 'PROMOTE',
+              'promotion_receipt': 'RELEASE_MAX_WINDOW_001_PROMOTION_RECEIPT.json',
+              'notes': 'Approved after Founder-authorized maximized-startup test. Alpha8 release UI remains rollback target.'
+          }
+          path = Path('jawnsort/approved-windows.json')
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          PY
+          git config user.name 'GlitchBot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add jawnsort/approved-windows.json
+          if git diff --cached --quiet; then
+            echo 'Feed already current.'
+          else
+            git commit -m 'promote(jawnsort): publish maximized startup update'
+            git push origin HEAD:system/jawnsort-approved-update-feed
+          fi
