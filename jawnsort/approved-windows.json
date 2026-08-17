@@ -3,13 +3,13 @@
   "channel": "approved-windows",
   "status": "PROMOTED",
   "product": "JawnSort Pro",
-  "version": "0.1.0-alpha.12-cargo-yard.1",
-  "candidate_id": "CARGO-YARD-001",
-  "commit": "641a3a72ebcbb36905fdbbffa67992f1f2fe79b8",
-  "installer_sha256": "ba38a50c9d26b023ef6824cc08b928857fffe3cc07df11a16f49f43ad36fdf08",
-  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.12-cargo-yard.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.12-cargo-yard.1.exe",
-  "promoted_at_utc": "2026-08-17T12:31:55.495586+00:00",
+  "version": "0.1.0-alpha.13-cargo-yard-dropbox.1",
+  "candidate_id": "CARGO-YARD-002",
+  "commit": "fe4a102cd3b0498adf59ceede33212e25b211b8a",
+  "installer_sha256": "71fd5f3c5e5030f4866358715c6a48b5b6f8553a089d5b4196cd944798ce15a6",
+  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.13-cargo-yard-dropbox.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.13-cargo-yard-dropbox.1.exe",
+  "promoted_at_utc": "2026-08-17T13:12:46.154276+00:00",
   "glitchbot_decision": "PROMOTE",
-  "promotion_receipt": "CARGO_YARD_001_PROMOTION_RECEIPT.json",
-  "notes": "Cargo Yard 001 Founder-visible acceptance target. Existing updater engine, Work Pad/Gandalf, Transfer Tank, CUZ inventory, and persisted data boundaries preserved. Alpha11 remains rollback until Founder human acceptance."
+  "promotion_receipt": "CARGO_YARD_002_PROMOTION_RECEIPT.json",
+  "notes": "Cargo Yard 002 Founder acceptance target. Dropbox reuses existing Work Pad/Gandalf continuity intake. Cargo Yard 001 remains rollback until Founder human acceptance."
 }
