@@ -1,0 +1,90 @@
+name: Publish JawnSort Founder Update UI Law 001
+
+on:
+  push:
+    branches:
+      - system/jawnsort-approved-update-feed
+    paths:
+      - .github/workflows/publish-jawnsort-founder-update-ui-law-001.yml
+
+permissions:
+  contents: write
+
+jobs:
+  publish-approved-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: system/jawnsort-approved-update-feed
+
+      - name: Download exact promoted artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location 'https://sdmntprnorthcentralus.oaiusercontent.com/files/00000000-87dc-822f-b50e-9ca28b03e2f8/raw?se=2026-08-17T12%3A10%3A09Z&sp=r&sv=2026-02-06&sr=b&scid=b831048e-a8b4-573c-a99e-559b0c3cad48&skoid=fae15675-a81a-44b5-9d8c-d8445a7c26a2&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-17T11%3A43%3A15Z&ske=2026-08-18T11%3A43%3A15Z&sks=b&skv=2026-02-06&sig=vnRtu3sMAoXDatM/bl8zVj2nqm/MenAVfzQS657Uvt4%3D' -o artifact.zip
+          mkdir artifact
+          unzip -q artifact.zip -d artifact
+          test -f artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.11-founder-update-ui.1.exe
+
+      - name: Verify exact promoted installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.11-founder-update-ui.1.exe'
+          actual="$(sha256sum "$installer" | awk '{print $1}')"
+          expected='877516edcf003ce15a4752051565ce46c74aa4df6e060d12bda0b501c03f32f1'
+          test "$actual" = "$expected"
+          echo 'PROMOTED_INSTALLER_HASH=PASS'
+
+      - name: Publish public update asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag='jawnsort-0.1.0-alpha.11-founder-update-ui.1'
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.11-founder-update-ui.1.exe'
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$installer" --clobber
+          else
+            gh release create "$tag" "$installer" --title 'JawnSort Pro Update' --notes 'Approved JawnSort Pro update for the Founder Home one-click update acceptance test. Normal successful updating stays on the customer surface; technical details remain diagnostic-only.'
+          fi
+
+      - name: Publish approved update feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          payload = {
+              'schema': 'jawnsort-approved-update-feed-v1',
+              'channel': 'approved-windows',
+              'status': 'PROMOTED',
+              'product': 'JawnSort Pro',
+              'version': '0.1.0-alpha.11-founder-update-ui.1',
+              'candidate_id': 'FOUNDER-UPDATE-UI-LAW-001',
+              'commit': 'ce0a57410a78b74a1fcc6f1b5b9964868d77e4b9',
+              'installer_sha256': '877516edcf003ce15a4752051565ce46c74aa4df6e060d12bda0b501c03f32f1',
+              'installer_url': 'https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.11-founder-update-ui.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.11-founder-update-ui.1.exe',
+              'promoted_at_utc': datetime.now(timezone.utc).isoformat(),
+              'glitchbot_decision': 'PROMOTE',
+              'promotion_receipt': 'FOUNDER_UPDATE_UI_LAW_001_PROMOTION_RECEIPT.json',
+              'notes': 'Founder Home one-click acceptance target. Existing updater engine preserved; Alpha10 remains rollback until Founder human acceptance.'
+          }
+          path = Path('jawnsort/approved-windows.json')
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          PY
+          git config user.name 'GlitchBot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add jawnsort/approved-windows.json
+          if git diff --cached --quiet; then
+            echo 'Feed already current.'
+          else
+            git commit -m 'promote(jawnsort): publish Founder Home update acceptance target'
+            git push origin HEAD:system/jawnsort-approved-update-feed
+          fi
