@@ -1,0 +1,72 @@
+name: Publish JawnSort Alpha25 Startup Fix
+
+on:
+  push:
+    branches: [system/jawnsort-approved-update-feed]
+    paths: [.github/workflows/publish-jawnsort-alpha25-startup-fix.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  publish-approved-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: system/jawnsort-approved-update-feed
+      - name: Download exact promoted artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location 'https://sdmntpreastus2.oaiusercontent.com/files/00000000-c878-81f6-9548-05e178e2458c/raw?se=2026-08-18T01%3A54%3A55Z&sp=r&sv=2026-02-06&sr=b&scid=863549fa-460e-5967-b4e5-180ac6231af8&skoid=dd316919-ffbf-4550-9c54-dfc99f412009&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-17T21%3A41%3A06Z&ske=2026-08-18T21%3A41%3A06Z&sks=b&skv=2026-02-06&sig=6uS9jje8KFGKtR1JVdRm7c9t8umy9PTlbrWkUe%2BUOPc%3D' -o artifact.zip
+          mkdir artifact
+          unzip -q artifact.zip -d artifact
+          test -f artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.25-startup-fix.1.exe
+      - name: Verify exact promoted installer and receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.25-startup-fix.1.exe'
+          actual="$(sha256sum "$installer" | awk '{print $1}')"
+          test "$actual" = '186dad2988f6620c064355f534203d2db6516901c0e5896bbf66753d9a247155'
+          grep -q 'PACKAGED_WINDOWS_WORKSPACE_READY=PASS' artifact/ALPHA24_STARTUP_FIX_RECEIPT.txt
+      - name: Publish public recovery/update asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag='jawnsort-0.1.0-alpha.25-startup-fix.1'
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.25-startup-fix.1.exe'
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$installer" --clobber
+          else
+            gh release create "$tag" "$installer" --title 'JawnSort Pro Startup Repair' --notes 'Alpha25 startup-only repair. Exact packaged Windows windowed runtime proved SERVER_START -> SERVER_READY -> WEBVIEW_START before promotion. Room UX, Transfer Tank, and My Files behavior are unchanged. Alpha23 remains rollback.'
+          fi
+      - name: Publish approved update feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+          payload = {
+              'schema':'jawnsort-approved-update-feed-v1','channel':'approved-windows','status':'PROMOTED','product':'JawnSort Pro',
+              'version':'0.1.0-alpha.25-startup-fix.1','candidate_id':'ALPHA24-STARTUP-REGRESSION-FIX',
+              'commit':'5a0ace19a1d5a3111ccd3cd40509111ced255cfc',
+              'installer_sha256':'186dad2988f6620c064355f534203d2db6516901c0e5896bbf66753d9a247155',
+              'installer_url':'https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.25-startup-fix.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.25-startup-fix.1.exe',
+              'promoted_at_utc':datetime.now(timezone.utc).isoformat(),'glitchbot_decision':'PROMOTE',
+              'promotion_receipt':'ALPHA24_STARTUP_FIX_PROMOTION_RECEIPT.json',
+              'notes':'Startup-only recovery. Exact packaged --windowed runtime passed SERVER_READY and entered WEBVIEW_START. Alpha23 remains rollback; Founder vertical-slice acceptance remains pending.'
+          }
+          path=Path('jawnsort/approved-windows.json'); path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(payload, indent=2)+'\n', encoding='utf-8')
+          PY
+          git config user.name 'GlitchBot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add jawnsort/approved-windows.json
+          git commit -m 'promote(jawnsort): Alpha25 startup repair' || true
+          git push origin HEAD:system/jawnsort-approved-update-feed
