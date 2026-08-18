@@ -3,13 +3,13 @@
   "channel": "approved-windows",
   "status": "PROMOTED",
   "product": "JawnSort Pro",
-  "version": "0.1.0-alpha.23-founder-file-intelligence.1",
-  "candidate_id": "FOUNDER-FILE-INTELLIGENCE-001",
-  "commit": "f7f08a6390ca74209c62f1d23e1d60a15a8e33d0",
-  "installer_sha256": "d2f98ea7a24fe30b3e8d33e43e43340db017b4efbb62cb0a4db646f5f1ac14b4",
-  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.23-founder-file-intelligence.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.23-founder-file-intelligence.1.exe",
-  "promoted_at_utc": "2026-08-18T00:07:11.318980+00:00",
+  "version": "0.1.0-alpha.24-separate-the-rooms.1",
+  "candidate_id": "SEPARATE-THE-ROOMS-001",
+  "commit": "590ed02846f3ddbe26d44e7c951af32ee6c24d8f",
+  "installer_sha256": "4004c419629fefac7028128fe175208358ad4de58c715faba0ee838b9c4617fb",
+  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.24-separate-the-rooms.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.24-separate-the-rooms.1.exe",
+  "promoted_at_utc": "2026-08-18T00:48:35.008775+00:00",
   "glitchbot_decision": "PROMOTE",
-  "promotion_receipt": "FOUNDER_FILE_INTELLIGENCE_001_PROMOTION_RECEIPT.json",
-  "notes": "Windows My Files proof target. One real local source through existing Transfer Tank evidence; Alpha22 remains rollback pending Isaac real-source acceptance."
+  "promotion_receipt": "SEPARATE_THE_ROOMS_001_PROMOTION_RECEIPT.json",
+  "notes": "Room-building proof target. Alpha23 remains rollback pending real Founder Windows room/file acceptance."
 }
