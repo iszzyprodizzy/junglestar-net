@@ -3,13 +3,13 @@
   "channel": "approved-windows",
   "status": "PROMOTED",
   "product": "JawnSort Pro",
-  "version": "0.1.0-alpha.22-front-door-windows.1",
-  "candidate_id": "FRONT-DOOR-WINDOWS-001",
-  "commit": "8e84b244e5cd7d49e8f2199a0db31f9f14acc7de",
-  "installer_sha256": "557bb834bd5034c0a89fb27fd74867969ccdaca2fb56a19b82f251b22a8698b8",
-  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.22-front-door-windows.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.22-front-door-windows.1.exe",
-  "promoted_at_utc": "2026-08-17T21:42:54.153471+00:00",
+  "version": "0.1.0-alpha.23-founder-file-intelligence.1",
+  "candidate_id": "FOUNDER-FILE-INTELLIGENCE-001",
+  "commit": "f7f08a6390ca74209c62f1d23e1d60a15a8e33d0",
+  "installer_sha256": "d2f98ea7a24fe30b3e8d33e43e43340db017b4efbb62cb0a4db646f5f1ac14b4",
+  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.23-founder-file-intelligence.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.23-founder-file-intelligence.1.exe",
+  "promoted_at_utc": "2026-08-18T00:07:11.318980+00:00",
   "glitchbot_decision": "PROMOTE",
-  "promotion_receipt": "FRONT_DOOR_WINDOWS_001_PROMOTION_RECEIPT.json",
-  "notes": "Windows Founder Home creator-room proof target. Same Alpha22 front door previously built for Mac, now packaged for Windows. Alpha19 remains rollback pending real Founder acceptance."
+  "promotion_receipt": "FOUNDER_FILE_INTELLIGENCE_001_PROMOTION_RECEIPT.json",
+  "notes": "Windows My Files proof target. One real local source through existing Transfer Tank evidence; Alpha22 remains rollback pending Isaac real-source acceptance."
 }
