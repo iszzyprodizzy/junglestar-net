@@ -3,13 +3,13 @@
   "channel": "approved-windows",
   "status": "PROMOTED",
   "product": "JawnSort Pro",
-  "version": "0.1.0-alpha.24-separate-the-rooms.1",
-  "candidate_id": "SEPARATE-THE-ROOMS-001",
-  "commit": "590ed02846f3ddbe26d44e7c951af32ee6c24d8f",
-  "installer_sha256": "4004c419629fefac7028128fe175208358ad4de58c715faba0ee838b9c4617fb",
-  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.24-separate-the-rooms.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.24-separate-the-rooms.1.exe",
-  "promoted_at_utc": "2026-08-18T00:48:35.008775+00:00",
+  "version": "0.1.0-alpha.25-startup-fix.1",
+  "candidate_id": "ALPHA24-STARTUP-REGRESSION-FIX",
+  "commit": "5a0ace19a1d5a3111ccd3cd40509111ced255cfc",
+  "installer_sha256": "186dad2988f6620c064355f534203d2db6516901c0e5896bbf66753d9a247155",
+  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.25-startup-fix.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.25-startup-fix.1.exe",
+  "promoted_at_utc": "2026-08-18T01:50:26.360875+00:00",
   "glitchbot_decision": "PROMOTE",
-  "promotion_receipt": "SEPARATE_THE_ROOMS_001_PROMOTION_RECEIPT.json",
-  "notes": "Room-building proof target. Alpha23 remains rollback pending real Founder Windows room/file acceptance."
+  "promotion_receipt": "ALPHA24_STARTUP_FIX_PROMOTION_RECEIPT.json",
+  "notes": "Startup-only recovery. Exact packaged --windowed runtime passed SERVER_READY and entered WEBVIEW_START. Alpha23 remains rollback; Founder vertical-slice acceptance remains pending."
 }
