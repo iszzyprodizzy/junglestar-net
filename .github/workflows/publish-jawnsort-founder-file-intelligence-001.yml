@@ -1,0 +1,80 @@
+name: Publish JawnSort Founder File Intelligence 001
+
+on:
+  push:
+    branches: [system/jawnsort-approved-update-feed]
+    paths: [.github/workflows/publish-jawnsort-founder-file-intelligence-001.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  publish-approved-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: system/jawnsort-approved-update-feed
+      - name: Download exact promoted artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location 'https://sdmntprwestcentralus.oaiusercontent.com/files/00000000-8cfc-81fb-b7e1-aefa4ddc9eec/raw?se=2026-08-18T00%3A10%3A40Z&sp=r&sv=2026-02-06&sr=b&scid=7295f2c7-6238-5e39-87fe-f945171e464d&skoid=e9d2f8b1-028a-4cff-8eb1-d0e66fbefcca&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-17T21%3A27%3A45Z&ske=2026-08-18T21%3A27%3A45Z&sks=b&skv=2026-02-06&sig=N4eaSGjEk65j799jSJZQ3r60NWrBy6a6V%2B3XgIJa%2BSo%3D' -o artifact.zip
+          mkdir artifact
+          unzip -q artifact.zip -d artifact
+          test -f artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.23-founder-file-intelligence.1.exe
+      - name: Verify exact promoted installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.23-founder-file-intelligence.1.exe'
+          actual="$(sha256sum "$installer" | awk '{print $1}')"
+          expected='d2f98ea7a24fe30b3e8d33e43e43340db017b4efbb62cb0a4db646f5f1ac14b4'
+          test "$actual" = "$expected"
+      - name: Publish public update asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag='jawnsort-0.1.0-alpha.23-founder-file-intelligence.1'
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.23-founder-file-intelligence.1.exe'
+          notes='Founder File Intelligence 001: Founder Home → My Files can authorize one real local Windows folder and render existing Transfer Tank evidence as a human file inventory: type, size, device, real path, SHA-256 status, exact duplicates, evidence-backed likely relationships, and UNKNOWN / NEEDS REVIEW. Originals are untouched; no duplicate deletion, canon invention, publication, sync claim, or approved-source setup. Alpha22 Windows remains rollback until Isaac completes the real-file proof.'
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$installer" --clobber
+          else
+            gh release create "$tag" "$installer" --title 'JawnSort Pro Update' --notes "$notes"
+          fi
+      - name: Publish approved update feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+          payload = {
+              'schema': 'jawnsort-approved-update-feed-v1',
+              'channel': 'approved-windows',
+              'status': 'PROMOTED',
+              'product': 'JawnSort Pro',
+              'version': '0.1.0-alpha.23-founder-file-intelligence.1',
+              'candidate_id': 'FOUNDER-FILE-INTELLIGENCE-001',
+              'commit': 'f7f08a6390ca74209c62f1d23e1d60a15a8e33d0',
+              'installer_sha256': 'd2f98ea7a24fe30b3e8d33e43e43340db017b4efbb62cb0a4db646f5f1ac14b4',
+              'installer_url': 'https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.23-founder-file-intelligence.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.23-founder-file-intelligence.1.exe',
+              'promoted_at_utc': datetime.now(timezone.utc).isoformat(),
+              'glitchbot_decision': 'PROMOTE',
+              'promotion_receipt': 'FOUNDER_FILE_INTELLIGENCE_001_PROMOTION_RECEIPT.json',
+              'notes': 'Windows My Files proof target. One real local source through existing Transfer Tank evidence; Alpha22 remains rollback pending Isaac real-source acceptance.'
+          }
+          path = Path('jawnsort/approved-windows.json')
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+          PY
+          git config user.name 'GlitchBot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add jawnsort/approved-windows.json
+          git commit -m 'promote(jawnsort): Founder File Intelligence 001' || true
+          git pull --rebase origin system/jawnsort-approved-update-feed
+          git push origin HEAD:system/jawnsort-approved-update-feed
