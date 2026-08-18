@@ -1,0 +1,71 @@
+name: Publish JawnSort Separate The Rooms 001
+
+on:
+  push:
+    branches: [system/jawnsort-approved-update-feed]
+    paths: [.github/workflows/publish-jawnsort-separate-the-rooms-001.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  publish-approved-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: system/jawnsort-approved-update-feed
+      - name: Download exact promoted artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location 'https://sdmntprnorthcentralus.oaiusercontent.com/files/00000000-ca38-822f-ad47-09e2bc3215b9/raw?se=2026-08-18T00%3A51%3A58Z&sp=r&sv=2026-02-06&sr=b&scid=7e640636-3bb0-51cb-9783-55f10cabd89d&skoid=77636ecc-ad8d-44df-baa7-163b524a0261&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-17T22%3A43%3A09Z&ske=2026-08-18T22%3A43%3A09Z&sks=b&skv=2026-02-06&sig=0gRccXBHqMjkgZMXXt/oXC3xZ2czp4uvv6ABO%2BD/wdM%3D' -o artifact.zip
+          mkdir artifact
+          unzip -q artifact.zip -d artifact
+          test -f artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.24-separate-the-rooms.1.exe
+      - name: Verify exact promoted installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.24-separate-the-rooms.1.exe'
+          actual="$(sha256sum "$installer" | awk '{print $1}')"
+          test "$actual" = '4004c419629fefac7028128fe175208358ad4de58c715faba0ee838b9c4617fb'
+      - name: Publish public update asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag='jawnsort-0.1.0-alpha.24-separate-the-rooms.1'
+          installer='artifact/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.24-separate-the-rooms.1.exe'
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$installer" --clobber
+          else
+            gh release create "$tag" "$installer" --title 'JawnSort Pro Update' --notes 'Separate The Rooms 001: JawnSort Pro is a building. Persistent 9-dot room launcher, distinct CUZ/creator rooms, Transfer Tank SAVE MY COMPUTER, and grouped My Files asset browser. Alpha23 remains rollback pending real Founder room/file proof.'
+          fi
+      - name: Publish approved update feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+          payload = {
+              'schema':'jawnsort-approved-update-feed-v1','channel':'approved-windows','status':'PROMOTED','product':'JawnSort Pro',
+              'version':'0.1.0-alpha.24-separate-the-rooms.1','candidate_id':'SEPARATE-THE-ROOMS-001',
+              'commit':'590ed02846f3ddbe26d44e7c951af32ee6c24d8f',
+              'installer_sha256':'4004c419629fefac7028128fe175208358ad4de58c715faba0ee838b9c4617fb',
+              'installer_url':'https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.24-separate-the-rooms.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.24-separate-the-rooms.1.exe',
+              'promoted_at_utc':datetime.now(timezone.utc).isoformat(),'glitchbot_decision':'PROMOTE',
+              'promotion_receipt':'SEPARATE_THE_ROOMS_001_PROMOTION_RECEIPT.json',
+              'notes':'Room-building proof target. Alpha23 remains rollback pending real Founder Windows room/file acceptance.'
+          }
+          path=Path('jawnsort/approved-windows.json'); path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(payload, indent=2)+'\n', encoding='utf-8')
+          PY
+          git config user.name 'GlitchBot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add jawnsort/approved-windows.json
+          git commit -m 'promote(jawnsort): Separate The Rooms Alpha24' || true
+          git push origin HEAD:system/jawnsort-approved-update-feed
