@@ -1,0 +1,15 @@
+{
+  "schema": "jawnsort-approved-update-feed-v1",
+  "channel": "approved-macos",
+  "status": "PROMOTED",
+  "product": "JawnSort Pro",
+  "version": "0.1.0-alpha.29-update-rail.1",
+  "candidate_id": "MAC-UPDATE-RAIL-ALPHA29",
+  "commit": "89ca3d814584abd1871fa92ed933afc1aea62600",
+  "installer_sha256": "2c200d4118b6aaff5085a34536ef8e69af29b92056031c88aa8a9d96d94df016",
+  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.29-update-rail.1/JawnSort-Pro-macOS-0.1.0-alpha.29-update-rail.1.zip",
+  "promoted_at_utc": "2026-08-24T01:58:39.568801+00:00",
+  "glitchbot_decision": "PROMOTE",
+  "promotion_receipt": "MAC_UPDATE_RAIL_ALPHA29_PROMOTION_RECEIPT.json",
+  "notes": "Platform-scoped macOS promotion. Alpha28 remains Mac rollback; Windows known-good unchanged."
+}
