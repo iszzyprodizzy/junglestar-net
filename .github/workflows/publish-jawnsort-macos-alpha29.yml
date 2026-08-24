@@ -1,0 +1,94 @@
+name: Publish JawnSort macOS Alpha29
+
+on:
+  push:
+    branches: [system/jawnsort-approved-update-feed]
+    paths: [.github/workflows/publish-jawnsort-macos-alpha29.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  publish-approved-macos-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: system/jawnsort-approved-update-feed
+      - name: Download exact promoted Mac artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location 'https://sdmntprcentralus.oaiusercontent.com/files/00000000-4a0c-81f5-b835-700619061f53/raw?se=2026-08-24T02%3A03%3A07Z&sp=r&sv=2026-02-06&sr=b&scid=1cb6aa4f-4b8b-5f51-97e2-d0d1b7028399&skoid=de71a0d5-fb02-4fce-be69-9296aced242b&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-23T22%3A34%3A26Z&ske=2026-08-24T22%3A34%3A26Z&sks=b&skv=2026-02-06&sig=hXClnBeTuOdqHt98mmYBfpXmYMV6fDMXyifdTch8u60%3D' -o artifact.zip
+          mkdir artifact
+          unzip -q artifact.zip -d artifact
+          test -f 'artifact/JawnSort-Pro-macOS-0.1.0-alpha.29-update-rail.1.zip'
+      - name: Verify exact promoted Mac ZIP and receipts
+        shell: bash
+        run: |
+          set -euo pipefail
+          package='artifact/JawnSort-Pro-macOS-0.1.0-alpha.29-update-rail.1.zip'
+          actual="$(sha256sum "$package" | awk '{print $1}')"
+          test "$actual" = '2c200d4118b6aaff5085a34536ef8e69af29b92056031c88aa8a9d96d94df016'
+          grep -q 'MACOS_DAILY_DRIVER_001=AUTOMATED_CANDIDATE_PASS' artifact/MACOS_DAILY_DRIVER_RECEIPT.txt
+          grep -q 'VERSION=0.1.0-alpha.29-update-rail.1' artifact/MACOS_DAILY_DRIVER_RECEIPT.txt
+          grep -q 'SHA256=2c200d4118b6aaff5085a34536ef8e69af29b92056031c88aa8a9d96d94df016' artifact/MACOS_DAILY_DRIVER_RECEIPT.txt
+          grep -q 'MAC_UPDATE_CHANNEL=PROMOTED_ONLY_CONFIGURED' artifact/MACOS_DAILY_DRIVER_RECEIPT.txt
+          grep -q 'MAC_UPDATE_KNOWN_GOOD_BACKUP=ENABLED' artifact/MACOS_DAILY_DRIVER_RECEIPT.txt
+          grep -q 'CREATOR_MODE_COMPLETION_PROOF=PASS' artifact/CREATOR_MODE_COMPLETION_PROOF_RECEIPT.txt
+          grep -q 'WORKFLOW_SHA=89ca3d814584abd1871fa92ed933afc1aea62600' artifact/CREATOR_MODE_COMPLETION_PROOF_RECEIPT.txt
+          grep -q 'RUN_ID=32681182582' artifact/CREATOR_MODE_COMPLETION_PROOF_RECEIPT.txt
+          grep -q 'ZIP_SHA256=2c200d4118b6aaff5085a34536ef8e69af29b92056031c88aa8a9d96d94df016' artifact/CREATOR_MODE_COMPLETION_PROOF_RECEIPT.txt
+      - name: Publish public Mac update asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag='jawnsort-0.1.0-alpha.29-update-rail.1'
+          package='artifact/JawnSort-Pro-macOS-0.1.0-alpha.29-update-rail.1.zip'
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$package" --clobber
+          else
+            gh release create "$tag" "$package" --title 'JawnSort Pro macOS Alpha29 Update Rail' --notes 'Promoted Mac update. Exact Alpha29 package passed the governed macOS candidate build, Creator Mode handoff, packaged LaunchServices smoke proof, SHA-256 verification, and scoped GlitchBot promotion. Alpha28 remains the Mac rollback floor; Windows known-good is unchanged.'
+          fi
+      - name: Verify public Mac package SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          url='https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.29-update-rail.1/JawnSort-Pro-macOS-0.1.0-alpha.29-update-rail.1.zip'
+          curl --fail --location "$url" -o public-mac.zip
+          actual="$(sha256sum public-mac.zip | awk '{print $1}')"
+          test "$actual" = '2c200d4118b6aaff5085a34536ef8e69af29b92056031c88aa8a9d96d94df016'
+      - name: Publish approved Mac update feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+          payload = {
+              'schema':'jawnsort-approved-update-feed-v1',
+              'channel':'approved-macos',
+              'status':'PROMOTED',
+              'product':'JawnSort Pro',
+              'version':'0.1.0-alpha.29-update-rail.1',
+              'candidate_id':'MAC-UPDATE-RAIL-ALPHA29',
+              'commit':'89ca3d814584abd1871fa92ed933afc1aea62600',
+              'installer_sha256':'2c200d4118b6aaff5085a34536ef8e69af29b92056031c88aa8a9d96d94df016',
+              'installer_url':'https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.29-update-rail.1/JawnSort-Pro-macOS-0.1.0-alpha.29-update-rail.1.zip',
+              'promoted_at_utc':datetime.now(timezone.utc).isoformat(),
+              'glitchbot_decision':'PROMOTE',
+              'promotion_receipt':'MAC_UPDATE_RAIL_ALPHA29_PROMOTION_RECEIPT.json',
+              'notes':'Platform-scoped macOS promotion. Alpha28 remains Mac rollback; Windows known-good unchanged.'
+          }
+          path=Path('jawnsort/approved-macos.json')
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(payload, indent=2)+'\n', encoding='utf-8')
+          PY
+          git config user.name 'GlitchBot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add jawnsort/approved-macos.json
+          git commit -m 'promote(jawnsort): macOS Alpha29 update rail' || true
+          git push origin HEAD:system/jawnsort-approved-update-feed
