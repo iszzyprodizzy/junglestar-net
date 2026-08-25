@@ -1,0 +1,436 @@
+{
+  "schema": "junglestar-site-health-v1",
+  "scope": "root HTML, arcade HTML, shared site shell, canonical content registry",
+  "public_origin": "https://junglestar.net/",
+  "last_verified": "2026-08-25T05:31:07+00:00",
+  "summary": {
+    "pages_found": 28,
+    "links_checked": 206,
+    "broken_links": 35,
+    "repeated_content_identities": 1,
+    "missing_invalid_destinations": 11,
+    "internal_links": 152,
+    "external_links": 39,
+    "email_links": 4
+  },
+  "content_identity_references": {
+    "great-food-fight-demo": 2
+  },
+  "external_results": {
+    "https://junglestar.net/": {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://junglestar.net/"
+    },
+    "https://square.link/u/9C1B9Fbm": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/9C1B9Fbm"
+    },
+    "https://square.link/u/TsDwffvx": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/TsDwffvx"
+    },
+    "https://square.link/u/bJwG4hEk": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/bJwG4hEk"
+    },
+    "https://square.link/u/uctqTxmE": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/uctqTxmE"
+    },
+    "https://square.link/u/DMffxfK0": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/DMffxfK0"
+    },
+    "https://square.link/u/tKvJuJHq": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/tKvJuJHq"
+    },
+    "https://square.link/u/D06zjTY6": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/D06zjTY6"
+    },
+    "https://square.link/u/BcSfjDln": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/BcSfjDln"
+    },
+    "https://square.link/u/U7plW6dd": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/U7plW6dd"
+    },
+    "https://square.link/u/5nAIIEOi": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/5nAIIEOi"
+    },
+    "https://square.link/u/afnsN3Dc": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/afnsN3Dc"
+    },
+    "https://square.link/u/wEiZoQ1o": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/wEiZoQ1o"
+    },
+    "https://square.link/u/GUHuWljM": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/GUHuWljM"
+    },
+    "https://square.link/u/PdKCJOko": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/PdKCJOko"
+    },
+    "https://square.link/u/1Q330OTV": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/1Q330OTV"
+    },
+    "https://square.link/u/JpdfNF7V": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/JpdfNF7V"
+    },
+    "https://square.link/u/i9UjlXlh": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/i9UjlXlh"
+    },
+    "https://square.link/u/mmIhHZsf": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/mmIhHZsf"
+    },
+    "https://square.link/u/Q6bSEgGJ": {
+      "ok": false,
+      "status": 404,
+      "final_url": "https://square.link/u/Q6bSEgGJ"
+    },
+    "https://iszzyprodizzy.itch.io/the-great-food-fight": {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://iszzyprodizzy.itch.io/the-great-food-fight"
+    },
+    "https://www.instagram.com/iszzyprodizzy/": {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://www.instagram.com/iszzyprodizzy/"
+    },
+    "https://junglestar.printify.me/": {
+      "ok": true,
+      "status": 200,
+      "final_url": "https://junglestar.printify.me/"
+    }
+  },
+  "issues": [
+    {
+      "type": "broken_external",
+      "source": "coffee.html",
+      "destination": "https://square.link/u/9C1B9Fbm",
+      "status": 404,
+      "final_url": "https://square.link/u/9C1B9Fbm"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/TsDwffvx",
+      "status": 404,
+      "final_url": "https://square.link/u/TsDwffvx"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/9C1B9Fbm",
+      "status": 404,
+      "final_url": "https://square.link/u/9C1B9Fbm"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/bJwG4hEk",
+      "status": 404,
+      "final_url": "https://square.link/u/bJwG4hEk"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/uctqTxmE",
+      "status": 404,
+      "final_url": "https://square.link/u/uctqTxmE"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/DMffxfK0",
+      "status": 404,
+      "final_url": "https://square.link/u/DMffxfK0"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/tKvJuJHq",
+      "status": 404,
+      "final_url": "https://square.link/u/tKvJuJHq"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/D06zjTY6",
+      "status": 404,
+      "final_url": "https://square.link/u/D06zjTY6"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/BcSfjDln",
+      "status": 404,
+      "final_url": "https://square.link/u/BcSfjDln"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/U7plW6dd",
+      "status": 404,
+      "final_url": "https://square.link/u/U7plW6dd"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/5nAIIEOi",
+      "status": 404,
+      "final_url": "https://square.link/u/5nAIIEOi"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/afnsN3Dc",
+      "status": 404,
+      "final_url": "https://square.link/u/afnsN3Dc"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/wEiZoQ1o",
+      "status": 404,
+      "final_url": "https://square.link/u/wEiZoQ1o"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/GUHuWljM",
+      "status": 404,
+      "final_url": "https://square.link/u/GUHuWljM"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/PdKCJOko",
+      "status": 404,
+      "final_url": "https://square.link/u/PdKCJOko"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/1Q330OTV",
+      "status": 404,
+      "final_url": "https://square.link/u/1Q330OTV"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/JpdfNF7V",
+      "status": 404,
+      "final_url": "https://square.link/u/JpdfNF7V"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/i9UjlXlh",
+      "status": 404,
+      "final_url": "https://square.link/u/i9UjlXlh"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/mmIhHZsf",
+      "status": 404,
+      "final_url": "https://square.link/u/mmIhHZsf"
+    },
+    {
+      "type": "broken_external",
+      "source": "donate.html",
+      "destination": "https://square.link/u/Q6bSEgGJ",
+      "status": 404,
+      "final_url": "https://square.link/u/Q6bSEgGJ"
+    },
+    {
+      "type": "missing_or_invalid",
+      "source": "music.html",
+      "destination": "#"
+    },
+    {
+      "type": "missing_or_invalid",
+      "source": "music.html",
+      "destination": "#"
+    },
+    {
+      "type": "broken_internal",
+      "source": "resources.html",
+      "destination": "downloads/parent-packet.pdf"
+    },
+    {
+      "type": "missing_or_invalid",
+      "source": "resources.html",
+      "destination": "#"
+    },
+    {
+      "type": "missing_or_invalid",
+      "source": "resources.html",
+      "destination": "#"
+    },
+    {
+      "type": "missing_or_invalid",
+      "source": "shop.html",
+      "destination": "PASTE_PRINTIFY_STORE_LINK_HERE"
+    },
+    {
+      "type": "missing_or_invalid",
+      "source": "shop.html",
+      "destination": "PASTE_PRINTFUL_STORE_LINK_HERE"
+    },
+    {
+      "type": "missing_or_invalid",
+      "source": "shop.html",
+      "destination": "PASTE_PRINTIFY_STORE_LINK_HERE"
+    },
+    {
+      "type": "missing_or_invalid",
+      "source": "shop.html",
+      "destination": "PASTE_PRINTFUL_STORE_LINK_HERE"
+    },
+    {
+      "type": "broken_external",
+      "source": "sponsor.html",
+      "destination": "https://square.link/u/9C1B9Fbm",
+      "status": 404,
+      "final_url": "https://square.link/u/9C1B9Fbm"
+    },
+    {
+      "type": "missing_or_invalid",
+      "source": "sponsor.html",
+      "destination": "PASTE_250_SQUARE_LINK_HERE"
+    },
+    {
+      "type": "missing_or_invalid",
+      "source": "sponsor.html",
+      "destination": "PASTE_500_SQUARE_LINK_HERE"
+    },
+    {
+      "type": "missing_or_invalid",
+      "source": "sponsor.html",
+      "destination": "PASTE_1000_SQUARE_LINK_HERE"
+    },
+    {
+      "type": "broken_external",
+      "source": "sponsor.html",
+      "destination": "https://square.link/u/i9UjlXlh",
+      "status": 404,
+      "final_url": "https://square.link/u/i9UjlXlh"
+    },
+    {
+      "type": "broken_external",
+      "source": "sponsor.html",
+      "destination": "https://square.link/u/mmIhHZsf",
+      "status": 404,
+      "final_url": "https://square.link/u/mmIhHZsf"
+    },
+    {
+      "type": "broken_external",
+      "source": "sponsor.html",
+      "destination": "https://square.link/u/Q6bSEgGJ",
+      "status": 404,
+      "final_url": "https://square.link/u/Q6bSEgGJ"
+    },
+    {
+      "type": "broken_external",
+      "source": "sponsor.html",
+      "destination": "https://square.link/u/BcSfjDln",
+      "status": 404,
+      "final_url": "https://square.link/u/BcSfjDln"
+    },
+    {
+      "type": "broken_external",
+      "source": "sponsor.html",
+      "destination": "https://square.link/u/U7plW6dd",
+      "status": 404,
+      "final_url": "https://square.link/u/U7plW6dd"
+    },
+    {
+      "type": "broken_external",
+      "source": "sponsor.html",
+      "destination": "https://square.link/u/afnsN3Dc",
+      "status": 404,
+      "final_url": "https://square.link/u/afnsN3Dc"
+    },
+    {
+      "type": "broken_external",
+      "source": "sponsor.html",
+      "destination": "https://square.link/u/5nAIIEOi",
+      "status": 404,
+      "final_url": "https://square.link/u/5nAIIEOi"
+    },
+    {
+      "type": "broken_external",
+      "source": "sponsor.html",
+      "destination": "https://square.link/u/GUHuWljM",
+      "status": 404,
+      "final_url": "https://square.link/u/GUHuWljM"
+    },
+    {
+      "type": "broken_external",
+      "source": "sponsor.html",
+      "destination": "https://square.link/u/PdKCJOko",
+      "status": 404,
+      "final_url": "https://square.link/u/PdKCJOko"
+    },
+    {
+      "type": "broken_external",
+      "source": "sponsor.html",
+      "destination": "https://square.link/u/wEiZoQ1o",
+      "status": 404,
+      "final_url": "https://square.link/u/wEiZoQ1o"
+    },
+    {
+      "type": "broken_external",
+      "source": "sponsor.html",
+      "destination": "https://square.link/u/JpdfNF7V",
+      "status": 404,
+      "final_url": "https://square.link/u/JpdfNF7V"
+    },
+    {
+      "type": "broken_external",
+      "source": "sponsor.html",
+      "destination": "https://square.link/u/1Q330OTV",
+      "status": 404,
+      "final_url": "https://square.link/u/1Q330OTV"
+    },
+    {
+      "type": "broken_external",
+      "source": "sponsor.html",
+      "destination": "https://square.link/u/9C1B9Fbm",
+      "status": 404,
+      "final_url": "https://square.link/u/9C1B9Fbm"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "junglestar-site-content-v1",
+  "content": {
+    "great-food-fight-demo": {
+      "title": "The Great Food Fight",
+      "description": "Healthy food fights back in an educational action universe powered by fruits, vegetables, hydration, and teamwork.",
+      "destination": "https://iszzyprodizzy.itch.io/the-great-food-fight",
+      "action": "Play Official Demo",
+      "kind": "game"
+    }
+  },
+  "placements": [
+    {"content_id": "great-food-fight-demo", "page": "index.html", "slot": "home-featured"},
+    {"content_id": "great-food-fight-demo", "page": "games.html", "slot": "games-featured"}
+  ]
+}
