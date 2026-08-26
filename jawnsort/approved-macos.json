@@ -3,13 +3,13 @@
   "channel": "approved-macos",
   "status": "PROMOTED",
   "product": "JawnSort Pro",
-  "version": "0.1.0-alpha.30-jawnlink-memory.1",
-  "candidate_id": "JAWNLINK-MEMORY-REMEMBER-ME-001",
-  "commit": "0869684b14446e6867680dd682feebb707e2f16a",
-  "installer_sha256": "84a66087a7a2776e5e76d3cd7947dd470db9ed0b1f467ccf18834d3915d80393",
-  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.30-jawnlink-memory.1/JawnSort-Pro-macOS-0.1.0-alpha.30-jawnlink-memory.1.zip",
-  "promoted_at_utc": "2026-08-25T04:57:12Z",
+  "version": "0.1.0-alpha.32-public-feed.1",
+  "candidate_id": "ALPHA32-NATIVE-MACOS",
+  "commit": "4d12a941286f89c0949e0b79520e177ad5aed3d8",
+  "installer_sha256": "df7f6e00c2483fb400a5302416b819f8b9301177e920b5cdee81dd64d5b42b59",
+  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.32-public-feed.1/JawnSort-Pro-macOS-0.1.0-alpha.32-public-feed.1.zip",
+  "promoted_at_utc": "2026-08-26T00:19:13.063878+00:00",
   "glitchbot_decision": "PROMOTE",
-  "promotion_receipt": "JAWNLINK-MEMORY-REMEMBER-ME-001",
-  "notes": "Platform-scoped macOS JawnLink / Memory promotion. Alpha29 remains prior Mac known-good; Windows known-good unchanged."
+  "promotion_receipt": "ALPHA32_PROMOTION.json",
+  "notes": "Local macOS publication of the exact GlitchBot-promoted candidate; prior public release remains available for rollback."
 }
