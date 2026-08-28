@@ -8,7 +8,7 @@
   "commit": "42882c2cc562a6a329799472c79d971673ec9ce9",
   "installer_sha256": "47e647c78abfae2f616593f2c81e829e56c848cba166a920824ec8f7aa52f817",
   "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.39-deep-street-fix.1/JawnSort-Pro-macOS-0.1.0-alpha.39-deep-street-fix.1.zip",
-  "promoted_at_utc": "2026-08-28T15:58:38.949281+00:00",
+  "promoted_at_utc": "2026-08-28T16:15:00.069779+00:00",
   "glitchbot_decision": "PROMOTE",
   "promotion_receipt": "ALPHA39_DEEP_STREET_FIX_PROMOTION_RECEIPT.json",
   "notes": "Local macOS publication of the exact GlitchBot-promoted candidate; prior public release remains available for rollback."
