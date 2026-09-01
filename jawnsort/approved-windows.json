@@ -3,13 +3,13 @@
   "channel": "approved-windows",
   "status": "PROMOTED",
   "product": "JawnSort Pro",
-  "version": "0.1.0-alpha.25-startup-fix.1",
-  "candidate_id": "ALPHA24-STARTUP-REGRESSION-FIX",
-  "commit": "5a0ace19a1d5a3111ccd3cd40509111ced255cfc",
-  "installer_sha256": "186dad2988f6620c064355f534203d2db6516901c0e5896bbf66753d9a247155",
-  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.25-startup-fix.1/JawnSort-Pro-Desktop-Windows-0.1.0-alpha.25-startup-fix.1.exe",
-  "promoted_at_utc": "2026-08-18T01:50:26.360875+00:00",
+  "version": "0.1.0-alpha.44-routing-conveyor.17",
+  "candidate_id": "ALPHA44-UPDATER-AUTH-REPAIR-WINDOWS",
+  "commit": "e5426163106c59ec9996ca0f5517272fec35c665",
+  "installer_sha256": "d5d2fc4fc9fa9547dfd56d758730f31dd394d65a5420f52cfef2d95399ff75f9",
+  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.44-routing-conveyor.17/JawnSort-Desktop-Alpha-Windows-0.1.0-alpha.44-routing-conveyor.17.exe",
+  "promoted_at_utc": "2026-09-01T08:53:39.587415+00:00",
   "glitchbot_decision": "PROMOTE",
-  "promotion_receipt": "ALPHA24_STARTUP_FIX_PROMOTION_RECEIPT.json",
-  "notes": "Startup-only recovery. Exact packaged --windowed runtime passed SERVER_READY and entered WEBVIEW_START. Alpha23 remains rollback; Founder vertical-slice acceptance remains pending."
+  "promotion_receipt": "GlitchBot Factory Passport + Windows package run 33488824205",
+  "notes": "Founder-visible delivery through the existing Windows approved feed and Inno .exe updater transport."
 }
