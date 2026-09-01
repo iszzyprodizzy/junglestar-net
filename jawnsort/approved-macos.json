@@ -1,0 +1,15 @@
+{
+  "schema": "jawnsort-approved-update-feed-v1",
+  "channel": "approved-macos",
+  "status": "PROMOTED",
+  "product": "JawnSort Pro",
+  "version": "0.1.0-alpha.44-routing-conveyor.20",
+  "candidate_id": "GROUND-ZERO-JAWNLINK-CREATOR-SEARCH-MACOS",
+  "commit": "69a5aa21a5c49ec327c60cabac1f04413b704f2c",
+  "installer_sha256": "956e995360429787c76c567f3579cca51d2e1e4b7b5fa03224f941e70e052ee2",
+  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.44-routing-conveyor.20/JawnSort-Pro-macOS-0.1.0-alpha.44-routing-conveyor.20.zip",
+  "promoted_at_utc": "2026-09-01T16:17:28.167372+00:00",
+  "glitchbot_decision": "PROMOTE",
+  "promotion_receipt": "GlitchBot Factory Passport 14/14 plus isolated packaged proof run 33530549203; publication resumed from preserved ZIP after runner credential failure",
+  "notes": "Founder-visible JawnLink creator-search delivery through the existing macOS Updates button. Save active work before update; Founder controls install and relaunch."
+}
