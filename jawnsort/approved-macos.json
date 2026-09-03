@@ -8,7 +8,7 @@
   "commit": "2d1b59e6ed04c36d5664b7a4ebe2aa3e4c887300",
   "installer_sha256": "acbeea397ce257019d8511f531c1e1aa02db0a788b619ea021c050668182d4df",
   "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.44-routing-conveyor.81/JawnSort-Pro-macOS-0.1.0-alpha.44-routing-conveyor.81.zip",
-  "promoted_at_utc": "2026-09-03T20:49:33.179943+00:00",
+  "promoted_at_utc": "2026-09-03T20:50:16.634371+00:00",
   "glitchbot_decision": "PROMOTE",
   "promotion_receipt": "JAWNLINK_44_81_PROMOTION.json",
   "notes": "Local macOS publication of the exact GlitchBot-promoted candidate; prior public release remains available for rollback."
