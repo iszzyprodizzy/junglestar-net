@@ -3,13 +3,13 @@
   "channel": "approved-macos",
   "status": "PROMOTED",
   "product": "JawnSort Pro",
-  "version": "0.1.0-alpha.44-routing-conveyor.74",
-  "candidate_id": "ALPHA44-74-CUSTOMER-ZERO",
-  "commit": "770dcbd109138cffe0faffb9f9447dc7112c395c",
-  "installer_sha256": "3ce2d96cb8ca73252b275f52a5668996cd1d93cff2542822c34e7fb6f115c1da",
-  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.44-routing-conveyor.74/JawnSort-Pro-macOS-0.1.0-alpha.44-routing-conveyor.74.zip",
-  "promoted_at_utc": "2026-09-03T01:46:05.877482+00:00",
+  "version": "0.1.0-alpha.44-routing-conveyor.77",
+  "candidate_id": "JAWNLINK-44-77-MACOS",
+  "commit": "2fac525ec19a7a0eff3834fe48fcd26369ea9e98",
+  "installer_sha256": "32e86682c4c8a44085f52b2297a9ea7aace0507daf3f43a097117d005c0a3b44",
+  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.44-routing-conveyor.77/JawnSort-Pro-macOS-0.1.0-alpha.44-routing-conveyor.77.zip",
+  "promoted_at_utc": "2026-09-03T17:24:53.205896+00:00",
   "glitchbot_decision": "PROMOTE",
-  "promotion_receipt": "Factory Passport PASS + package proof PASS + public byte verification PASS",
-  "notes": "Founder-visible delivery through existing macOS Updates button."
+  "promotion_receipt": "JAWNLINK_44_77_PROMOTION.json",
+  "notes": "Local macOS publication of the exact GlitchBot-promoted candidate; prior public release remains available for rollback."
 }
