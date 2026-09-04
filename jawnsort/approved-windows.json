@@ -7,7 +7,7 @@
     "candidate_id":  "WINDOWS-44-87-CROSS-DEVICE-CREATOR-MEMORY",
     "commit":  "d516b6f7940905c96954b7d637619ab32745f11f",
     "installer_sha256":  "f908689e2acb286dea25480b21554fdebc0afa15af9330c400aefa462b3a6f64",
-    "installer_url":  "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.44-routing-conveyor.87/",
+    "installer_url":  "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.44-routing-conveyor.87/JawnSort-Desktop-Alpha-Windows-0.1.0-alpha.44-routing-conveyor.87.exe",
     "promoted_at_utc":  "2026-09-04T04:33:16.0662177+00:00",
     "glitchbot_decision":  "PROMOTE",
     "promotion_receipt":  "59 contract tests + human-scene cross-device proof + core surface gate",
