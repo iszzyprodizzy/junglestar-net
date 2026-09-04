@@ -1,15 +1,15 @@
-{
-  "schema": "jawnsort-approved-update-feed-v1",
-  "channel": "approved-windows",
-  "status": "PROMOTED",
-  "product": "JawnSort Pro",
-  "version": "0.1.0-alpha.44-routing-conveyor.17",
-  "candidate_id": "ALPHA44-UPDATER-AUTH-REPAIR-WINDOWS",
-  "commit": "e5426163106c59ec9996ca0f5517272fec35c665",
-  "installer_sha256": "d5d2fc4fc9fa9547dfd56d758730f31dd394d65a5420f52cfef2d95399ff75f9",
-  "installer_url": "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.44-routing-conveyor.17/JawnSort-Desktop-Alpha-Windows-0.1.0-alpha.44-routing-conveyor.17.exe",
-  "promoted_at_utc": "2026-09-01T08:53:39.587415+00:00",
-  "glitchbot_decision": "PROMOTE",
-  "promotion_receipt": "GlitchBot Factory Passport + Windows package run 33488824205",
-  "notes": "Founder-visible delivery through the existing Windows approved feed and Inno .exe updater transport."
+﻿{
+    "schema":  "jawnsort-approved-update-feed-v1",
+    "channel":  "approved-windows",
+    "status":  "PROMOTED",
+    "product":  "JawnSort Pro",
+    "version":  "0.1.0-alpha.44-routing-conveyor.86",
+    "candidate_id":  "WINDOWS-44-86-PY310-JAWNLINK-PARITY",
+    "commit":  "bc4671a9a7625574ba32806b091c0a9a5ffba7d7",
+    "installer_sha256":  "c3763dd0448d2bccc17c14c94e2b82102b92483bef2ba8b02f890ea831d3465e",
+    "installer_url":  "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.44-routing-conveyor.86/JawnSort-Desktop-Alpha-Windows-0.1.0-alpha.44-routing-conveyor.86.exe",
+    "promoted_at_utc":  "2026-09-04T02:41:07.6999569Z",
+    "glitchbot_decision":  "PROMOTE",
+    "promotion_receipt":  "WINDOWS_44_86_BUILD_RECEIPT.txt + deterministic local GlitchBot reproof",
+    "notes":  "Windows .86 parity: Python 3.10 97/97 compile PASS; JawnLink contracts 27 PASS; exact public installer bytes verified."
 }
