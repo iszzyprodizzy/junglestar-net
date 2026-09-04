@@ -3,13 +3,13 @@
     "channel":  "approved-windows",
     "status":  "PROMOTED",
     "product":  "JawnSort Pro",
-    "version":  "0.1.0-alpha.44-routing-conveyor.87",
-    "candidate_id":  "WINDOWS-44-87-CROSS-DEVICE-CREATOR-MEMORY",
-    "commit":  "d516b6f7940905c96954b7d637619ab32745f11f",
-    "installer_sha256":  "f908689e2acb286dea25480b21554fdebc0afa15af9330c400aefa462b3a6f64",
-    "installer_url":  "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.44-routing-conveyor.87/JawnSort-Desktop-Alpha-Windows-0.1.0-alpha.44-routing-conveyor.87.exe",
-    "promoted_at_utc":  "2026-09-04T04:33:16.0662177+00:00",
+    "version":  "0.1.0-alpha.44-routing-conveyor.88",
+    "candidate_id":  "WINDOWS-44-88-JSONSCHEMA-STARTUP-FIX",
+    "commit":  "afa5773b010264c69019f240f79f5969a47c6645",
+    "installer_sha256":  "766d28551ce1131f65c56954dc1c81bda7564afbfea4de629c056ef94a8dc137",
+    "installer_url":  "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.44-routing-conveyor.88/JawnSort-Desktop-Alpha-Windows-0.1.0-alpha.44-routing-conveyor.88.exe",
+    "promoted_at_utc":  "2026-09-04T04:53:54.6818132+00:00",
     "glitchbot_decision":  "PROMOTE",
-    "promotion_receipt":  "59 contract tests + human-scene cross-device proof + core surface gate",
-    "notes":  "Metadata-only cross-device Creator Memory; raw creator payloads remain on source device."
+    "promotion_receipt":  "packaged runtime stayed alive 8 seconds; jsonschema dependency proven; Windows launcher and Inno passed",
+    "notes":  "Cross-device Creator Memory preserved. Raw creator payloads remain on source devices."
 }
