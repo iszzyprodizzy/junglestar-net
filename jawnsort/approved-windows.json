@@ -3,13 +3,13 @@
     "channel":  "approved-windows",
     "status":  "PROMOTED",
     "product":  "JawnSort Pro",
-    "version":  "0.1.0-alpha.44-routing-conveyor.86",
-    "candidate_id":  "WINDOWS-44-86-PY310-JAWNLINK-PARITY",
-    "commit":  "bc4671a9a7625574ba32806b091c0a9a5ffba7d7",
-    "installer_sha256":  "c3763dd0448d2bccc17c14c94e2b82102b92483bef2ba8b02f890ea831d3465e",
-    "installer_url":  "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.44-routing-conveyor.86/JawnSort-Desktop-Alpha-Windows-0.1.0-alpha.44-routing-conveyor.86.exe",
-    "promoted_at_utc":  "2026-09-04T02:41:07.6999569Z",
+    "version":  "0.1.0-alpha.44-routing-conveyor.87",
+    "candidate_id":  "WINDOWS-44-87-CROSS-DEVICE-CREATOR-MEMORY",
+    "commit":  "d516b6f7940905c96954b7d637619ab32745f11f",
+    "installer_sha256":  "f908689e2acb286dea25480b21554fdebc0afa15af9330c400aefa462b3a6f64",
+    "installer_url":  "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.44-routing-conveyor.87/",
+    "promoted_at_utc":  "2026-09-04T04:33:16.0662177+00:00",
     "glitchbot_decision":  "PROMOTE",
-    "promotion_receipt":  "WINDOWS_44_86_BUILD_RECEIPT.txt + deterministic local GlitchBot reproof",
-    "notes":  "Windows .86 parity: Python 3.10 97/97 compile PASS; JawnLink contracts 27 PASS; exact public installer bytes verified."
+    "promotion_receipt":  "59 contract tests + human-scene cross-device proof + core surface gate",
+    "notes":  "Metadata-only cross-device Creator Memory; raw creator payloads remain on source device."
 }
