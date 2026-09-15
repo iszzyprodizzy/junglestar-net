@@ -1,0 +1,933 @@
+{
+  "schema": "junglestar-linksmith-registry-v1",
+  "generated_at": "2026-09-15T21:50:09+00:00",
+  "canonical_record_count": 59,
+  "records": [
+    {
+      "id": "LINK-566CD103D3D4F83E",
+      "title": "mailto:IsaacBark@gmail.com",
+      "destination": "mailto:IsaacBark@gmail.com",
+      "type": "BOOK",
+      "project": "JUNGLE STAR MUSIC / ANIMAL RADIO",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "publishing.html",
+        "submit-music.html"
+      ],
+      "original_variants": [
+        "mailto:IsaacBark@gmail.com"
+      ]
+    },
+    {
+      "id": "LINK-FCD42704FD42D676",
+      "title": "https://iszzyprodizzy.itch.io/the-great-food-fight",
+      "destination": "https://iszzyprodizzy.itch.io/the-great-food-fight",
+      "type": "GAME",
+      "project": "JUNGLE STAR GAMES",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "games.html",
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "https://iszzyprodizzy.itch.io/the-great-food-fight"
+      ]
+    },
+    {
+      "id": "LINK-F57F1E1A0FB29C8F",
+      "title": "mailto:Team@JungleStar.app?subject=Game%20Sponsor%20Wall%20Sponsorship",
+      "destination": "mailto:Team@JungleStar.app?subject=Game%20Sponsor%20Wall%20Sponsorship",
+      "type": "GAME",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "mailto:Team@JungleStar.app?subject=Game%20Sponsor%20Wall%20Sponsorship"
+      ]
+    },
+    {
+      "id": "LINK-532314DBB34590FC",
+      "title": "#",
+      "destination": "#",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR MUSIC / ANIMAL RADIO",
+      "status": "PLACEHOLDER",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "music.html",
+        "resources.html"
+      ],
+      "original_variants": [
+        "#"
+      ]
+    },
+    {
+      "id": "LINK-44E511E4F87BF228",
+      "title": "/PASTE_PRINTFUL_STORE_LINK_HERE",
+      "destination": "/PASTE_PRINTFUL_STORE_LINK_HERE",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLESTAR.NET",
+      "status": "PLACEHOLDER",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "shop.html"
+      ],
+      "original_variants": [
+        "PASTE_PRINTFUL_STORE_LINK_HERE"
+      ]
+    },
+    {
+      "id": "LINK-E514FEE1659DB1B2",
+      "title": "/PASTE_PRINTIFY_STORE_LINK_HERE",
+      "destination": "/PASTE_PRINTIFY_STORE_LINK_HERE",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLESTAR.NET",
+      "status": "PLACEHOLDER",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "shop.html"
+      ],
+      "original_variants": [
+        "PASTE_PRINTIFY_STORE_LINK_HERE"
+      ]
+    },
+    {
+      "id": "LINK-0A20227660B51F38",
+      "title": "/academy.html",
+      "destination": "/academy.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR GAMES",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "games.html",
+        "index.html"
+      ],
+      "original_variants": [
+        "academy.html"
+      ]
+    },
+    {
+      "id": "LINK-6A269B8ABCD272E0",
+      "title": "/arcade",
+      "destination": "/arcade",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR GAMES",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "games.html"
+      ],
+      "original_variants": [
+        "arcade/"
+      ]
+    },
+    {
+      "id": "LINK-B6B3F7C3B401C399",
+      "title": "/arcade/broc_lee_dojo.html",
+      "destination": "/arcade/broc_lee_dojo.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR GAMES",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "arcade/index.html"
+      ],
+      "original_variants": [
+        "broc_lee_dojo.html"
+      ]
+    },
+    {
+      "id": "LINK-1E88D071B9243042",
+      "title": "/arcade/candy_cleanup.html",
+      "destination": "/arcade/candy_cleanup.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR GAMES",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "arcade/index.html"
+      ],
+      "original_variants": [
+        "candy_cleanup.html"
+      ]
+    },
+    {
+      "id": "LINK-E85AA892AC26B2A0",
+      "title": "/arcade/farmers_market_tycoon.html",
+      "destination": "/arcade/farmers_market_tycoon.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR GAMES",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "arcade/index.html"
+      ],
+      "original_variants": [
+        "farmers_market_tycoon.html"
+      ]
+    },
+    {
+      "id": "LINK-BFA5D239999C7C27",
+      "title": "/arcade/fruit_kabob_game.html",
+      "destination": "/arcade/fruit_kabob_game.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR GAMES",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "arcade/index.html",
+        "games.html"
+      ],
+      "original_variants": [
+        "arcade/fruit_kabob_game.html",
+        "fruit_kabob_game.html"
+      ]
+    },
+    {
+      "id": "LINK-B6C38FC7B38DAD88",
+      "title": "/arcade/protect_the_garden.html",
+      "destination": "/arcade/protect_the_garden.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR GAMES",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "arcade/index.html",
+        "games.html"
+      ],
+      "original_variants": [
+        "arcade/protect_the_garden.html",
+        "protect_the_garden.html"
+      ]
+    },
+    {
+      "id": "LINK-EC62AD317383B7EA",
+      "title": "/arcade/rainbow_smoothie_lab.html",
+      "destination": "/arcade/rainbow_smoothie_lab.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR GAMES",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "arcade/index.html",
+        "games.html"
+      ],
+      "original_variants": [
+        "arcade/rainbow_smoothie_lab.html",
+        "rainbow_smoothie_lab.html"
+      ]
+    },
+    {
+      "id": "LINK-35F6E3887230F329",
+      "title": "/arcade/seed_slinger.html",
+      "destination": "/arcade/seed_slinger.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR GAMES",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "arcade/index.html"
+      ],
+      "original_variants": [
+        "seed_slinger.html"
+      ]
+    },
+    {
+      "id": "LINK-713E0E94381C8C57",
+      "title": "/arcade/sugar_monster_defense.html",
+      "destination": "/arcade/sugar_monster_defense.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR GAMES",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "arcade/index.html"
+      ],
+      "original_variants": [
+        "sugar_monster_defense.html"
+      ]
+    },
+    {
+      "id": "LINK-FCEAE739B83D4968",
+      "title": "/arcade/veggie_match3.html",
+      "destination": "/arcade/veggie_match3.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR GAMES",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "arcade/index.html"
+      ],
+      "original_variants": [
+        "veggie_match3.html"
+      ]
+    },
+    {
+      "id": "LINK-0EB2990F65A2635B",
+      "title": "/arcade/water_malone_warriors.html",
+      "destination": "/arcade/water_malone_warriors.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR GAMES",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "arcade/index.html"
+      ],
+      "original_variants": [
+        "water_malone_warriors.html"
+      ]
+    },
+    {
+      "id": "LINK-2F92F5A0E7AA0B9D",
+      "title": "/donate.html",
+      "destination": "/donate.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR GAMES",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "academy.html",
+        "games.html",
+        "index.html",
+        "shop.html",
+        "start.html"
+      ],
+      "original_variants": [
+        "donate.html"
+      ]
+    },
+    {
+      "id": "LINK-8E0CE0A0767A899F",
+      "title": "/downloads/parent-packet.pdf",
+      "destination": "/downloads/parent-packet.pdf",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLESTAR.NET",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "resources.html"
+      ],
+      "original_variants": [
+        "downloads/parent-packet.pdf"
+      ]
+    },
+    {
+      "id": "LINK-7F8D53D2CA8C775C",
+      "title": "/games.html",
+      "destination": "/games.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "academy.html",
+        "index.html",
+        "resources.html",
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "games.html"
+      ]
+    },
+    {
+      "id": "LINK-533D04C000982014",
+      "title": "/index.html",
+      "destination": "/index.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLESTAR.NET",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "privacy.html"
+      ],
+      "original_variants": [
+        "index.html"
+      ]
+    },
+    {
+      "id": "LINK-D2646244D851A66F",
+      "title": "/music.html",
+      "destination": "/music.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR MUSIC / ANIMAL RADIO",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "games.html",
+        "radio.html"
+      ],
+      "original_variants": [
+        "music.html"
+      ]
+    },
+    {
+      "id": "LINK-3000F0E2E7DB02AE",
+      "title": "/music.html#library",
+      "destination": "/music.html#library",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR MUSIC / ANIMAL RADIO",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "music.html"
+      ],
+      "original_variants": [
+        "#library"
+      ]
+    },
+    {
+      "id": "LINK-975BC2F7CC57C790",
+      "title": "/privacy.html",
+      "destination": "/privacy.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR PUBLISHING",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "publishing.html"
+      ],
+      "original_variants": [
+        "privacy.html"
+      ]
+    },
+    {
+      "id": "LINK-54170F34A04B69D7",
+      "title": "/radio.html",
+      "destination": "/radio.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR MUSIC / ANIMAL RADIO",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "music.html"
+      ],
+      "original_variants": [
+        "radio.html"
+      ]
+    },
+    {
+      "id": "LINK-DE9B138C2A230152",
+      "title": "/radio.html#live",
+      "destination": "/radio.html#live",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR MUSIC / ANIMAL RADIO",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "radio.html"
+      ],
+      "original_variants": [
+        "#live"
+      ]
+    },
+    {
+      "id": "LINK-F9CF0850164C09EE",
+      "title": "/resources.html",
+      "destination": "/resources.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR GAMES",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "academy.html",
+        "games.html",
+        "index.html",
+        "tech.html"
+      ],
+      "original_variants": [
+        "resources.html"
+      ]
+    },
+    {
+      "id": "LINK-850CDFCE365F360A",
+      "title": "/shop.html",
+      "destination": "/shop.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLESTAR.NET",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "index.html"
+      ],
+      "original_variants": [
+        "shop.html"
+      ]
+    },
+    {
+      "id": "LINK-BE7E301B52F378C9",
+      "title": "/sponsor.html",
+      "destination": "/sponsor.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR MUSIC / ANIMAL RADIO",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "academy.html",
+        "games.html",
+        "music.html",
+        "resources.html"
+      ],
+      "original_variants": [
+        "sponsor.html"
+      ]
+    },
+    {
+      "id": "LINK-5F2356CB8005DB3E",
+      "title": "/sponsor.html#station-sponsorships",
+      "destination": "/sponsor.html#station-sponsorships",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "#station-sponsorships"
+      ]
+    },
+    {
+      "id": "LINK-7D04B824CE5AED63",
+      "title": "/start.html",
+      "destination": "/start.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR GAMES",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "consulting.html",
+        "games.html",
+        "publishing.html"
+      ],
+      "original_variants": [
+        "start.html"
+      ]
+    },
+    {
+      "id": "LINK-374EDF2F3007794E",
+      "title": "/submit-music.html",
+      "destination": "/submit-music.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLE STAR MUSIC / ANIMAL RADIO",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "radio.html"
+      ],
+      "original_variants": [
+        "submit-music.html"
+      ]
+    },
+    {
+      "id": "LINK-57BA6A5E67DECDBA",
+      "title": "/tech.html",
+      "destination": "/tech.html",
+      "type": "INTERNAL_PAGE",
+      "project": "JUNGLESTAR.NET",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "academy.html",
+        "resources.html"
+      ],
+      "original_variants": [
+        "tech.html"
+      ]
+    },
+    {
+      "id": "LINK-AD5548798FB22F1B",
+      "title": "https://junglestar.net/",
+      "destination": "https://junglestar.net/",
+      "type": "OTHER",
+      "project": "JUNGLESTAR.NET",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "archive.html"
+      ],
+      "original_variants": [
+        "https://junglestar.net/"
+      ]
+    },
+    {
+      "id": "LINK-684F9BD6377DACE8",
+      "title": "https://junglestar.printify.me/",
+      "destination": "https://junglestar.printify.me/",
+      "type": "PRINTIFY",
+      "project": "JUNGLESTAR.NET",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "shop.html"
+      ],
+      "original_variants": [
+        "https://junglestar.printify.me/"
+      ]
+    },
+    {
+      "id": "LINK-7220FD449D0F272E",
+      "title": "https://www.instagram.com/iszzyprodizzy/",
+      "destination": "https://www.instagram.com/iszzyprodizzy/",
+      "type": "SOCIAL",
+      "project": "JUNGLE STAR MUSIC / ANIMAL RADIO",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "music.html"
+      ],
+      "original_variants": [
+        "https://www.instagram.com/iszzyprodizzy/"
+      ]
+    },
+    {
+      "id": "LINK-76E7FC0106DFD24C",
+      "title": "mailto:Team@JungleStar.app",
+      "destination": "mailto:Team@JungleStar.app",
+      "type": "SPONSOR",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "mailto:Team@JungleStar.app"
+      ]
+    },
+    {
+      "id": "LINK-B82C8346966B3896",
+      "title": "mailto:Team@JungleStar.app?subject=City%20Builder%20Sponsorship",
+      "destination": "mailto:Team@JungleStar.app?subject=City%20Builder%20Sponsorship",
+      "type": "SPONSOR",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "mailto:Team@JungleStar.app?subject=City%20Builder%20Sponsorship"
+      ]
+    },
+    {
+      "id": "LINK-ADBAD55606CA0D29",
+      "title": "mailto:Team@JungleStar.app?subject=Community%20Supporter%20Sponsorship",
+      "destination": "mailto:Team@JungleStar.app?subject=Community%20Supporter%20Sponsorship",
+      "type": "SPONSOR",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "CURRENT",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "mailto:Team@JungleStar.app?subject=Community%20Supporter%20Sponsorship"
+      ]
+    },
+    {
+      "id": "LINK-9796FC3717A853E2",
+      "title": "https://square.link/u/1Q330OTV",
+      "destination": "https://square.link/u/1Q330OTV",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html",
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/1Q330OTV"
+      ]
+    },
+    {
+      "id": "LINK-25A37E85F3E8487A",
+      "title": "https://square.link/u/5nAIIEOi",
+      "destination": "https://square.link/u/5nAIIEOi",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html",
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/5nAIIEOi"
+      ]
+    },
+    {
+      "id": "LINK-7D0A6195FA96C698",
+      "title": "https://square.link/u/9C1B9Fbm",
+      "destination": "https://square.link/u/9C1B9Fbm",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR COFFEE",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "coffee.html",
+        "donate.html",
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/9C1B9Fbm"
+      ]
+    },
+    {
+      "id": "LINK-42BB04DE0206C0BF",
+      "title": "https://square.link/u/BcSfjDln",
+      "destination": "https://square.link/u/BcSfjDln",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html",
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/BcSfjDln"
+      ]
+    },
+    {
+      "id": "LINK-BEBE43028DFC0D7E",
+      "title": "https://square.link/u/D06zjTY6",
+      "destination": "https://square.link/u/D06zjTY6",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/D06zjTY6"
+      ]
+    },
+    {
+      "id": "LINK-881EFFF3C8EAD341",
+      "title": "https://square.link/u/DMffxfK0",
+      "destination": "https://square.link/u/DMffxfK0",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/DMffxfK0"
+      ]
+    },
+    {
+      "id": "LINK-C9DED78908C14837",
+      "title": "https://square.link/u/GUHuWljM",
+      "destination": "https://square.link/u/GUHuWljM",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html",
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/GUHuWljM"
+      ]
+    },
+    {
+      "id": "LINK-8856C0D8B5807632",
+      "title": "https://square.link/u/JpdfNF7V",
+      "destination": "https://square.link/u/JpdfNF7V",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html",
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/JpdfNF7V"
+      ]
+    },
+    {
+      "id": "LINK-D6E20E19DE48FFFF",
+      "title": "https://square.link/u/PdKCJOko",
+      "destination": "https://square.link/u/PdKCJOko",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html",
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/PdKCJOko"
+      ]
+    },
+    {
+      "id": "LINK-FF1E16BC3ACD7326",
+      "title": "https://square.link/u/Q6bSEgGJ",
+      "destination": "https://square.link/u/Q6bSEgGJ",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html",
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/Q6bSEgGJ"
+      ]
+    },
+    {
+      "id": "LINK-627EBB3F0845B778",
+      "title": "https://square.link/u/TsDwffvx",
+      "destination": "https://square.link/u/TsDwffvx",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/TsDwffvx"
+      ]
+    },
+    {
+      "id": "LINK-90C886EDC91DE3F7",
+      "title": "https://square.link/u/U7plW6dd",
+      "destination": "https://square.link/u/U7plW6dd",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html",
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/U7plW6dd"
+      ]
+    },
+    {
+      "id": "LINK-B5172E8B0CC3F112",
+      "title": "https://square.link/u/afnsN3Dc",
+      "destination": "https://square.link/u/afnsN3Dc",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html",
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/afnsN3Dc"
+      ]
+    },
+    {
+      "id": "LINK-6B3B4F6698CD7B6B",
+      "title": "https://square.link/u/bJwG4hEk",
+      "destination": "https://square.link/u/bJwG4hEk",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/bJwG4hEk"
+      ]
+    },
+    {
+      "id": "LINK-BBF6658FC36C3788",
+      "title": "https://square.link/u/i9UjlXlh",
+      "destination": "https://square.link/u/i9UjlXlh",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html",
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/i9UjlXlh"
+      ]
+    },
+    {
+      "id": "LINK-25E26631664B6F29",
+      "title": "https://square.link/u/mmIhHZsf",
+      "destination": "https://square.link/u/mmIhHZsf",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html",
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/mmIhHZsf"
+      ]
+    },
+    {
+      "id": "LINK-A6218941801EE11C",
+      "title": "https://square.link/u/tKvJuJHq",
+      "destination": "https://square.link/u/tKvJuJHq",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/tKvJuJHq"
+      ]
+    },
+    {
+      "id": "LINK-064FE677E67AD47F",
+      "title": "https://square.link/u/uctqTxmE",
+      "destination": "https://square.link/u/uctqTxmE",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/uctqTxmE"
+      ]
+    },
+    {
+      "id": "LINK-A55D258237355EDE",
+      "title": "https://square.link/u/wEiZoQ1o",
+      "destination": "https://square.link/u/wEiZoQ1o",
+      "type": "SQUARE",
+      "project": "JUNGLE STAR SPONSORSHIP",
+      "status": "BROKEN",
+      "last_check": "2026-09-15T21:50:09+00:00",
+      "used_on": [
+        "donate.html",
+        "sponsor.html"
+      ],
+      "original_variants": [
+        "https://square.link/u/wEiZoQ1o"
+      ]
+    }
+  ]
+}

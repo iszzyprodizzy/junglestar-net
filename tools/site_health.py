@@ -137,6 +137,15 @@ def scan(verify_public: bool) -> dict:
     repeated = sum(1 for count in placement_counts.values() if count > 1)
 
     now = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+    issues_by_page: dict[str, list[dict]] = {}
+    issues_by_destination: dict[str, list[dict]] = {}
+
+    for issue in issues:
+        page = str(issue.get("source") or "UNKNOWN")
+        destination = str(issue.get("destination") or "UNKNOWN")
+        issues_by_page.setdefault(page, []).append(issue)
+        issues_by_destination.setdefault(destination, []).append(issue)
+
     return {
         "schema": "junglestar-site-health-v1",
         "scope": "root HTML, arcade HTML, shared site shell, canonical content registry",
@@ -152,6 +161,8 @@ def scan(verify_public: bool) -> dict:
             "external_links": classifications["external"],
             "email_links": classifications["email"]
         },
+        "issues_by_page": issues_by_page,
+        "issues_by_destination": issues_by_destination,
         "content_identity_references": placement_counts,
         "external_results": {url: {"ok": value[0], "status": value[1], "final_url": value[2]} for url, value in external_cache.items()},
         "issues": issues

@@ -14,6 +14,7 @@ const siteNav = `
     <a href="coffee.html">Coffee</a>
     <a href="publishing.html">Publishing</a>
     <a href="tech.html">Tech</a>
+    <a href="linksmith.html">LinkSmith</a>
     <a href="music.html">Music</a>
     <a href="radio.html">Radio</a>
     <a href="consulting.html">Consulting</a>
