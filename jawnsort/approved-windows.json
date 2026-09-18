@@ -3,13 +3,14 @@
     "channel":  "approved-windows",
     "status":  "PROMOTED",
     "product":  "JawnSort Pro",
-    "version":  "0.1.0-alpha.44-routing-conveyor.88",
-    "candidate_id":  "WINDOWS-44-88-JSONSCHEMA-STARTUP-FIX",
-    "commit":  "afa5773b010264c69019f240f79f5969a47c6645",
-    "installer_sha256":  "766d28551ce1131f65c56954dc1c81bda7564afbfea4de629c056ef94a8dc137",
-    "installer_url":  "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-0.1.0-alpha.44-routing-conveyor.88/JawnSort-Desktop-Alpha-Windows-0.1.0-alpha.44-routing-conveyor.88.exe",
-    "promoted_at_utc":  "2026-09-04T04:53:54.6818132+00:00",
+    "release_name":  "FREEDOM 1.0",
+    "version":  "1.0.0",
+    "candidate_id":  "FREEDOM-1-0",
+    "commit":  "25a64d6d2be0962c8edc3f9faeb3ed431bc69c52",
+    "installer_sha256":  "90a90e528eafc299d78fe30fdbbbb6d2b4a8dd99665ae2ff12b31eca9d6cf3b2",
+    "installer_url":  "https://github.com/iszzyprodizzy/jungle-star-living-archive/releases/download/founder-hq-25a64d6d2be0/JawnSort.Founder.HQ.Setup.exe",
+    "promoted_at_utc":  "2026-09-18T02:46:27.9675060Z",
     "glitchbot_decision":  "PROMOTE",
-    "promotion_receipt":  "packaged runtime stayed alive 8 seconds; jsonschema dependency proven; Windows launcher and Inno passed",
-    "notes":  "Cross-device Creator Memory preserved. Raw creator payloads remain on source devices."
+    "promotion_receipt":  "Founder accepted 28-room body and JW Comics work door. Freedom 1.0 built from one source for Mac and Windows.",
+    "notes":  "Alpha lineage retired from active product and preserved as Mechanics Workshop / GlitchBot / Heimdall history."
 }
