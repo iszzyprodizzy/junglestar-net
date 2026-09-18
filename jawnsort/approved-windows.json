@@ -3,14 +3,14 @@
     "channel":  "approved-windows",
     "status":  "PROMOTED",
     "product":  "JawnSort Pro",
-    "release_name":  "FREEDOM 1.1",
-    "version":  "1.1.0",
-    "candidate_id":  "FREEDOM-1-1",
-    "commit":  "51af8633a37c79343c4c50b3ed628d37becde9fd",
-    "installer_sha256":  "c9069283619b00adb016487dd02c8b462776ac7e234feff20fd9f1e7fc2f92e7",
-    "installer_url":  "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-freedom-1.1/JawnSort-Pro-Freedom-1.1-Windows.exe",
-    "promoted_at_utc":  "2026-09-18T19:32:49.3038689Z",
+    "release_name":  "PHASE ONE",
+    "version":  "1.2.0",
+    "candidate_id":  "PHASE-ONE-SINGLE-ROUND-20260918",
+    "commit":  "103083b260faf9f3b838062595ff091ad0153a72",
+    "installer_sha256":  "0164463ffb55c47f6b67d0cfee1d0dffc9fb70c6bce19b3deb2ecb95ae69c7d1",
+    "installer_url":  "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-phase-one-1.2.0/JawnSort-Pro-Phase-One-1.2.0-Windows.exe",
+    "promoted_at_utc":  "2026-09-18T22:00:31.2608937Z",
     "glitchbot_decision":  "PROMOTE",
-    "promotion_receipt":  "Freedom 1.1 cross-platform build passed. Jawn Rail visible. Public Windows installer published and SHA locked.",
-    "notes":  "Founder Use Cycle 1 delivery regression repaired. Update button is the normal Windows delivery rail."
+    "promotion_receipt":  "Phase One source, Mac and Windows builds passed. Exact private Windows release SHA verified. Same installer promoted directly to public delivery without Actions artifact storage.",
+    "notes":  "Customer Zero Phase One. Normal installed JawnSort must update, relaunch and expose current body before Dunzo."
 }
