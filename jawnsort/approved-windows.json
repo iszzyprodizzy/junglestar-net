@@ -8,9 +8,9 @@
     "candidate_id":  "FREEDOM-1-0",
     "commit":  "25a64d6d2be0962c8edc3f9faeb3ed431bc69c52",
     "installer_sha256":  "90a90e528eafc299d78fe30fdbbbb6d2b4a8dd99665ae2ff12b31eca9d6cf3b2",
-    "installer_url":  "https://github.com/iszzyprodizzy/jungle-star-living-archive/releases/download/founder-hq-25a64d6d2be0/JawnSort.Founder.HQ.Setup.exe",
-    "promoted_at_utc":  "2026-09-18T02:46:27.9675060Z",
+    "installer_url":  "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-freedom-1.0/JawnSort-Pro-Freedom-1.0-Windows.exe",
+    "promoted_at_utc":  "2026-09-18T03:01:07.3034167Z",
     "glitchbot_decision":  "PROMOTE",
-    "promotion_receipt":  "Founder accepted 28-room body and JW Comics work door. Freedom 1.0 built from one source for Mac and Windows.",
-    "notes":  "Alpha lineage retired from active product and preserved as Mechanics Workshop / GlitchBot / Heimdall history."
+    "promotion_receipt":  "Founder accepted 28-room body. Freedom 1.0 Windows installer is publicly retrievable and SHA verified.",
+    "notes":  "Private release 404 fixed by public binary delivery. Alpha history preserved in Mechanics Workshop."
 }
