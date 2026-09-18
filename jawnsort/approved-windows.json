@@ -3,14 +3,14 @@
     "channel":  "approved-windows",
     "status":  "PROMOTED",
     "product":  "JawnSort Pro",
-    "release_name":  "FREEDOM 1.0",
-    "version":  "1.0.0",
-    "candidate_id":  "FREEDOM-1-0",
-    "commit":  "25a64d6d2be0962c8edc3f9faeb3ed431bc69c52",
-    "installer_sha256":  "90a90e528eafc299d78fe30fdbbbb6d2b4a8dd99665ae2ff12b31eca9d6cf3b2",
-    "installer_url":  "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-freedom-1.0/JawnSort-Pro-Freedom-1.0-Windows.exe",
-    "promoted_at_utc":  "2026-09-18T03:01:07.3034167Z",
+    "release_name":  "FREEDOM 1.1",
+    "version":  "1.1.0",
+    "candidate_id":  "FREEDOM-1-1",
+    "commit":  "51af8633a37c79343c4c50b3ed628d37becde9fd",
+    "installer_sha256":  "c9069283619b00adb016487dd02c8b462776ac7e234feff20fd9f1e7fc2f92e7",
+    "installer_url":  "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-freedom-1.1/JawnSort-Pro-Freedom-1.1-Windows.exe",
+    "promoted_at_utc":  "2026-09-18T19:32:49.3038689Z",
     "glitchbot_decision":  "PROMOTE",
-    "promotion_receipt":  "Founder accepted 28-room body. Freedom 1.0 Windows installer is publicly retrievable and SHA verified.",
-    "notes":  "Private release 404 fixed by public binary delivery. Alpha history preserved in Mechanics Workshop."
+    "promotion_receipt":  "Freedom 1.1 cross-platform build passed. Jawn Rail visible. Public Windows installer published and SHA locked.",
+    "notes":  "Founder Use Cycle 1 delivery regression repaired. Update button is the normal Windows delivery rail."
 }
