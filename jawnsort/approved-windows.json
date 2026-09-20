@@ -3,14 +3,14 @@
     "channel":  "approved-windows",
     "status":  "PROMOTED",
     "product":  "JawnSort Pro",
-    "release_name":  "PHASE ONE",
-    "version":  "1.2.0",
-    "candidate_id":  "PHASE-ONE-SINGLE-ROUND-20260918",
-    "commit":  "103083b260faf9f3b838062595ff091ad0153a72",
-    "installer_sha256":  "0164463ffb55c47f6b67d0cfee1d0dffc9fb70c6bce19b3deb2ecb95ae69c7d1",
-    "installer_url":  "https://github.com/iszzyprodizzy/junglestar-net/releases/download/jawnsort-phase-one-1.2.0/JawnSort-Pro-Phase-One-1.2.0-Windows.exe",
-    "promoted_at_utc":  "2026-09-18T22:00:31.2608937Z",
+    "release_name":  "FOUNDER INTELLIGENCE",
+    "version":  "1.2.1",
+    "candidate_id":  "FOUNDER-INTELLIGENCE-dd661732",
+    "commit":  "dd6617320aabf8541b1195b247ca5ee0cde121eb",
+    "installer_sha256":  "3802ee117f1a07935bd0193fd3d0feb1f9a64b900fed21e2d49179be8cc3fab0",
+    "installer_url":  "https://github.com/iszzyprodizzy/jungle-star-living-archive/releases/download/jawnsort-founder-intelligence-1.2.1/JawnSort-Pro-Founder-Intelligence-1.2.1-Windows.exe",
+    "promoted_at_utc":  "2026-09-20T02:20:45.6369088Z",
     "glitchbot_decision":  "PROMOTE",
-    "promotion_receipt":  "Phase One source, Mac and Windows builds passed. Exact private Windows release SHA verified. Same installer promoted directly to public delivery without Actions artifact storage.",
-    "notes":  "Customer Zero Phase One. Normal installed JawnSort must update, relaunch and expose current body before Dunzo."
+    "promotion_receipt":  "Exact locked source dd6617320aabf8541b1195b247ca5ee0cde121eb -\u003e exact package SHA256 3802ee117f1a07935bd0193fd3d0feb1f9a64b900fed21e2d49179be8cc3fab0 -\u003e normal Windows update lineage.",
+    "notes":  "Customer Zero visible trophy. Normal installed JawnSort must expose current Founder body."
 }
