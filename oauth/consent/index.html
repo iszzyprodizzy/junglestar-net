@@ -132,19 +132,26 @@ function signIn() {
   });
 }
 
-// ── Cancel ─────────────────────────────────────────────────────────────────
-function cancel() {
-  if (authId) {
-    // Tell Supabase the user denied — redirect with error so ChatGPT gets a clean denial
-    const denyUrl = `${SUPABASE_URL}/auth/v1/oauth/authorize?` +
-      `authorization_id=${encodeURIComponent(authId)}&error=access_denied`;
-    window.location.href = denyUrl;
-  } else {
+// ── Cancel — deny via Supabase OAuth server, then redirect ────────────────
+async function cancel() {
+  if (!authId) {
     history.back();
+    return;
+  }
+  try {
+    const { data, error } = await sb.auth.oauth.denyAuthorization(authId);
+    if (error) throw error;
+    if (data && data.redirect_url) {
+      window.location.href = data.redirect_url;
+    } else {
+      history.back();
+    }
+  } catch (err) {
+    setStatus(err.message || "Cancel failed.", true);
   }
 }
 
-// ── Authorize — POST approval to Supabase OAuth server ────────────────────
+// ── Authorize — approve via Supabase OAuth server, then redirect ──────────
 async function authorize() {
   if (!authId) {
     setStatus("Missing authorization_id — cannot proceed.", true);
@@ -154,35 +161,12 @@ async function authorize() {
   setStatus("Authorizing…");
 
   try {
-    const { data: { session } } = await sb.auth.getSession();
-    if (!session) throw new Error("Session lost — please sign in again.");
-
-    const resp = await fetch(
-      `${SUPABASE_URL}/auth/v1/oauth/authorize`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type":  "application/json",
-          "Authorization": `Bearer ${session.access_token}`,
-          "apikey":        SUPABASE_ANON,
-        },
-        body: JSON.stringify({ authorization_id: authId }),
-      }
-    );
-
-    if (!resp.ok) {
-      const err = await resp.json().catch(() => ({}));
-      throw new Error(err.msg || err.error_description || `Server error ${resp.status}`);
-    }
-
-    const result = await resp.json();
-
-    // Supabase returns a redirect_to URL pointing back to ChatGPT with the code
-    if (result.redirect_to) {
+    const { data, error } = await sb.auth.oauth.approveAuthorization(authId);
+    if (error) throw error;
+    if (data && data.redirect_url) {
       setStatus("Authorized. Returning to app…");
-      window.location.href = result.redirect_to;
+      window.location.href = data.redirect_url;
     } else {
-      // Fallback: Supabase may have already redirected via the response itself
       setStatus("Authorized.");
     }
   } catch (err) {
@@ -191,40 +175,23 @@ async function authorize() {
   }
 }
 
-// ── Load authorization details ─────────────────────────────────────────────
-async function loadAuthorizationDetails(accessToken) {
+// ── Load authorization details via Supabase OAuth server ───────────────────
+async function loadAuthorizationDetails() {
   if (!authId) {
     setStatus("No authorization_id in URL.", true);
     return false;
   }
 
   try {
-    const resp = await fetch(
-      `${SUPABASE_URL}/auth/v1/oauth/authorize?authorization_id=${encodeURIComponent(authId)}`,
-      {
-        headers: {
-          "Authorization": `Bearer ${accessToken}`,
-          "apikey":        SUPABASE_ANON,
-        }
-      }
-    );
-
-    if (!resp.ok) {
-      const err = await resp.json().catch(() => ({}));
-      // If 400/404 the authorization may be expired
-      setStatus(err.msg || `Could not load authorization details (${resp.status}).`, true);
-      return false;
-    }
-
-    const details = await resp.json();
-    const clientName = details?.client?.name || details?.client_id || "an external app";
+    const { data, error } = await sb.auth.oauth.getAuthorizationDetails(authId);
+    if (error) throw error;
+    const clientName = data?.client?.name || data?.client_id || "an external app";
     appNameDisplay.textContent = clientName;
     return true;
 
-  } catch {
-    // Non-fatal — show generic name and let user proceed
-    appNameDisplay.textContent = "ChatGPT / JawnSort Pro Connector";
-    return true;
+  } catch (err) {
+    setStatus(err.message || "Could not load authorization details.", true);
+    return false;
   }
 }
 
@@ -254,7 +221,7 @@ async function init() {
   userPillWrap.innerHTML = `<div class="user-pill">✓ ${email}</div>`;
 
   // Load app name from authorization details
-  await loadAuthorizationDetails(session.access_token);
+  await loadAuthorizationDetails();
 
   btnAuthorize.disabled = false;
   showSection("authorize");
