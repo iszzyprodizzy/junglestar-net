@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connect JawnSort Pro</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+  <style>
+    .consent-wrap{max-width:480px;margin:3rem auto;padding:0 1rem}
+    .consent-card{background:white;border:1px solid var(--line);border-radius:1.25rem;padding:2rem;box-shadow:0 10px 24px #0000000d;text-align:center}
+    .consent-card h1{color:var(--leaf);font-size:1.6rem;margin:0 0 .5rem}
+    .consent-card .sub{color:#555;margin:0 0 1.5rem;font-size:.95rem}
+    .app-name{font-weight:900;color:var(--leaf)}
+    .scope-list{text-align:left;margin:1rem 0 1.5rem;padding:0;list-style:none}
+    .scope-list li{padding:.4rem 0;border-bottom:1px solid var(--line);font-size:.92rem}
+    .scope-list li:last-child{border:none}
+    .scope-list li::before{content:"✓ ";color:var(--leaf);font-weight:900}
+    .btn-row{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:1.25rem}
+    .btn-auth{padding:.85rem 1.5rem;border-radius:999px;font-weight:900;font-size:1rem;cursor:pointer;border:none;text-decoration:none;display:inline-block}
+    .btn-authorize{background:var(--leaf);color:white}
+    .btn-authorize:disabled{background:#aaa;cursor:not-allowed}
+    .btn-cancel{background:white;color:var(--leaf);border:2px solid var(--leaf)}
+    .btn-signin{background:var(--gold);color:var(--ink)}
+    .status{margin:1rem 0;font-size:.9rem;color:#555;min-height:1.4rem}
+    .error-msg{color:#c0392b;font-weight:700}
+    .user-pill{display:inline-block;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:.3rem .9rem;font-size:.88rem;margin-bottom:1rem}
+    #authorize-section{display:none}
+    #signin-section{display:none}
+    #loading-section{display:block}
+  </style>
+</head>
+<body>
+<div data-site-header></div>
+<main>
+<div class="consent-wrap">
+  <div class="consent-card">
+    <h1>Connect JawnSort Pro</h1>
+    <p class="sub">An external app is requesting access to your JawnSort Pro workspace.</p>
+
+    <!-- Loading state -->
+    <div id="loading-section">
+      <p class="status">Checking your session…</p>
+    </div>
+
+    <!-- Not signed in -->
+    <div id="signin-section">
+      <p class="status">Sign in to JawnSort Pro to authorize this connection.</p>
+      <button class="btn-auth btn-signin" id="btn-signin" onclick="signIn()">
+        Sign in with Google
+      </button>
+      <p style="font-size:.82rem;color:#888;margin-top:1rem">
+        You will be returned to this authorization request after signing in.
+      </p>
+    </div>
+
+    <!-- Signed in — show consent -->
+    <div id="authorize-section">
+      <div id="user-pill-wrap"></div>
+      <div id="app-info">
+        <p style="margin:.25rem 0 1rem">
+          <strong id="app-name-display" class="app-name"></strong>
+          wants permission to:
+        </p>
+        <ul class="scope-list">
+          <li>Search your JawnSort memory (read-only)</li>
+          <li>Send conversations to JawnSort (governed write)</li>
+          <li>Create notes and tasks in JawnSort</li>
+        </ul>
+      </div>
+      <p class="status" id="status-msg"></p>
+      <div class="btn-row">
+        <button class="btn-auth btn-authorize" id="btn-authorize" onclick="authorize()" disabled>
+          Authorize
+        </button>
+        <button class="btn-auth btn-cancel" onclick="cancel()">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+</main>
+<div data-site-footer></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../../assets/js/site-shell.js"></script>
+<script>
+// ── Config ─────────────────────────────────────────────────────────────────
+const SUPABASE_URL  = "https://rekuyqcdznqdljkuesjl.supabase.co";
+const SUPABASE_ANON = "sb_publishable_oUXPdrcOMfUGdqkVkJvIWg_X-Xb13-R";
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+// ── Read authorization_id from URL — must survive the sign-in round-trip ──
+const params        = new URLSearchParams(window.location.search);
+const authId        = params.get("authorization_id") || "";
+const returnTo      = window.location.href;  // full URL including authorization_id
+
+// ── Sections ───────────────────────────────────────────────────────────────
+const loadingSection   = document.getElementById("loading-section");
+const signinSection    = document.getElementById("signin-section");
+const authorizeSection = document.getElementById("authorize-section");
+const statusMsg        = document.getElementById("status-msg");
+const btnAuthorize     = document.getElementById("btn-authorize");
+const appNameDisplay   = document.getElementById("app-name-display");
+const userPillWrap     = document.getElementById("user-pill-wrap");
+
+function showSection(name) {
+  loadingSection.style.display   = name === "loading"    ? "block" : "none";
+  signinSection.style.display    = name === "signin"     ? "block" : "none";
+  authorizeSection.style.display = name === "authorize"  ? "block" : "none";
+}
+
+function setStatus(msg, isError) {
+  statusMsg.textContent  = msg;
+  statusMsg.className    = isError ? "status error-msg" : "status";
+}
+
+// ── Sign in — preserve the full consent URL as the redirect target ─────────
+function signIn() {
+  // Store the current consent URL so we can return here after OAuth
+  sessionStorage.setItem("consent_return_url", returnTo);
+
+  sb.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: returnTo,   // Supabase will redirect back here after login
+      scopes:     "openid profile email",
+    }
+  });
+}
+
+// ── Cancel ─────────────────────────────────────────────────────────────────
+function cancel() {
+  if (authId) {
+    // Tell Supabase the user denied — redirect with error so ChatGPT gets a clean denial
+    const denyUrl = `${SUPABASE_URL}/auth/v1/oauth/authorize?` +
+      `authorization_id=${encodeURIComponent(authId)}&error=access_denied`;
+    window.location.href = denyUrl;
+  } else {
+    history.back();
+  }
+}
+
+// ── Authorize — POST approval to Supabase OAuth server ────────────────────
+async function authorize() {
+  if (!authId) {
+    setStatus("Missing authorization_id — cannot proceed.", true);
+    return;
+  }
+  btnAuthorize.disabled = true;
+  setStatus("Authorizing…");
+
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) throw new Error("Session lost — please sign in again.");
+
+    const resp = await fetch(
+      `${SUPABASE_URL}/auth/v1/oauth/authorize`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":  "application/json",
+          "Authorization": `Bearer ${session.access_token}`,
+          "apikey":        SUPABASE_ANON,
+        },
+        body: JSON.stringify({ authorization_id: authId }),
+      }
+    );
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      throw new Error(err.msg || err.error_description || `Server error ${resp.status}`);
+    }
+
+    const result = await resp.json();
+
+    // Supabase returns a redirect_to URL pointing back to ChatGPT with the code
+    if (result.redirect_to) {
+      setStatus("Authorized. Returning to app…");
+      window.location.href = result.redirect_to;
+    } else {
+      // Fallback: Supabase may have already redirected via the response itself
+      setStatus("Authorized.");
+    }
+  } catch (err) {
+    setStatus(err.message || "Authorization failed.", true);
+    btnAuthorize.disabled = false;
+  }
+}
+
+// ── Load authorization details ─────────────────────────────────────────────
+async function loadAuthorizationDetails(accessToken) {
+  if (!authId) {
+    setStatus("No authorization_id in URL.", true);
+    return false;
+  }
+
+  try {
+    const resp = await fetch(
+      `${SUPABASE_URL}/auth/v1/oauth/authorize?authorization_id=${encodeURIComponent(authId)}`,
+      {
+        headers: {
+          "Authorization": `Bearer ${accessToken}`,
+          "apikey":        SUPABASE_ANON,
+        }
+      }
+    );
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      // If 400/404 the authorization may be expired
+      setStatus(err.msg || `Could not load authorization details (${resp.status}).`, true);
+      return false;
+    }
+
+    const details = await resp.json();
+    const clientName = details?.client?.name || details?.client_id || "an external app";
+    appNameDisplay.textContent = clientName;
+    return true;
+
+  } catch {
+    // Non-fatal — show generic name and let user proceed
+    appNameDisplay.textContent = "ChatGPT / JawnSort Pro Connector";
+    return true;
+  }
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+async function init() {
+  showSection("loading");
+
+  if (!authId) {
+    setStatus("No authorization_id — this page must be opened by an OAuth flow.", true);
+    showSection("authorize");   // show the card body so the error is visible
+    btnAuthorize.disabled = true;
+    return;
+  }
+
+  // Check for existing browser session
+  const { data: { session } } = await sb.auth.getSession();
+
+  if (!session) {
+    // No browser session — show sign-in button
+    // authorization_id is in the current URL; signIn() will return here
+    showSection("signin");
+    return;
+  }
+
+  // Session exists — show user pill
+  const email = session.user?.email || session.user?.id || "signed in";
+  userPillWrap.innerHTML = `<div class="user-pill">✓ ${email}</div>`;
+
+  // Load app name from authorization details
+  await loadAuthorizationDetails(session.access_token);
+
+  btnAuthorize.disabled = false;
+  showSection("authorize");
+}
+
+// Handle the post-OAuth redirect back here:
+// Supabase appends #access_token=... — let the SDK process it, then re-init
+sb.auth.onAuthStateChange((event, session) => {
+  if (event === "SIGNED_IN" && session) {
+    // Remove the hash so it doesn't clutter the URL
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+    init();
+  }
+});
+
+init();
+</script>
+</body>
+</html>
