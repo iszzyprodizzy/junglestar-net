@@ -8,7 +8,6 @@ const siteNav = `
     <a href="resources.html">Resources</a>
     <a href="archive.html">Archive</a>
     <a href="games.html">Games</a>
-    <a href="cinema.html">CinemaBot</a>
     <a href="donate.html">Donate</a>
     <a href="sponsor.html">Sponsor</a>
     <a href="shop.html">Shop</a>
