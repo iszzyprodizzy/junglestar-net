@@ -1,37 +1,1725 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Home | Jungle Star</title>
-  <meta name="description" content="Jungle Star - Build A Better World Academy, The Great Food Fight, publishing, tech, music, and youth missions.">
-  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>Jungle Star | Build. Create. Explore.</title>
+
+  <meta
+    name="description"
+    content="Enter Jungle Star: kids, comics, games, music, books, video, community, education, products and the Build-A-Better-World mission."
+  >
+
+  <style>
+
+    :root {
+      --bg: #07090d;
+      --panel: #11151d;
+      --panel2: #171d27;
+      --ink: #ffffff;
+      --muted: #aeb5c2;
+      --line: #303846;
+      --gold: #e2bf67;
+      --green: #8ee39d;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          #202638 0%,
+          #0b0e15 42%,
+          #06070a 100%
+        );
+      color: var(--ink);
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      line-height: 1.55;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .wrap {
+      width: min(var(--max), 92vw);
+      margin: auto;
+    }
+
+
+    /* ======================================================
+       TOP NAV
+    ====================================================== */
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: rgba(7,9,13,.9);
+      backdrop-filter: blur(18px);
+    }
+
+    .topbar-inner {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-weight: 950;
+      letter-spacing: .06em;
+    }
+
+    .brand-star {
+      color: var(--gold);
+      font-size: 1.35rem;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .top-link {
+      text-decoration: none;
+      color: #d9dde5;
+      font-size: .92rem;
+    }
+
+    .icon-button {
+      width: 46px;
+      height: 46px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: #11151d;
+      color: #fff;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+    }
+
+    .icon-button:hover {
+      background: #1b2230;
+    }
+
+
+    /* ======================================================
+       GOOGLE-STYLE JUNGLE STAR LAUNCHER
+    ====================================================== */
+
+    .launcher {
+      position: fixed;
+      right: 24px;
+      top: 82px;
+      z-index: 200;
+
+      width: min(420px, calc(100vw - 30px));
+      max-height: calc(100vh - 105px);
+      overflow-y: auto;
+
+      padding: 18px;
+
+      border: 1px solid var(--line);
+      border-radius: 25px;
+
+      background: #10141c;
+
+      box-shadow:
+        0 25px 80px rgba(0,0,0,.55);
+
+      display: none;
+    }
+
+    .launcher.open {
+      display: block;
+    }
+
+    .launcher h2 {
+      margin: 3px 0 6px;
+    }
+
+    .launcher-copy {
+      margin: 0 0 15px;
+      color: var(--muted);
+      font-size: .86rem;
+    }
+
+    .launcher-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+    }
+
+    .app {
+      min-height: 105px;
+
+      padding: 13px 7px;
+
+      border-radius: 17px;
+
+      text-decoration: none;
+      text-align: center;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      gap: 8px;
+    }
+
+    .app:hover {
+      background: #1b2230;
+    }
+
+    .app-icon {
+      width: 48px;
+      height: 48px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 15px;
+
+      background: #202735;
+
+      font-size: 1.5rem;
+    }
+
+    .app-name {
+      font-size: .77rem;
+      line-height: 1.15;
+    }
+
+
+    /* ======================================================
+       HERO
+    ====================================================== */
+
+    .hero {
+      padding: 92px 0 66px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-size: .78rem;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: .16em 0;
+      font-size: clamp(3.7rem, 10vw, 8.5rem);
+      line-height: .84;
+      letter-spacing: -.055em;
+    }
+
+    .hero-copy {
+      max-width: 790px;
+      margin: 23px auto;
+
+      color: #d0d5df;
+
+      font-size: clamp(1rem, 2vw, 1.25rem);
+    }
+
+
+    /* ======================================================
+       SEARCH
+    ====================================================== */
+
+    .search-box {
+      max-width: 760px;
+      margin: 38px auto 0;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      height: 62px;
+
+      border: 1px solid #394354;
+      border-radius: 999px;
+
+      background: #111720;
+      color: white;
+
+      padding: 0 58px 0 24px;
+
+      outline: none;
+
+      box-shadow:
+        0 12px 40px rgba(0,0,0,.25);
+    }
+
+    .search-box input:focus {
+      border-color: var(--gold);
+    }
+
+    .search-mark {
+      position: absolute;
+      right: 22px;
+      top: 31px;
+      transform: translateY(-50%);
+      opacity: .75;
+    }
+
+    .search-hint {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: .84rem;
+    }
+
+
+    /* ======================================================
+       SECTIONS
+    ====================================================== */
+
+    section {
+      padding: 46px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+
+      gap: 25px;
+
+      margin-bottom: 23px;
+    }
+
+    .section-head h2 {
+      margin: 5px 0 0;
+
+      font-size: clamp(2rem, 5vw, 3.6rem);
+
+      letter-spacing: -.035em;
+    }
+
+    .section-head p {
+      max-width: 590px;
+      color: var(--muted);
+    }
+
+
+    /* ======================================================
+       PUBLIC ROOM CARDS
+    ====================================================== */
+
+    .world-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+      gap: 16px;
+    }
+
+    .world-card {
+      min-height: 225px;
+
+      padding: 24px;
+
+      border: 1px solid var(--line);
+      border-radius: 23px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #171d27,
+          #0c0f15
+        );
+
+      text-decoration: none;
+
+      transition:
+        transform .18s ease,
+        border-color .18s ease;
+    }
+
+    .world-card:hover {
+      transform: translateY(-4px);
+      border-color: #68758b;
+    }
+
+    .world-card .icon {
+      font-size: 2.1rem;
+    }
+
+    .world-card h3 {
+      margin: 19px 0 7px;
+      font-size: 1.5rem;
+    }
+
+    .world-card p {
+      margin: 0;
+      color: #bbc1cb;
+    }
+
+    .go {
+      display: inline-block;
+      margin-top: 21px;
+
+      color: var(--gold);
+
+      font-weight: 850;
+    }
+
+
+    /* ======================================================
+       KIDS FEATURE
+    ====================================================== */
+
+    .kids-feature {
+      padding: 28px;
+
+      border: 1px solid #405c4a;
+      border-radius: 30px;
+
+      background:
+        radial-gradient(
+          circle at 85% 10%,
+          rgba(142,227,157,.18),
+          transparent 35%
+        ),
+        linear-gradient(
+          145deg,
+          #14231a,
+          #0c1110
+        );
+    }
+
+    .kids-feature h2 {
+      margin: .15em 0;
+
+      font-size: clamp(3rem, 7vw, 5.5rem);
+
+      line-height: .9;
+    }
+
+    .kids-feature p {
+      max-width: 760px;
+      color: #cfddd1;
+    }
+
+
+    /* ======================================================
+       JW COMICS FEATURE
+    ====================================================== */
+
+    .feature {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      gap: 32px;
+
+      align-items: center;
+
+      padding: 25px;
+
+      border: 1px solid #3b3540;
+      border-radius: 30px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #17121d,
+          #0b0c10
+        );
+    }
+
+    .feature img {
+      width: 100%;
+
+      display: block;
+
+      border-radius: 21px;
+
+      max-height: 650px;
+
+      object-fit: cover;
+    }
+
+    .feature h2 {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+
+      line-height: .94;
+
+      margin: .15em 0;
+    }
+
+    .feature p {
+      color: #c8ccd5;
+    }
+
+
+    /* ======================================================
+       BUTTONS
+    ====================================================== */
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 10px;
+
+      margin-top: 22px;
+    }
+
+    .btn {
+      display: inline-block;
+
+      padding: 12px 18px;
+
+      border: 1px solid #4c5566;
+      border-radius: 999px;
+
+      text-decoration: none;
+
+      font-weight: 850;
+    }
+
+    .btn.primary {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #111;
+    }
+
+    .btn.green {
+      background: var(--green);
+      border-color: var(--green);
+      color: #071108;
+    }
+
+
+    /* ======================================================
+       BUILD / IMPACT
+    ====================================================== */
+
+    .mission {
+      padding: 35px;
+
+      border-radius: 27px;
+
+      background: #131921;
+
+      border: 1px solid var(--line);
+    }
+
+    .mission h2 {
+      margin: 0;
+
+      font-size: clamp(2.2rem, 5vw, 4rem);
+    }
+
+    .mission p {
+      max-width: 770px;
+      color: #c4c9d3;
+    }
+
+
+    /* ======================================================
+       STATUS / LINKSMITH
+    ====================================================== */
+
+    .build-status {
+      margin: 18px 0;
+
+      padding: 14px 16px;
+
+      border:
+        1px solid rgba(226,191,103,.35);
+
+      border-radius: 14px;
+
+      background:
+        rgba(226,191,103,.08);
+
+      color: #d8dce5;
+    }
+
+    .build-status strong {
+      display: block;
+
+      color: var(--gold);
+
+      margin-bottom: 4px;
+    }
+
+
+    footer {
+      margin-top: 55px;
+
+      border-top: 1px solid var(--line);
+
+      padding: 35px 0 65px;
+
+      color: var(--muted);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      gap: 30px;
+    }
+
+
+    /* ======================================================
+       SEARCH
+    ====================================================== */
+
+    .hidden-by-search {
+      display: none !important;
+    }
+
+
+    /* ======================================================
+       MOBILE
+    ====================================================== */
+
+    @media(max-width:850px) {
+
+      .world-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .feature {
+        grid-template-columns: 1fr;
+      }
+
+      .top-link {
+        display: none;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+
+    @media(max-width:560px) {
+
+      .hero {
+        padding-top: 64px;
+      }
+
+      .world-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .launcher-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+    }
+
+  </style>
 </head>
+
+
 <body>
-<div data-site-header></div>
+
+
+<!-- ======================================================
+     HEADER
+====================================================== -->
+
+<header class="topbar">
+
+  <div class="wrap topbar-inner">
+
+    <a class="brand" href="/">
+      <span class="brand-star">★</span>
+      JUNGLE STAR
+    </a>
+
+
+    <div class="top-actions">
+
+      <a class="top-link" href="shop/">
+        Shop
+      </a>
+
+      <a class="top-link" href="sponsor/">
+        Support
+      </a>
+
+      <button
+        class="icon-button"
+        id="launcherButton"
+        type="button"
+        aria-label="Open Jungle Star rooms"
+        aria-expanded="false"
+      >
+        ⠿
+      </button>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+
+<!-- ======================================================
+     PUBLIC APP LAUNCHER
+====================================================== -->
+
+<aside
+  class="launcher"
+  id="launcher"
+  aria-label="Jungle Star public rooms"
+>
+
+  <h2>
+    Where do you want to go?
+  </h2>
+
+  <p class="launcher-copy">
+    Pick a universe. You do not need the whole map.
+  </p>
+
+
+  <div class="launcher-grid">
+
+
+    <a class="app" href="kids/">
+      <span class="app-icon">🌟</span>
+      <span class="app-name">
+        Jungle Star Kids
+      </span>
+    </a>
+
+
+    <a class="app" href="jw-comics/">
+      <span class="app-icon">⚡</span>
+      <span class="app-name">
+        JW Comics
+      </span>
+    </a>
+
+
+    <a class="app" href="arcade/">
+      <span class="app-icon">🕹️</span>
+      <span class="app-name">
+        Jungle Star Games
+      </span>
+    </a>
+
+
+    <a class="app" href="animal-radio/">
+      <span class="app-icon">🎵</span>
+      <span class="app-name">
+        Animal Radio
+      </span>
+    </a>
+
+
+    <a class="app" href="jungle-star-tv/">
+      <span class="app-icon">📺</span>
+      <span class="app-name">
+        Jungle Star TV
+      </span>
+    </a>
+
+
+    <a class="app" href="book-club/">
+      <span class="app-icon">📚</span>
+      <span class="app-name">
+        Book Club
+      </span>
+    </a>
+
+
+    <a class="app" href="vox-news/">
+      <span class="app-icon">📰</span>
+      <span class="app-name">
+        Vox
+      </span>
+    </a>
+
+
+    <a class="app" href="cinemabot/">
+      <span class="app-icon">🎬</span>
+      <span class="app-name">
+        CinemaBot
+      </span>
+    </a>
+
+
+    <a class="app" href="social-jawn/">
+      <span class="app-icon">👥</span>
+      <span class="app-name">
+        Social Jawn
+      </span>
+    </a>
+
+
+    <a class="app" href="publishing/">
+      <span class="app-icon">✍️</span>
+      <span class="app-name">
+        Publishing
+      </span>
+    </a>
+
+
+    <a class="app" href="academy/">
+      <span class="app-icon">🧠</span>
+      <span class="app-name">
+        Academy
+      </span>
+    </a>
+
+
+    <a class="app" href="coaching/">
+      <span class="app-icon">🧭</span>
+      <span class="app-name">
+        Coaching
+      </span>
+    </a>
+
+
+    <a class="app" href="choa/">
+      <span class="app-icon">🏠</span>
+      <span class="app-name">
+        CHOA
+      </span>
+    </a>
+
+
+    <a class="app" href="saving-the-world/">
+      <span class="app-icon">🌍</span>
+      <span class="app-name">
+        Saving the World
+      </span>
+    </a>
+
+
+    <a class="app" href="shop/">
+      <span class="app-icon">🛍️</span>
+      <span class="app-name">
+        Shop
+      </span>
+    </a>
+
+
+    <a class="app" href="sponsor/">
+      <span class="app-icon">🤝</span>
+      <span class="app-name">
+        Support
+      </span>
+    </a>
+
+  </div>
+
+</aside>
+
+
+
 <main>
 
+
+<!-- ======================================================
+     HERO
+====================================================== -->
+
 <section class="hero">
-  <p class="eyebrow">Build A Better World Academy + The Great Food Fight</p>
-  <h1>Welcome to Jungle Star.</h1>
-  <p class="lead">We turn chaos into composure, neighborhood ideas into curriculum, and children's creativity into ownership.</p>
-  <p><strong>Books. Bots. Gardens. Drones. Soap. Candles. Music. Comics. Games. Community systems.</strong></p>
-  <div class="button-row">
-    <a class="btn primary" href="donate.html">Support the Mission</a>
-    <a class="btn" href="academy.html">Join the Academy</a>
-    <a class="btn" href="games.html">Follow the Games</a>
-    <a class="btn" href="shop.html">Shop Merch</a>
+
+  <div class="wrap">
+
+    <div class="eyebrow">
+      Build • Create • Publish • Play • Learn
+    </div>
+
+
+    <h1>
+      Welcome to<br>
+      Jungle Star.
+    </h1>
+
+
+    <p class="hero-copy">
+
+      Comics, games, books, music, video, education,
+      community systems, products and real-world building—
+
+      <strong>
+        all connected.
+      </strong>
+
+    </p>
+
+
+    <div class="search-box">
+
+      <input
+        id="worldSearch"
+        type="search"
+        placeholder="What are you looking for?"
+        autocomplete="off"
+        aria-label="Search Jungle Star rooms"
+      >
+
+      <span class="search-mark">
+        🔎
+      </span>
+
+      <div class="search-hint">
+        Try comics, games, music, books, kids, movies, news,
+        school, housing or shop.
+      </div>
+
+    </div>
+
   </div>
+
 </section>
-<section class="grid three">
-<article class="card"><h3>Build A Better World Academy</h3><p>Children do not need to wait until adulthood to learn ownership. They can learn now.</p><a class="btn" href="academy.html">Explore Academy</a></article><article class="card"><h3>The Great Food Fight</h3><p>Healthy food fights back in an educational action universe powered by fruits, vegetables, hydration, and teamwork.</p><a class="btn" href="games.html">Enter the Game</a></article><article class="card"><h3>Resources</h3><p>Helpful things for parents, students, teachers, sponsors, volunteers, and future builders.</p><a class="btn" href="resources.html">Open Resources</a></article>
+
+
+
+<!-- ======================================================
+     JUNGLE STAR KIDS
+====================================================== -->
+
+<section>
+
+  <div class="wrap">
+
+    <div class="kids-feature">
+
+      <div class="eyebrow">
+        🌟 A universe built for the kids
+      </div>
+
+
+      <h2>
+        Jungle Star Kids
+      </h2>
+
+
+      <p>
+
+        Watch cool stuff. Play games. Read stories.
+        Listen to music. Learn something.
+        Make something.
+
+        Jungle Star Kids is the kid-first doorway
+        into the parts of Jungle Star made for young explorers.
+
+      </p>
+
+
+      <div class="buttons">
+
+        <a
+          class="btn green"
+          href="kids/"
+        >
+          Enter Jungle Star Kids
+        </a>
+
+
+        <a
+          class="btn"
+          href="arcade/"
+        >
+          Play Games
+        </a>
+
+
+        <a
+          class="btn"
+          href="jungle-star-tv/"
+        >
+          Watch
+        </a>
+
+
+        <a
+          class="btn"
+          href="animal-radio/"
+        >
+          Listen
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </section>
-<section class="callout"><h2>Help A Child Build</h2><p>Every $25 helps sponsor one child's hands-on learning kit.</p><a class="btn primary" href="donate.html">Sponsor One Child</a></section>
+
+
+
+<!-- ======================================================
+     PICK A DOOR
+====================================================== -->
+
+<section>
+
+  <div class="wrap">
+
+
+    <div class="section-head">
+
+      <div>
+
+        <div class="eyebrow">
+          Explore the universe
+        </div>
+
+        <h2>
+          Pick a door.
+        </h2>
+
+      </div>
+
+
+      <p>
+
+        Jungle Star is big on purpose.
+
+        You do not need to understand all of it.
+        Start with whatever you came here looking for.
+
+      </p>
+
+    </div>
+
+
+
+    <div
+      class="world-grid"
+      id="worldGrid"
+    >
+
+
+      <a
+        class="world-card"
+        href="jw-comics/"
+        data-search="
+          comics
+          characters
+          heroes
+          villains
+          stories
+          justice
+          jw
+          multiverse
+        "
+      >
+
+        <div class="icon">
+          ⚡
+        </div>
+
+        <h3>
+          JW Comics
+        </h3>
+
+        <p>
+
+          Characters, stories, ancient lore,
+          future worlds and the growing JW Comics multiverse.
+
+        </p>
+
+        <span class="go">
+          Enter the multiverse →
+        </span>
+
+      </a>
+
+
+
+      <a
+        class="world-card"
+        href="arcade/"
+        data-search="
+          games
+          play
+          arcade
+          kids
+          great food fight
+          video games
+        "
+      >
+
+        <div class="icon">
+          🕹️
+        </div>
+
+        <h3>
+          Jungle Star Games
+        </h3>
+
+        <p>
+
+          Playable Jungle Star games already living online,
+          with more adventures on the way.
+
+        </p>
+
+        <span class="go">
+          Play →
+        </span>
+
+      </a>
+
+
+
+      <a
+        class="world-card"
+        href="animal-radio/"
+        data-search="
+          music
+          albums
+          songs
+          radio
+          playlists
+          soundtracks
+        "
+      >
+
+        <div class="icon">
+          🎵
+        </div>
+
+        <h3>
+          Animal Radio
+        </h3>
+
+        <p>
+
+          Music, albums, playlists, soundtracks
+          and years of Jungle Star audio.
+
+        </p>
+
+        <span class="go">
+          Listen →
+        </span>
+
+      </a>
+
+
+
+      <a
+        class="world-card"
+        href="jungle-star-tv/"
+        data-search="
+          video
+          tv
+          youtube
+          shows
+          construction
+          interviews
+          media
+        "
+      >
+
+        <div class="icon">
+          📺
+        </div>
+
+        <h3>
+          Jungle Star TV
+        </h3>
+
+        <p>
+
+          Videos, construction journeys, shows,
+          interviews, music, games and original media.
+
+        </p>
+
+        <span class="go">
+          Watch →
+        </span>
+
+      </a>
+
+
+
+      <a
+        class="world-card"
+        href="book-club/"
+        data-search="
+          books
+          reading
+          reviews
+          authors
+          book club
+        "
+      >
+
+        <div class="icon">
+          📚
+        </div>
+
+        <h3>
+          Book Club
+        </h3>
+
+        <p>
+
+          Books we publish, books we read,
+          local authors and reading community.
+
+        </p>
+
+        <span class="go">
+          Find a book →
+        </span>
+
+      </a>
+
+
+
+      <a
+        class="world-card"
+        href="vox-news/"
+        data-search="
+          news
+          business
+          community
+          technology
+          vox
+          articles
+        "
+      >
+
+        <div class="icon">
+          📰
+        </div>
+
+        <h3>
+          Vox
+        </h3>
+
+        <p>
+
+          News, business, community reporting,
+          technology and useful information.
+
+        </p>
+
+        <span class="go">
+          Read →
+        </span>
+
+      </a>
+
+
+
+      <a
+        class="world-card"
+        href="cinemabot/"
+        data-search="
+          movies
+          shows
+          film
+          cinema
+          reviews
+        "
+      >
+
+        <div class="icon">
+          🎬
+        </div>
+
+        <h3>
+          CinemaBot
+        </h3>
+
+        <p>
+
+          Movie and television reviews,
+          filmmaking, discovery and entertainment.
+
+        </p>
+
+        <span class="go">
+          Go to the movies →
+        </span>
+
+      </a>
+
+
+
+      <a
+        class="world-card"
+        href="social-jawn/"
+        data-search="
+          people
+          creators
+          social
+          swagger
+          man myth
+          community
+        "
+      >
+
+        <div class="icon">
+          👥
+        </div>
+
+        <h3>
+          Social Jawn
+        </h3>
+
+        <p>
+
+          Real people, creators, accomplishments,
+          community work and Man vs. the Myth.
+
+        </p>
+
+        <span class="go">
+          Meet the people →
+        </span>
+
+      </a>
+
+
+
+      <a
+        class="world-card"
+        href="academy/"
+        data-search="
+          kids
+          academy
+          education
+          school
+          youth
+          learning
+        "
+      >
+
+        <div class="icon">
+          🧠
+        </div>
+
+        <h3>
+          Build-A-Better-World Academy
+        </h3>
+
+        <p>
+
+          Learning by building, creating, reading,
+          making and solving real problems.
+
+        </p>
+
+        <span class="go">
+          Learn →
+        </span>
+
+      </a>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     JW COMICS FEATURE
+====================================================== -->
+
+<section>
+
+  <div class="wrap">
+
+
+    <div class="feature">
+
+
+      <div>
+
+        <div class="eyebrow">
+          Featured universe • JW Comics
+        </div>
+
+
+        <h2>
+          Crack the ceiling to the multiverse.
+        </h2>
+
+
+        <p>
+
+          Ancient wars. Living heroes. Future civilizations.
+          Families. Monsters. Builders. Gods.
+          Real people who inspired legends.
+
+        </p>
+
+
+        <div class="buttons">
+
+
+          <a
+            class="btn primary"
+            href="jw-comics/"
+          >
+            Enter JW Comics
+          </a>
+
+
+          <a
+            class="btn"
+            href="jw-comics/characters/"
+          >
+            Characters
+          </a>
+
+
+          <a
+            class="btn"
+            href="jw-comics/characters/justice/"
+          >
+            Meet Justice
+          </a>
+
+
+          <a
+            class="btn"
+            href="jw-comics/stories/"
+          >
+            Stories
+          </a>
+
+
+          <a
+            class="btn"
+            href="jw-comics/jw-comics-story-vault.html"
+          >
+            Story Vault
+          </a>
+
+
+        </div>
+
+      </div>
+
+
+
+      <div>
+
+        <img
+          src="jw-comics/assets/construction-spider-lil-spider-wolf.webp"
+          alt="Construction Spider and Lil Spider Wolf from JW Comics"
+        >
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     REAL WORLD
+====================================================== -->
+
+<section>
+
+  <div class="wrap">
+
+    <div class="mission">
+
+      <div class="eyebrow">
+        Saving the World in Style
+      </div>
+
+
+      <h2>
+        The stories connect to the real world.
+      </h2>
+
+
+      <p>
+
+        Jungle Star connects entertainment and creativity
+        to education, products, entrepreneurship,
+        housing, community work and opportunities for young people.
+
+      </p>
+
+
+      <div class="buttons">
+
+        <a
+          class="btn primary"
+          href="saving-the-world/"
+        >
+          See the Impact
+        </a>
+
+
+        <a
+          class="btn"
+          href="shop/"
+        >
+          Shop
+        </a>
+
+
+        <a
+          class="btn"
+          href="academy/"
+        >
+          Academy
+        </a>
+
+
+        <a
+          class="btn"
+          href="choa/"
+        >
+          CHOA
+        </a>
+
+
+        <a
+          class="btn"
+          href="sponsor/"
+        >
+          Support Jungle Star
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
 
 </main>
-<div data-site-footer></div>
 
-  <script src="assets/js/site-shell.js"></script>
-  <script src="assets/js/main.js"></script>
+
+
+<!-- ======================================================
+     FOOTER / LINKSMITH
+====================================================== -->
+
+<footer>
+
+  <div class="wrap footer-grid">
+
+
+    <div>
+
+      <strong>
+        Jungle Star Entertainment
+      </strong>
+
+      <br>
+
+      Saving the World in Style.
+
+    </div>
+
+
+
+    <div>
+
+      <div class="build-status">
+
+        <strong>
+          Open while we build.
+        </strong>
+
+        <span>
+          Jungle Star is live.
+          New stories, games, music, books,
+          videos and products are being added.
+        </span>
+
+      </div>
+
+
+      <div
+        class="linksmith-meta"
+        data-linksmith-id="LS-HOME-0001"
+        data-created="2026-09-29"
+        data-updated="2026-09-29"
+        data-last-checked="2026-09-29"
+      >
+
+        Last updated:
+        September 29, 2026
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</footer>
+
+
+
+<script>
+
+
+  /* ======================================================
+     APP GRID
+  ====================================================== */
+
+  const launcherButton =
+    document.getElementById("launcherButton");
+
+  const launcher =
+    document.getElementById("launcher");
+
+
+  launcherButton.addEventListener(
+    "click",
+    () => {
+
+      const open =
+        launcher.classList.toggle("open");
+
+      launcherButton.setAttribute(
+        "aria-expanded",
+        String(open)
+      );
+
+    }
+  );
+
+
+  document.addEventListener(
+    "click",
+    event => {
+
+      const clickedLauncher =
+        launcher.contains(event.target);
+
+      const clickedButton =
+        launcherButton.contains(event.target);
+
+      if (!clickedLauncher && !clickedButton) {
+
+        launcher.classList.remove("open");
+
+        launcherButton.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+
+      }
+
+    }
+  );
+
+
+
+  /* ======================================================
+     LIBRARIAN SEARCH
+  ====================================================== */
+
+  const search =
+    document.getElementById("worldSearch");
+
+  const cards =
+    document.querySelectorAll(".world-card");
+
+
+  search.addEventListener(
+    "input",
+    () => {
+
+      const query =
+        search.value
+          .trim()
+          .toLowerCase();
+
+
+      cards.forEach(
+        card => {
+
+          const text =
+            (
+              card.textContent +
+              " " +
+              card.dataset.search
+            ).toLowerCase();
+
+
+          const match =
+            text.includes(query);
+
+
+          card.classList.toggle(
+            "hidden-by-search",
+            query && !match
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+</script>
+
+
 </body>
+
 </html>
