@@ -2,41 +2,57 @@
 <html lang="en">
 
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Jungle Star Command | Sign In</title>
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
 
-<meta name="robots" content="noindex,nofollow">
+<title>
+Jungle Star Command Login
+</title>
+
+<meta
+  name="robots"
+  content="noindex,nofollow"
+>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 
 :root{
-  --bg:#06080c;
+  --bg:#07090d;
   --panel:#111722;
-  --panel2:#171e2b;
   --text:#f8f9fc;
-  --muted:#9ea8b8;
-  --line:#2d394b;
-  --gold:#e6bd62;
-  --green:#7ee39e;
-  --max:480px;
+  --muted:#a5afbe;
+  --line:#2c3849;
+  --gold:#e5bd66;
+  --green:#72dfa0;
 }
 
-*{box-sizing:border-box}
-
-html,body{
-  min-height:100%;
+*{
+  box-sizing:border-box;
 }
 
 body{
+
+  min-height:100vh;
+
   margin:0;
 
   display:grid;
+
   place-items:center;
 
   background:
-    radial-gradient(circle at 50% 0%,#243047 0,#0b0e14 45%,#050608 100%);
+    radial-gradient(
+      circle at 50% 0%,
+      #1b2639,
+      #080b10 50%
+    );
 
   color:var(--text);
 
@@ -47,257 +63,319 @@ body{
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
+
 }
 
-.shell{
-  width:min(var(--max),92vw);
+.login-shell{
+
+  width:min(92vw,520px);
+
 }
 
 .logo{
+
   text-align:center;
-  margin-bottom:25px;
+
+  margin-bottom:24px;
 
   font-weight:950;
+
   letter-spacing:.08em;
+
 }
 
 .logo span{
   color:var(--gold);
 }
 
-.card{
-  padding:32px;
+.login-card{
+
+  padding:38px;
 
   border:1px solid var(--line);
-  border-radius:28px;
+
+  border-radius:26px;
 
   background:
-    linear-gradient(
-      155deg,
-      rgba(24,31,44,.97),
-      rgba(13,17,25,.97)
-    );
+    rgba(17,23,34,.94);
 
   box-shadow:
-    0 30px 100px rgba(0,0,0,.5);
+    0 30px 90px rgba(0,0,0,.45);
+
 }
 
 .eyebrow{
+
+  margin-bottom:10px;
+
   color:var(--gold);
 
-  text-transform:uppercase;
+  font-size:.75rem;
+
+  font-weight:950;
+
   letter-spacing:.16em;
 
-  font-size:.75rem;
-  font-weight:950;
+  text-transform:uppercase;
+
 }
 
 h1{
-  margin:.2em 0;
 
-  font-size:clamp(2.9rem,10vw,4.8rem);
+  margin:.1em 0 .3em;
 
-  line-height:.88;
+  font-size:
+    clamp(2.5rem,8vw,4.5rem);
+
+  line-height:.9;
+
   letter-spacing:-.05em;
+
 }
 
-.lead{
+p{
+
   color:var(--muted);
+
   line-height:1.6;
+
 }
 
-label{
-  display:block;
+.google-button{
 
-  margin-top:17px;
-
-  font-weight:850;
-}
-
-input{
   width:100%;
 
-  margin-top:7px;
-  padding:14px 15px;
+  margin-top:24px;
 
-  border:1px solid #3b485b;
-  border-radius:13px;
-
-  background:#080c12;
-  color:#fff;
-
-  font:inherit;
-}
-
-button{
-  width:100%;
-
-  margin-top:22px;
-  padding:14px 18px;
+  padding:15px 18px;
 
   border:0;
+
   border-radius:999px;
 
   background:var(--gold);
+
   color:#111;
+
+  font:inherit;
 
   font-weight:950;
 
   cursor:pointer;
+
+}
+
+.google-button:hover{
+  filter:brightness(1.05);
+}
+
+.google-button:disabled{
+
+  opacity:.6;
+
+  cursor:wait;
+
 }
 
 .status{
+
   min-height:24px;
 
-  margin-top:15px;
+  margin-top:18px;
 
   color:var(--muted);
 
   font-size:.88rem;
+
 }
 
-.security{
-  margin-top:22px;
+.back{
 
-  padding:14px;
-
-  border:1px solid rgba(230,189,98,.25);
-  border-radius:14px;
-
-  background:rgba(230,189,98,.06);
-
-  color:#c7ced9;
-
-  font-size:.84rem;
-}
-
-.home{
   display:block;
 
-  margin-top:19px;
-
-  text-align:center;
+  margin-top:22px;
 
   color:var(--muted);
 
+  text-align:center;
+
   text-decoration:none;
+
+}
+
+.back:hover{
+  color:#fff;
+}
+
+.security{
+
+  margin-top:24px;
+
+  padding-top:18px;
+
+  border-top:1px solid var(--line);
+
+  color:#748093;
+
+  font-size:.78rem;
+
+  line-height:1.5;
+
 }
 
 </style>
-</head>
 
+</head>
 
 <body>
 
-<div class="shell">
+<div class="login-shell">
 
-  <div class="logo">
-    <span>★</span>
-    JUNGLE STAR COMMAND
-  </div>
+<div class="logo">
 
-
-  <main class="card">
-
-    <div class="eyebrow">
-      Private Operations
-    </div>
-
-    <h1>
-      COMMAND<br>
-      SIGN-IN
-    </h1>
-
-    <p class="lead">
-      Founder, administrator, staff and approved-team access.
-      Public Jungle Star accounts are separate.
-    </p>
-
-
-    <form id="loginForm">
-
-      <label>
-        Email
-
-        <input
-          id="email"
-          type="email"
-          autocomplete="email"
-          required
-        >
-      </label>
-
-
-      <label>
-        Password
-
-        <input
-          id="password"
-          type="password"
-          autocomplete="current-password"
-          required
-        >
-      </label>
-
-
-      <button type="submit">
-        Enter Jungle Star Command
-      </button>
-
-    </form>
-
-
-    <div
-      id="status"
-      class="status"
-    ></div>
-
-
-    <div class="security">
-
-      <strong>ADMINISTRATION GATE</strong><br>
-
-      This interface is ready for the independent
-      Jungle Star Command authentication service.
-
-      It is intentionally not connected to
-      JawnSort Pro or public Jungle Star accounts.
-
-    </div>
-
-  </main>
-
-
-  <a
-    class="home"
-    href="/"
-  >
-    ← Jungle Star Home
-  </a>
+<span>★</span>
+JUNGLE STAR COMMAND
 
 </div>
 
+<div class="login-card">
+
+<div class="eyebrow">
+Private Operations
+</div>
+
+<h1>
+SIGN IN.
+</h1>
+
+<p>
+
+Jungle Star Command is the private
+operations headquarters for authorized
+Jungle Star team members.
+
+</p>
+
+<button
+  id="google-login"
+  class="google-button"
+  type="button"
+>
+
+Continue with Google
+
+</button>
+
+<div
+  id="login-status"
+  class="status"
+></div>
+
+<div class="security">
+
+Authentication provided through
+Google and Jungle Star Command's
+Supabase authentication project.
+
+</div>
+
+</div>
+
+<a
+  class="back"
+  href="/"
+>
+← Return to Jungle Star
+</a>
+
+</div>
 
 <script>
 
-const form =
-  document.getElementById("loginForm");
+const SUPABASE_URL =
+  "https://xfknuiuqzihtgodnybwv.supabase.co";
 
-const status =
-  document.getElementById("status");
+const SUPABASE_PUBLISHABLE_KEY =
+  "YOUR_SUPABASE_PUBLISHABLE_KEY";
 
+const commandSupabase =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 
-form.addEventListener(
-  "submit",
-  event => {
+const googleButton =
+  document.getElementById(
+    "google-login"
+  );
 
-    event.preventDefault();
+const loginStatus =
+  document.getElementById(
+    "login-status"
+  );
 
-    status.textContent =
-      "Jungle Star Command authentication is not connected yet.";
+async function checkExistingSession(){
+
+  const {
+    data: { session }
+  } =
+    await commandSupabase.auth.getSession();
+
+  if(session){
+
+    window.location.replace(
+      "https://junglestar.net/jungle-star-command/"
+    );
 
   }
+
+}
+
+async function signInWithGoogle(){
+
+  googleButton.disabled = true;
+
+  loginStatus.textContent =
+    "Opening Google sign-in…";
+
+  const {
+    error
+  } =
+    await commandSupabase.auth.signInWithOAuth({
+
+      provider: "google",
+
+      options: {
+
+        redirectTo:
+          "https://junglestar.net/jungle-star-command/"
+
+      }
+
+    });
+
+  if(error){
+
+    console.error(
+      "Google login failed:",
+      error
+    );
+
+    loginStatus.textContent =
+      "Google sign-in failed. Please try again.";
+
+    googleButton.disabled = false;
+
+  }
+
+}
+
+googleButton.addEventListener(
+  "click",
+  signInWithGoogle
 );
+
+checkExistingSession();
 
 </script>
 
