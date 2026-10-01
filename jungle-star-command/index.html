@@ -2,634 +2,645 @@
 <html lang="en">
 
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Jungle Star Command</title>
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
+<title>
+Jungle Star Command
+</title>
+
+<meta
+  name="robots"
+  content="noindex,nofollow"
+>
+
+<link
+  rel="stylesheet"
+  href="/jungle-star-command/assets/command.css"
+>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  defer
+></script>
+
+<script
+  src="/jungle-star-command/assets/command.js"
+  defer
+></script>
 
-<meta name="robots" content="noindex,nofollow">
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-
-:root{
-  --bg:#07090d;
-  --panel:#111722;
-  --panel2:#171f2c;
-  --text:#f8f9fc;
-  --muted:#a5afbe;
-  --line:#2c3849;
-  --gold:#e5bd66;
-  --green:#72dfa0;
-  --blue:#68caff;
-  --purple:#b99cff;
-  --max:1500px;
-}
-
-*{
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  margin:0;
-  background:
-    radial-gradient(circle at 50% 0%,#1b2639,#080b10 48%);
-  color:var(--text);
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-  visibility:hidden;
-}
-
-body.auth-ready{
-  visibility:visible;
-}
-
-a{
-  color:inherit;
-}
-
-button{
-  font:inherit;
-}
-
-/* =========================================================
-   WRAPPER
-========================================================= */
-
-.wrap{
-  width:min(var(--max),96vw);
-  margin:auto;
-}
-
-/* =========================================================
-   HEADER
-========================================================= */
-
-header{
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:rgba(7,9,13,.97);
-  border-bottom:1px solid var(--line);
-  backdrop-filter:blur(16px);
-}
-
-.main-nav{
-  min-height:68px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-}
-
-.brand{
-  font-weight:950;
-  letter-spacing:.06em;
-  white-space:nowrap;
-}
-
-.brand span{
-  color:var(--gold);
-}
-
-.account-actions{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-}
-
-.account-pill{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  padding:6px 11px 6px 7px;
-  border:1px solid var(--line);
-  border-radius:999px;
-  background:#111722;
-}
-
-.avatar{
-  width:35px;
-  height:35px;
-  display:grid;
-  place-items:center;
-  border-radius:50%;
-  background:var(--blue);
-  color:#071018;
-  font-weight:950;
-}
-
-.account-copy{
-  max-width:200px;
-  line-height:1.1;
-}
-
-.account-name{
-  display:block;
-  font-size:.82rem;
-  font-weight:900;
-}
-
-.account-email{
-  display:block;
-  margin-top:3px;
-  color:var(--muted);
-  font-size:.67rem;
-}
-
-.btn{
-  padding:9px 13px;
-  border:1px solid #45536a;
-  border-radius:999px;
-  background:#111722;
-  color:#fff;
-  text-decoration:none;
-  font-weight:850;
-  cursor:pointer;
-}
-
-.btn:hover{
-  border-color:var(--gold);
-}
-
-/* =========================================================
-   HUGE COMMAND MENU
-========================================================= */
-
-.command-menu{
-  border-top:1px solid #151d29;
-  overflow-x:auto;
-  scrollbar-width:thin;
-}
-
-.command-menu-inner{
-  display:flex;
-  gap:7px;
-  padding:9px 0 11px;
-  min-width:max-content;
-}
-
-.menu-link{
-  padding:8px 11px;
-  border:1px solid #2c3849;
-  border-radius:999px;
-  background:#0e141d;
-  text-decoration:none;
-  color:#dce4ef;
-  font-size:.76rem;
-  font-weight:800;
-  white-space:nowrap;
-}
-
-.menu-link:hover{
-  color:#111;
-  background:var(--gold);
-  border-color:var(--gold);
-}
-
-.menu-link.robot{
-  border-color:#4e3f7f;
-  color:#d9ceff;
-}
-
-/* =========================================================
-   HERO
-========================================================= */
-
-.hero{
-  padding:55px 0 28px;
-}
-
-.eyebrow{
-  color:var(--gold);
-  text-transform:uppercase;
-  letter-spacing:.16em;
-  font-weight:950;
-  font-size:.76rem;
-}
-
-h1{
-  margin:.15em 0;
-  font-size:clamp(3.4rem,8vw,7rem);
-  line-height:.86;
-  letter-spacing:-.055em;
-}
-
-.lead{
-  max-width:1000px;
-  color:var(--muted);
-  font-size:1.08rem;
-  line-height:1.55;
-}
-
-.stamps{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:20px;
-}
-
-.stamp{
-  padding:7px 10px;
-  border:1px solid var(--line);
-  border-radius:999px;
-  color:var(--muted);
-  background:#0d131c;
-  font-size:.72rem;
-}
-
-/* =========================================================
-   SECTION
-========================================================= */
-
-section{
-  padding:36px 0;
-}
-
-.section-title{
-  margin:.15em 0 .35em;
-  font-size:clamp(2rem,5vw,3.6rem);
-  letter-spacing:-.04em;
-}
-
-.section-copy{
-  color:var(--muted);
-  max-width:950px;
-  line-height:1.5;
-}
-
-/* =========================================================
-   ROOM GRID
-========================================================= */
-
-.room-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-  margin-top:22px;
-}
-
-.room{
-  min-height:150px;
-  padding:20px;
-  display:block;
-  border:1px solid var(--line);
-  border-radius:20px;
-  background:var(--panel);
-  text-decoration:none;
-}
-
-.room:hover{
-  border-color:var(--gold);
-  transform:translateY(-1px);
-}
-
-.room.original{
-  border-color:#39495f;
-}
-
-.room.added{
-  border-color:#685d35;
-}
-
-.room.robot-room{
-  border-color:#594c88;
-  background:
-    linear-gradient(145deg,#17162a,#111722);
-}
-
-.icon{
-  font-size:1.5rem;
-}
-
-.room h3{
-  margin:9px 0 6px;
-}
-
-.room p{
-  margin:0;
-  color:var(--muted);
-  font-size:.86rem;
-  line-height:1.4;
-}
-
-.label{
-  display:inline-block;
-  margin-top:12px;
-  padding:4px 7px;
-  border:1px solid var(--line);
-  border-radius:999px;
-  color:#8996a8;
-  font-size:.61rem;
-  font-weight:800;
-  letter-spacing:.05em;
-}
-
-.original .label{
-  color:#9bc9ff;
-}
-
-.added .label{
-  color:#e5bd66;
-}
-
-/* =========================================================
-   TODO BOARD SHELL
-========================================================= */
-
-.board{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:10px;
-  margin-top:22px;
-}
-
-.column{
-  min-height:220px;
-  border:1px solid var(--line);
-  border-radius:18px;
-  background:#0e131b;
-}
-
-.column-head{
-  padding:14px;
-  border-bottom:1px solid var(--line);
-  font-weight:950;
-}
-
-.column-body{
-  padding:13px;
-  color:#697484;
-  font-size:.83rem;
-}
-
-/* =========================================================
-   ROBOT HALL FEATURE
-========================================================= */
-
-.robot-feature{
-  margin-top:20px;
-  padding:28px;
-  border:1px solid #564a82;
-  border-radius:24px;
-  background:
-    radial-gradient(circle at 100% 0%,#27214a,#111722 52%);
-}
-
-.robot-actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:18px;
-}
-
-.robot-actions a{
-  padding:10px 14px;
-  border:1px solid #67589b;
-  border-radius:999px;
-  text-decoration:none;
-  font-weight:850;
-}
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-footer{
-  margin-top:40px;
-  padding:35px 0 60px;
-  border-top:1px solid var(--line);
-  color:var(--muted);
-}
-
-@media(max-width:1100px){
-
-  .room-grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .board{
-    grid-template-columns:1fr 1fr;
-  }
-
-}
-
-@media(max-width:750px){
-
-  .room-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .account-copy{
-    display:none;
-  }
-
-}
-
-@media(max-width:520px){
-
-  .room-grid,
-  .board{
-    grid-template-columns:1fr;
-  }
-
-}
-
-</style>
 </head>
+
 
 <body>
 
-<header>
+
+<header class="site-header">
 
 <div class="wrap">
 
+
 <div class="main-nav">
 
-  <div class="brand">
-    <span>★</span>
-    JUNGLE STAR COMMAND
-  </div>
 
-  <div class="account-actions">
+<a
+  class="brand"
+  href="/jungle-star-command/"
+>
 
-    <div class="account-pill">
+<span>★</span>
 
-      <div
-        id="account-avatar"
-        class="avatar"
-      >
-        J
-      </div>
+JUNGLE STAR COMMAND
 
-      <div class="account-copy">
+</a>
 
-        <span
-          id="account-name"
-          class="account-name"
-        >
-          Signed In
-        </span>
 
-        <span
-          id="account-email"
-          class="account-email"
-        >
-          Jungle Star
-        </span>
+<div class="account-actions">
 
-      </div>
 
-    </div>
+<div
+  id="account-pill"
+  class="account-pill"
+>
 
-    <button
-      class="btn"
-      onclick="window.print()"
-    >
-      Print
-    </button>
+<div
+  id="account-avatar"
+  class="avatar"
+>
+J
+</div>
 
-    <a
-      class="btn"
-      href="/"
-    >
-      Jungle Star
-    </a>
 
-    <button
-      class="btn"
-      id="command-sign-out"
-    >
-      Sign Out
-    </button>
+<div class="account-copy">
 
-  </div>
+<span
+  id="account-name"
+  class="account-name"
+>
+Signed In
+</span>
+
+<span
+  id="account-email"
+  class="account-email"
+>
+Jungle Star
+</span>
 
 </div>
 
-<div class="command-menu">
+</div>
+
+
+<button
+  class="btn"
+  type="button"
+  onclick="window.print()"
+>
+Print
+</button>
+
+
+<a
+  class="btn"
+  href="/"
+>
+Jungle Star
+</a>
+
+
+<button
+  class="btn"
+  id="command-sign-out"
+  type="button"
+>
+Sign Out
+</button>
+
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     DEPARTMENT NAVIGATION
+===================================================== -->
+
+<nav
+  class="command-menu"
+  aria-label="Jungle Star Command departments"
+>
 
 <div class="command-menu-inner">
 
-<a class="menu-link" href="/jungle-star-command/">
-Home
+
+<!-- FOUNDER DESK -->
+
+<div class="nav-group">
+
+<button
+  class="nav-group-button"
+  type="button"
+  aria-expanded="false"
+>
+
+★ Founder Desk
+
+</button>
+
+
+<div class="nav-panel">
+
+<div class="nav-heading">
+Run My Day
+</div>
+
+<a href="/jungle-star-command/today/">
+🔥 Today
 </a>
 
-<a class="menu-link" href="/jungle-star-command/today/">
-Today
+<a href="/jungle-star-command/daily/">
+☀️ Daily
 </a>
 
-<a class="menu-link" href="/jungle-star-command/daily/">
-Daily
+<a href="/jungle-star-command/weekly/">
+📆 Weekly
 </a>
 
-<a class="menu-link" href="/jungle-star-command/master-to-do/">
-Master To-Do
+<a href="#master-to-do">
+✅ Master To-Do
 </a>
 
-<a class="menu-link" href="/jungle-star-command/messages/">
-Messages
+<a href="#waiting">
+⏳ Waiting
 </a>
 
-<a class="menu-link" href="/jungle-star-command/communication-jar/">
-Communication Jar
+
+<div class="nav-heading">
+Founder Brain
+</div>
+
+<a href="/jungle-star-command/messages/">
+💬 Messages
 </a>
 
-<a class="menu-link" href="/jungle-star-command/calendar/">
-Calendar
+<a href="/jungle-star-command/communication-jar/">
+🫙 Communication Jar
 </a>
 
-<a class="menu-link" href="/jungle-star-command/announcements/">
-Announcements
+<a href="/jungle-star-command/idea-box/">
+💡 Idea Box
 </a>
 
-<a class="menu-link" href="/jungle-star-command/volunteer-hub/">
-Volunteer Hub
+<a href="/jungle-star-command/decision-log/">
+🧠 Decision Log
 </a>
 
-<a class="menu-link" href="/jungle-star-command/garden/">
-Garden Tasks
+<a href="/jungle-star-command/founder-notes/">
+📓 Founder Notes
 </a>
 
-<a class="menu-link" href="/jungle-star-command/programs/">
-Programs
+</div>
+
+</div>
+
+
+<!-- ORGANIZATION -->
+
+<div class="nav-group">
+
+<button
+  class="nav-group-button"
+  type="button"
+  aria-expanded="false"
+>
+
+🏢 Organization
+
+</button>
+
+
+<div class="nav-panel">
+
+<a href="/jungle-star-command/calendar/">
+🗓️ Calendar
 </a>
 
-<a class="menu-link" href="/jungle-star-command/safety/">
-Safety
+<a href="/jungle-star-command/announcements/">
+📢 Announcements
 </a>
 
-<a class="menu-link" href="/jungle-star-command/grievances/">
-Grievances
+<a href="/jungle-star-command/meetings/">
+👥 Meetings
 </a>
 
-<a class="menu-link" href="/jungle-star-command/idea-box/">
-Idea Box
+<a href="/jungle-star-command/meeting-notes/">
+📝 Meeting Notes
 </a>
 
-<a class="menu-link" href="/jungle-star-command/resources/">
-Resources
+<a href="/jungle-star-command/volunteer-hub/">
+🙋 Volunteer Hub
 </a>
 
-<a class="menu-link" href="/jungle-star-command/transparency/">
-Transparency
+<a href="/jungle-star-command/onboarding/">
+🚪 Onboarding
 </a>
 
-<a class="menu-link" href="/jungle-star-command/documents/">
-Documents
+<a href="/jungle-star-command/programs/">
+📋 Programs
 </a>
 
-<a class="menu-link" href="/jungle-star-command/meeting-notes/">
-Meeting Notes
+<a href="/jungle-star-command/safety/">
+🛡️ Safety
 </a>
 
-<a class="menu-link" href="/jungle-star-command/decision-log/">
-Decision Log
+<a href="/jungle-star-command/grievances/">
+⚖️ Grievances
 </a>
 
-<a class="menu-link" href="/jungle-star-command/onboarding/">
-Onboarding
+<a href="/jungle-star-command/resources/">
+🧰 Resources
 </a>
 
-<a class="menu-link" href="/jungle-star-command/links/">
-Links Board
+<a href="/jungle-star-command/transparency/">
+🔎 Transparency
 </a>
 
-<a class="menu-link" href="/jungle-star-command/admin/">
-Admin
+<a href="/jungle-star-command/documents/">
+📂 Documents
 </a>
 
-<a class="menu-link robot" href="/jungle-star-command/robot-hall/">
+<a href="/jungle-star-command/contact/">
+☎️ Contact
+</a>
+
+<a href="/jungle-star-command/admin/">
+🧭 Admin
+</a>
+
+</div>
+
+</div>
+
+
+<!-- COMPANY -->
+
+<div class="nav-group">
+
+<button
+  class="nav-group-button"
+  type="button"
+  aria-expanded="false"
+>
+
+💼 Company
+
+</button>
+
+
+<div class="nav-panel">
+
+<a href="/jungle-star-command/businesses/">
+🏪 Businesses
+</a>
+
+<a href="/jungle-star-command/projects/">
+🧱 Projects
+</a>
+
+<a href="/jungle-star-command/people/">
+👥 People
+</a>
+
+<a href="/jungle-star-command/contractors/">
+🛠 Contractors
+</a>
+
+<a href="/jungle-star-command/purchases/">
+🧾 Purchases
+</a>
+
+<a href="/jungle-star-command/jawnny-cash/">
+💰 Jawnny Cash
+</a>
+
+<a href="/jungle-star-command/headquarters/">
+🏗 Headquarters
+</a>
+
+<a href="/jungle-star-command/transportation/">
+🚐 Transportation
+</a>
+
+<a href="/jungle-star-command/assets-registry/">
+🧰 Equipment / Assets
+</a>
+
+<a href="/jungle-star-command/capital-purchases/">
+🏦 Capital Purchases
+</a>
+
+<a href="/jungle-star-command/document-forge/">
+📄 Document Forge
+</a>
+
+<a href="/jungle-star-command/packets-legal/">
+⚖️ Packets / Legal
+</a>
+
+<a href="/jungle-star-command/files-receipts/">
+📎 Files / Receipts
+</a>
+
+<a href="/jungle-star-command/export/">
+⬇️ Export
+</a>
+
+</div>
+
+</div>
+
+
+<!-- CREATIVE -->
+
+<div class="nav-group">
+
+<button
+  class="nav-group-button"
+  type="button"
+  aria-expanded="false"
+>
+
+🎨 Creative / IP
+
+</button>
+
+
+<div class="nav-panel">
+
+<a href="/jungle-star-command/great-food-fight/">
+🥦 Great Food Fight
+</a>
+
+<a href="/jungle-star-command/jw-comics/">
+🦸 JW Comics
+</a>
+
+<a href="/jungle-star-command/publishing/">
+📚 Publishing
+</a>
+
+<a href="/jungle-star-command/animal-radio/">
+🎵 Animal Radio
+</a>
+
+<a href="/jungle-star-command/jungle-star-tv/">
+📺 Jungle Star TV
+</a>
+
+<a href="/jungle-star-command/jungle-star-kids/">
+🌟 Jungle Star Kids
+</a>
+
+<a href="/jungle-star-command/games/">
+🎮 Games
+</a>
+
+<a href="/jungle-star-command/characters/">
+🧑‍🎤 Characters
+</a>
+
+<a href="/jungle-star-command/performance-scripts/">
+🎭 Performance Scripts
+</a>
+
+<a href="/jungle-star-command/merchandise/">
+👕 Merchandise
+</a>
+
+<a href="/jungle-star-command/music/">
+🎧 Music
+</a>
+
+<a href="/jungle-star-command/books/">
+📖 Books
+</a>
+
+<a href="/jungle-star-command/curriculum/">
+🎓 Curriculum
+</a>
+
+<a href="/jungle-star-command/media/">
+🎬 Media
+</a>
+
+</div>
+
+</div>
+
+
+<!-- COMMUNITY -->
+
+<div class="nav-group">
+
+<button
+  class="nav-group-button"
+  type="button"
+  aria-expanded="false"
+>
+
+🌍 Community
+
+</button>
+
+
+<div class="nav-panel">
+
+<a href="/jungle-star-command/choa/">
+🏠 CHOA
+</a>
+
+<a href="/jungle-star-command/academy/">
+🎓 Build-A-Better-World Academy
+</a>
+
+<a href="/jungle-star-command/community-needs/">
+🤝 Community Needs
+</a>
+
+<a href="/jungle-star-command/programs/">
+📋 Programs
+</a>
+
+<a href="/jungle-star-command/classes/">
+🧑‍🏫 Classes
+</a>
+
+<a href="/jungle-star-command/volunteer-hub/">
+🙋 Volunteers
+</a>
+
+<a href="/jungle-star-command/garden/">
+🌱 Garden
+</a>
+
+<a href="/jungle-star-command/resources/">
+🧰 Resources
+</a>
+
+<a href="/jungle-star-command/philanthropy/">
+❤️ Philanthropy
+</a>
+
+<a href="/jungle-star-command/impact/">
+📈 Impact
+</a>
+
+<a href="/jungle-star-command/partnerships/">
+🤝 Partnerships
+</a>
+
+</div>
+
+</div>
+
+
+<!-- ROBOT HALL -->
+
+<div class="nav-group robot">
+
+<button
+  class="nav-group-button"
+  type="button"
+  aria-expanded="false"
+>
+
 🤖 Robot Hall Dubai
+
+</button>
+
+
+<div class="nav-panel">
+
+
+<div class="nav-heading">
+Fleet Headquarters
+</div>
+
+<a href="/jungle-star-command/robot-hall/">
+🤖 Open Robot Hall
+</a>
+
+<a href="/jungle-star-command/robot-hall/registry/">
+📋 Fleet Registry
+</a>
+
+<a href="/jungle-star-command/robot-hall/training/">
+🧠 Training Registry
+</a>
+
+<a href="/jungle-star-command/robot-hall/documents/">
+📂 Robot Documents
+</a>
+
+<a href="/jungle-star-command/robot-hall/cattle-silver-gold/">
+🏅 Cattle / Silver / Gold
+</a>
+
+
+<div class="nav-heading">
+Rooms
+</div>
+
+<a href="/jungle-star-command/robot-hall/00-code-bro/">
+💻 00 Code Bro
+</a>
+
+<a href="/jungle-star-command/robot-hall/groovebot/">
+🎵 GrooveBot
+</a>
+
+<a href="/jungle-star-command/robot-hall/docubot/">
+📄 DocuBot
+</a>
+
+<a href="/jungle-star-command/robot-hall/pressforge/">
+📚 PressForge
+</a>
+
+<a href="/jungle-star-command/robot-hall/gamemaster/">
+🎮 GameMaster
+</a>
+
+<a href="/jungle-star-command/robot-hall/drawsword/">
+🎨 DrawSword
+</a>
+
+<a href="/jungle-star-command/robot-hall/cinemabot/">
+🎬 CinemaBot
+</a>
+
+<a href="/jungle-star-command/robot-hall/linksmith/">
+🔗 LinkSmith
+</a>
+
+<a href="/jungle-star-command/robot-hall/tron/">
+🧰 TRON
+</a>
+
+<a href="/jungle-star-command/robot-hall/montage/">
+🎯 Montage
+</a>
+
+<a href="/jungle-star-command/robot-hall/general-pro/">
+🪖 General Pro
+</a>
+
+<a href="/jungle-star-command/robot-hall/star-selector/">
+⭐ Star Selector
+</a>
+
+<a href="/jungle-star-command/robot-hall/drj/">
+🧪 DRJ
+</a>
+
+<a href="/jungle-star-command/robot-hall/registry/">
+➕ All Robots
 </a>
 
 </div>
 
 </div>
+
+
+</div>
+
+</nav>
+
 
 </div>
 
 </header>
 
 
+
 <main class="wrap">
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
 
 <section class="hero">
 
 <div class="eyebrow">
-Founder + Organization Operations
+Founder Operations Headquarters
 </div>
 
 <h1>
@@ -637,18 +648,30 @@ COMMAND.
 </h1>
 
 <p class="lead">
+
 Put the work where you can see it.
-People. Meetings. Tasks. Community.
-Businesses. Programs. Documents.
-Ideas. Messages. Decisions. Tools.
-Creative work. Robot knowledge.
-Physical work first. Metadata where it belongs.
+
+Run the house.
+
+Run the company.
+
+Build the worlds.
+
+Serve the community.
+
+Train the robots.
+
+Preserve the source.
+
+Do not make the Founder remember everything twice.
+
 </p>
+
 
 <div class="stamps">
 
 <div class="stamp">
-PAGE BUILD: 2026-10-01
+BUILD: 2026-10-01
 </div>
 
 <div
@@ -656,6 +679,13 @@ PAGE BUILD: 2026-10-01
   class="stamp"
 >
 PAGE OPENED: —
+</div>
+
+<div
+  id="task-updated"
+  class="stamp"
+>
+TASK DATA UPDATED: —
 </div>
 
 <div class="stamp">
@@ -667,231 +697,233 @@ RECOVER → PRESERVE → ADD
 </section>
 
 
-<!-- ======================================================
-     DAILY COMMAND
-====================================================== -->
 
-<section>
+<!-- =====================================================
+     MASTER TASK HIT LIST
+===================================================== -->
+
+<section id="master-to-do">
 
 <div class="eyebrow">
-Founder Day
+Founder Task Hit List
 </div>
 
 <h2 class="section-title">
-What needs doing?
+Get it out of your head.
 </h2>
 
-<div class="room-grid">
+<p class="section-copy">
 
-<a
-  class="room added"
-  href="/jungle-star-command/master-to-do/"
->
+One master task registry underneath.
 
-<div class="icon">✅</div>
+Many filtered views on top.
 
-<h3>
-Master To-Do
-</h3>
+Great Food Fight can have its list.
 
-<p>
-Everything that actually requires action.
-Filter it instead of forgetting it.
+JW Comics can have its list.
+
+Headquarters can have its list.
+
+Embroidery can have its list.
+
+CHOA can have its list.
+
+Nothing has to disappear because another project becomes more important.
+
 </p>
 
-<span class="label">
-ADDED TO COMMAND
-</span>
 
-</a>
+<div class="task-toolbar">
 
 
-<a
-  class="room added"
-  href="/jungle-star-command/today/"
+<input
+  id="task-title"
+  class="field task-title-input"
+  type="text"
+  placeholder="What needs to be done?"
 >
 
-<div class="icon">🔥</div>
 
-<h3>
+<select
+  id="task-status"
+  class="field"
+>
+
+<option value="today">
 Today
-</h3>
+</option>
 
-<p>
-The work in front of you right now.
-</p>
+<option value="next">
+Next
+</option>
 
-<span class="label">
-ADDED TO COMMAND
-</span>
+<option value="later">
+Later
+</option>
 
-</a>
+<option value="waiting">
+Waiting
+</option>
+
+<option value="done">
+Done
+</option>
+
+</select>
 
 
-<a
-  class="room added"
-  href="/jungle-star-command/daily/"
+<input
+  id="task-project"
+  class="field"
+  type="text"
+  placeholder="Project / room"
 >
 
-<div class="icon">☀️</div>
 
-<h3>
-Daily
-</h3>
-
-<p>
-Recurring everyday operations and routines.
-</p>
-
-<span class="label">
-ADDED TO COMMAND
-</span>
-
-</a>
-
-
-<a
-  class="room added"
-  href="/jungle-star-command/weekly/"
+<input
+  id="task-category"
+  class="field"
+  type="text"
+  placeholder="Category"
 >
 
-<div class="icon">📆</div>
 
-<h3>
-Weekly
-</h3>
-
-<p>
-Recurring weekly work and reviews.
-</p>
-
-<span class="label">
-ADDED TO COMMAND
-</span>
-
-</a>
-
-
-<a
-  class="room added"
-  href="/jungle-star-command/messages/"
+<input
+  id="task-owner"
+  class="field"
+  type="text"
+  placeholder="Owner"
 >
 
-<div class="icon">💬</div>
 
-<h3>
-Messages
-</h3>
-
-<p>
-Messages that need to be received,
-answered, preserved or routed.
-</p>
-
-<span class="label">
-ADDED TODAY
-</span>
-
-</a>
-
-
-<a
-  class="room added"
-  href="/jungle-star-command/communication-jar/"
+<input
+  id="task-due"
+  class="field"
+  type="date"
 >
 
-<div class="icon">🫙</div>
 
-<h3>
-Communication Jar
-</h3>
-
-<p>
-Say-it-once notes, team communication,
-follow-up and organizational continuity.
-</p>
-
-<span class="label">
-ADDED TODAY
-</span>
-
-</a>
+<textarea
+  id="task-notes"
+  class="field task-notes-input"
+  placeholder="Notes, materials, source, dependencies, links, evidence..."
+></textarea>
 
 
-<a
-  class="room original"
-  href="/jungle-star-command/idea-box/"
+<button
+  id="add-task"
+  class="btn btn-primary"
+  type="button"
+>
++ Add Task
+</button>
+
+
+<label class="btn file-button">
+
+Import CSV
+
+<input
+  id="import-csv"
+  type="file"
+  accept=".csv,text/csv"
+  hidden
 >
 
-<div class="icon">💡</div>
-
-<h3>
-Idea Box
-</h3>
-
-<p>
-Capture ideas without turning
-every idea into today's work.
-</p>
-
-<span class="label">
-PRESERVED ORIGINAL
-</span>
-
-</a>
+</label>
 
 
-<a
-  class="room original"
-  href="/jungle-star-command/calendar/"
+<button
+  id="export-csv"
+  class="btn"
+  type="button"
 >
+Export CSV
+</button>
 
-<div class="icon">🗓️</div>
 
-<h3>
-Calendar
-</h3>
+<button
+  id="copy-tasks"
+  class="btn"
+  type="button"
+>
+Copy for AI
+</button>
 
-<p>
-Dates, events, deadlines and schedules.
-</p>
-
-<span class="label">
-PRESERVED ORIGINAL
-</span>
-
-</a>
 
 </div>
 
-</section>
 
 
-<!-- ======================================================
-     WORK BOARD
-====================================================== -->
+<div class="project-hit-list">
 
-<section>
+<button
+  class="project-filter active"
+  data-project=""
+>
+ALL TASKS
+</button>
 
-<div class="eyebrow">
-Principal To-Do
+<button
+  class="project-filter"
+  data-project="Great Food Fight"
+>
+🥦 GREAT FOOD FIGHT
+</button>
+
+<button
+  class="project-filter"
+  data-project="JW Comics"
+>
+🦸 JW COMICS
+</button>
+
+<button
+  class="project-filter"
+  data-project="Headquarters"
+>
+🏗 HEADQUARTERS
+</button>
+
+<button
+  class="project-filter"
+  data-project="Mint Press Express"
+>
+🧵 MINT PRESS EXPRESS
+</button>
+
+<button
+  class="project-filter"
+  data-project="CHOA"
+>
+🏠 CHOA
+</button>
+
+<button
+  class="project-filter"
+  data-project="Academy"
+>
+🎓 ACADEMY
+</button>
+
 </div>
 
-<h2 class="section-title">
-Move the work.
-</h2>
+
 
 <div class="board">
+
 
 <div class="column">
 
 <div class="column-head">
 🔥 TODAY
+<span id="count-today">0</span>
 </div>
 
-<div class="column-body">
-Today's tasks.
-</div>
+<div
+  id="list-today"
+  class="task-list"
+></div>
 
 </div>
 
@@ -900,11 +932,13 @@ Today's tasks.
 
 <div class="column-head">
 ➡️ NEXT
+<span id="count-next">0</span>
 </div>
 
-<div class="column-body">
-Upcoming work.
-</div>
+<div
+  id="list-next"
+  class="task-list"
+></div>
 
 </div>
 
@@ -913,25 +947,31 @@ Upcoming work.
 
 <div class="column-head">
 🗃️ LATER
+<span id="count-later">0</span>
 </div>
 
-<div class="column-body">
-Not forgotten. Not today.
-</div>
+<div
+  id="list-later"
+  class="task-list"
+></div>
 
 </div>
 
 
-<div class="column">
+<div
+  class="column"
+  id="waiting"
+>
 
 <div class="column-head">
 ⏳ WAITING
+<span id="count-waiting">0</span>
 </div>
 
-<div class="column-body">
-Waiting on people, money,
-materials or outside action.
-</div>
+<div
+  id="list-waiting"
+  class="task-list"
+></div>
 
 </div>
 
@@ -940,22 +980,164 @@ materials or outside action.
 
 <div class="column-head">
 ✅ DONE
+<span id="count-done">0</span>
 </div>
 
-<div class="column-body">
-Finished work becomes receipts.
-</div>
+<div
+  id="list-done"
+  class="task-list"
+></div>
 
 </div>
+
 
 </div>
 
 </section>
 
 
-<!-- ======================================================
-     ORIGINAL COMMUNITY COMMAND FOUNDATION
-====================================================== -->
+
+<!-- =====================================================
+     FOUNDER DESK
+===================================================== -->
+
+<section>
+
+<div class="eyebrow">
+Founder Desk
+</div>
+
+<h2 class="section-title">
+Run your day without running every department.
+</h2>
+
+
+<div class="room-grid">
+
+
+<a class="room added"
+href="#master-to-do">
+
+<div class="icon">
+✅
+</div>
+
+<h3>
+Master To-Do
+</h3>
+
+<p>
+Every actionable item,
+filtered instead of forgotten.
+</p>
+
+</a>
+
+
+<a class="room added"
+href="/jungle-star-command/messages/">
+
+<div class="icon">
+💬
+</div>
+
+<h3>
+Messages
+</h3>
+
+<p>
+Calls, texts, emails,
+replies and follow-up.
+</p>
+
+</a>
+
+
+<a class="room added"
+href="/jungle-star-command/communication-jar/">
+
+<div class="icon">
+🫙
+</div>
+
+<h3>
+Communication Jar
+</h3>
+
+<p>
+Say-it-once notes and
+organizational continuity.
+</p>
+
+</a>
+
+
+<a class="room original"
+href="/jungle-star-command/idea-box/">
+
+<div class="icon">
+💡
+</div>
+
+<h3>
+Idea Box
+</h3>
+
+<p>
+Capture ideas without converting
+every thought into immediate work.
+</p>
+
+</a>
+
+
+<a class="room original"
+href="/jungle-star-command/decision-log/">
+
+<div class="icon">
+🧠
+</div>
+
+<h3>
+Decision Log
+</h3>
+
+<p>
+What was decided,
+why and what happens next.
+</p>
+
+</a>
+
+
+<a class="room added"
+href="/jungle-star-command/founder-notes/">
+
+<div class="icon">
+📓
+</div>
+
+<h3>
+Founder Notes
+</h3>
+
+<p>
+Working thoughts,
+continuity and handoffs.
+</p>
+
+</a>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ORGANIZATION FOUNDATION
+===================================================== -->
 
 <section>
 
@@ -964,31 +1146,53 @@ Recovered Command Foundation
 </div>
 
 <h2 class="section-title">
-Organization rooms.
+Organization.
 </h2>
 
-<p class="section-copy">
-These are preserved from the recovered Community
-Command Center structure. They are not being replaced
-by the new business rooms.
-</p>
 
 <div class="room-grid">
 
 
 <a class="room original"
+href="/jungle-star-command/calendar/">
+
+<div class="icon">
+🗓️
+</div>
+
+<h3>
+Calendar
+</h3>
+
+<p>
+Events, deadlines,
+meetings and schedules.
+</p>
+
+<span class="label">
+PRESERVED
+</span>
+
+</a>
+
+
+<a class="room original"
 href="/jungle-star-command/announcements/">
 
-<div class="icon">📢</div>
+<div class="icon">
+📢
+</div>
 
-<h3>Announcements</h3>
+<h3>
+Announcements
+</h3>
 
 <p>
 Organization-wide updates.
 </p>
 
 <span class="label">
-PRESERVED ORIGINAL
+PRESERVED
 </span>
 
 </a>
@@ -997,17 +1201,21 @@ PRESERVED ORIGINAL
 <a class="room original"
 href="/jungle-star-command/volunteer-hub/">
 
-<div class="icon">🙋</div>
+<div class="icon">
+🙋
+</div>
 
-<h3>Volunteer Hub</h3>
+<h3>
+Volunteer Hub
+</h3>
 
 <p>
-Volunteer people, assignments,
+People, assignments,
 availability and work.
 </p>
 
 <span class="label">
-PRESERVED ORIGINAL
+PRESERVED
 </span>
 
 </a>
@@ -1016,16 +1224,21 @@ PRESERVED ORIGINAL
 <a class="room original"
 href="/jungle-star-command/garden/">
 
-<div class="icon">🌱</div>
+<div class="icon">
+🌱
+</div>
 
-<h3>Garden Tasks</h3>
+<h3>
+Garden Tasks
+</h3>
 
 <p>
-Garden operations and physical work.
+Physical garden and
+community operations.
 </p>
 
 <span class="label">
-PRESERVED ORIGINAL
+PRESERVED
 </span>
 
 </a>
@@ -1034,16 +1247,21 @@ PRESERVED ORIGINAL
 <a class="room original"
 href="/jungle-star-command/programs/">
 
-<div class="icon">🏫</div>
+<div class="icon">
+📋
+</div>
 
-<h3>Programs</h3>
+<h3>
+Programs
+</h3>
 
 <p>
-Programs, classes and organizational activity.
+Classes, events,
+services and initiatives.
 </p>
 
 <span class="label">
-PRESERVED ORIGINAL
+PRESERVED
 </span>
 
 </a>
@@ -1052,16 +1270,21 @@ PRESERVED ORIGINAL
 <a class="room original"
 href="/jungle-star-command/safety/">
 
-<div class="icon">🛡️</div>
+<div class="icon">
+🛡️
+</div>
 
-<h3>Safety Protocols</h3>
+<h3>
+Safety
+</h3>
 
 <p>
-Safety procedures, incidents and requirements.
+Safety procedures,
+incidents and requirements.
 </p>
 
 <span class="label">
-PRESERVED ORIGINAL
+PRESERVED
 </span>
 
 </a>
@@ -1070,17 +1293,21 @@ PRESERVED ORIGINAL
 <a class="room original"
 href="/jungle-star-command/grievances/">
 
-<div class="icon">⚖️</div>
+<div class="icon">
+⚖️
+</div>
 
-<h3>Grievances</h3>
+<h3>
+Grievances
+</h3>
 
 <p>
-Conflict, grievances,
-incidents and resolution records.
+Conflict, incidents
+and resolution records.
 </p>
 
 <span class="label">
-PRESERVED ORIGINAL
+PRESERVED
 </span>
 
 </a>
@@ -1089,17 +1316,21 @@ PRESERVED ORIGINAL
 <a class="room original"
 href="/jungle-star-command/resources/">
 
-<div class="icon">🧰</div>
+<div class="icon">
+🧰
+</div>
 
-<h3>Resources</h3>
+<h3>
+Resources
+</h3>
 
 <p>
-Things people need to get work done
-or receive assistance.
+Things people need
+to get work done.
 </p>
 
 <span class="label">
-PRESERVED ORIGINAL
+PRESERVED
 </span>
 
 </a>
@@ -1108,16 +1339,21 @@ PRESERVED ORIGINAL
 <a class="room original"
 href="/jungle-star-command/transparency/">
 
-<div class="icon">🔎</div>
+<div class="icon">
+🔎
+</div>
 
-<h3>Transparency</h3>
+<h3>
+Transparency
+</h3>
 
 <p>
-Accountability and visible organizational records.
+Accountability and
+visible records.
 </p>
 
 <span class="label">
-PRESERVED ORIGINAL
+PRESERVED
 </span>
 
 </a>
@@ -1126,16 +1362,21 @@ PRESERVED ORIGINAL
 <a class="room original"
 href="/jungle-star-command/documents/">
 
-<div class="icon">📂</div>
+<div class="icon">
+📂
+</div>
 
-<h3>Documents</h3>
+<h3>
+Documents
+</h3>
 
 <p>
-Organization documents and source files.
+Organization source files
+and references.
 </p>
 
 <span class="label">
-PRESERVED ORIGINAL
+PRESERVED
 </span>
 
 </a>
@@ -1144,16 +1385,21 @@ PRESERVED ORIGINAL
 <a class="room original"
 href="/jungle-star-command/contact/">
 
-<div class="icon">☎️</div>
+<div class="icon">
+☎️
+</div>
 
-<h3>Contact</h3>
+<h3>
+Contact
+</h3>
 
 <p>
-People and organization contact routes.
+People and organization
+contact routes.
 </p>
 
 <span class="label">
-PRESERVED ORIGINAL
+PRESERVED
 </span>
 
 </a>
@@ -1162,16 +1408,20 @@ PRESERVED ORIGINAL
 <a class="room original"
 href="/jungle-star-command/admin/">
 
-<div class="icon">🧭</div>
+<div class="icon">
+🧭
+</div>
 
-<h3>Admin Dashboard</h3>
+<h3>
+Admin
+</h3>
 
 <p>
-Administrative command and accountability.
+Administrative operations.
 </p>
 
 <span class="label">
-PRESERVED ORIGINAL
+PRESERVED
 </span>
 
 </a>
@@ -1180,36 +1430,21 @@ PRESERVED ORIGINAL
 <a class="room original"
 href="/jungle-star-command/meeting-notes/">
 
-<div class="icon">📝</div>
+<div class="icon">
+📝
+</div>
 
-<h3>Meeting Notes</h3>
+<h3>
+Meeting Notes
+</h3>
 
 <p>
-What happened, who said what,
-and what follows.
+What happened,
+who owns what and next actions.
 </p>
 
 <span class="label">
-PRESERVED ORIGINAL
-</span>
-
-</a>
-
-
-<a class="room original"
-href="/jungle-star-command/decision-log/">
-
-<div class="icon">🧠</div>
-
-<h3>Decision Log</h3>
-
-<p>
-What was decided,
-when and what happens next.
-</p>
-
-<span class="label">
-PRESERVED ORIGINAL
+PRESERVED
 </span>
 
 </a>
@@ -1218,375 +1453,160 @@ PRESERVED ORIGINAL
 <a class="room original"
 href="/jungle-star-command/onboarding/">
 
-<div class="icon">🚪</div>
+<div class="icon">
+🚪
+</div>
 
-<h3>Onboarding</h3>
+<h3>
+Onboarding
+</h3>
 
 <p>
-Bring new people into the organization correctly.
+Bring people into the
+organization correctly.
 </p>
 
 <span class="label">
-PRESERVED ORIGINAL
+PRESERVED
 </span>
 
 </a>
 
-
-<a class="room original"
-href="/jungle-star-command/links/">
-
-<div class="icon">🔗</div>
-
-<h3>Links Board</h3>
-
-<p>
-Important destinations and references.
-LinkSmith can work inside here later.
-</p>
-
-<span class="label">
-PRESERVED ORIGINAL
-</span>
-
-</a>
-
-
-<a class="room original"
-href="/jungle-star-command/idea-box/">
-
-<div class="icon">💡</div>
-
-<h3>Idea Box</h3>
-
-<p>
-Capture ideas without losing them.
-</p>
-
-<span class="label">
-PRESERVED ORIGINAL
-</span>
-
-</a>
 
 </div>
 
 </section>
 
 
-<!-- ======================================================
+
+<!-- =====================================================
      COMPANY OPERATIONS
-====================================================== -->
+===================================================== -->
 
 <section>
 
 <div class="eyebrow">
-Jungle Star Operations
+Company Operations
 </div>
 
 <h2 class="section-title">
-Run the company.
+Build the physical company.
 </h2>
 
+
 <div class="room-grid">
+
+
+<a class="room added"
+href="/jungle-star-command/businesses/">
+
+<div class="icon">
+🏪
+</div>
+
+<h3>
+Businesses
+</h3>
+
+<p>
+Every Jungle Star business,
+division and revenue lane.
+</p>
+
+</a>
 
 
 <a class="room added"
 href="/jungle-star-command/projects/">
 
-<div class="icon">🧱</div>
-
-<h3>Projects</h3>
-
-<p>
-Construction, creative,
-community and company projects.
-</p>
-
-<span class="label">
-ADDED
-</span>
-
-</a>
-
-
-<a class="room added"
-href="/jungle-star-command/people/">
-
-<div class="icon">👥</div>
-
-<h3>People</h3>
-
-<p>
-Team, contractors, partners,
-assignments and ownership.
-</p>
-
-<span class="label">
-ADDED
-</span>
-
-</a>
-
-
-<a class="room added"
-href="/jungle-star-command/purchases/">
-
-<div class="icon">🧾</div>
-
-<h3>Purchases</h3>
-
-<p>
-Materials, equipment,
-supplies and operating needs.
-</p>
-
-<span class="label">
-ADDED
-</span>
-
-</a>
-
-
-<a class="room added"
-href="/jungle-star-command/jawnny-cash/">
-
-<div class="icon">💰</div>
-
-<h3>Jawnny Cash</h3>
-
-<p>
-Personal needs and money separated
-from company operating money.
-</p>
-
-<span class="label">
-ADDED
-</span>
-
-</a>
-
-
-<a class="room added"
-href="/jungle-star-command/files-receipts/">
-
-<div class="icon">📎</div>
-
-<h3>Files / Receipts</h3>
-
-<p>
-Evidence, receipts,
-photos and source materials.
-</p>
-
-<span class="label">
-ADDED
-</span>
-
-</a>
-
-
-<a class="room added"
-href="/jungle-star-command/packets-legal/">
-
-<div class="icon">⚖️</div>
-
-<h3>Packets / Legal</h3>
-
-<p>
-Matters, packets, filings,
-deadlines and next required steps.
-</p>
-
-<span class="label">
-ADDED
-</span>
-
-</a>
-
-
-<a class="room added"
-href="/jungle-star-command/document-forge/">
-
-<div class="icon">📄</div>
-
-<h3>Document Forge</h3>
-
-<p>
-IFPs, RFPs, proposals,
-contracts and working documents.
-</p>
-
-<span class="label">
-ADDED
-</span>
-
-</a>
-
-
-<a class="room added"
-href="/jungle-star-command/export/">
-
-<div class="icon">⬇️</div>
-
-<h3>Export My Data</h3>
-
-<p>
-CSV, JSON, print and AI handoff.
-</p>
-
-<span class="label">
-ADDED
-</span>
-
-</a>
-
+<div class="icon">
+🧱
 </div>
 
-</section>
-
-
-<!-- ======================================================
-     ROBOT HALL
-====================================================== -->
-
-<section id="robot-hall">
-
-<div class="eyebrow">
-Robot Hall Dubai
-</div>
-
-<h2 class="section-title">
-Give every robot its own room.
-</h2>
-
-<div class="robot-feature">
-
-<h2>
-🤖 ROBOT HALL DUBAI
-</h2>
-
-<p class="section-copy">
-
-Open one headquarters for the fleet,
-then create each robot's individual page as you go.
-
-GrooveBot gets music knowledge.
-
-DocuBot gets non-book documents.
-
-PressForge / Penman gets publishing.
-
-GameMaster gets games.
-
-LinkSmith gets destinations and links.
-
-TRON gets field equipment and physical-resource knowledge.
-
-Nobody has to become God over the whole system.
-
-</p>
-
-<div class="robot-actions">
-
-<a href="/jungle-star-command/robot-hall/">
-OPEN ROBOT HALL
-</a>
-
-<a href="/jungle-star-command/robot-hall/registry/">
-FLEET REGISTRY
-</a>
-
-<a href="/jungle-star-command/robot-hall/training/">
-TRAINING
-</a>
-
-<a href="/jungle-star-command/robot-hall/documents/">
-ROBOT DOCUMENTS
-</a>
-
-<a href="/jungle-star-command/robot-hall/cattle-silver-gold/">
-CATTLE / SILVER / GOLD
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ======================================================
-     BUSINESS / CREATIVE DOORS
-====================================================== -->
-
-<section>
-
-<div class="eyebrow">
-Company Rooms
-</div>
-
-<h2 class="section-title">
-Keep expanding.
-</h2>
-
-<div class="room-grid">
-
-
-<a class="room added"
-href="/jungle-star-command/great-food-fight/">
-
-<div class="icon">🥦</div>
-
-<h3>Great Food Fight</h3>
+<h3>
+Projects
+</h3>
 
 <p>
-Game, characters, scripts,
-books, curriculum and products.
+Physical, creative,
+technical and community work.
 </p>
 
 </a>
 
 
 <a class="room added"
-href="/jungle-star-command/jw-comics/">
+href="/jungle-star-command/headquarters/">
 
-<div class="icon">🦸</div>
+<div class="icon">
+🏗️
+</div>
 
-<h3>JW Comics</h3>
+<h3>
+Headquarters
+</h3>
 
 <p>
-Characters, stories,
-worlds, books and merchandise.
+Rooms, walls, lighting,
+electrical, construction,
+furniture and improvements.
 </p>
 
 </a>
 
 
 <a class="room added"
-href="/jungle-star-command/publishing/">
+href="/jungle-star-command/assets-registry/">
 
-<div class="icon">📚</div>
+<div class="icon">
+🧰
+</div>
 
-<h3>Publishing</h3>
+<h3>
+Equipment / Assets
+</h3>
 
 <p>
-Books, authors, manuscripts,
-printing and releases.
+Tools, machines,
+technology and physical assets.
 </p>
 
 </a>
 
 
 <a class="room added"
-href="/jungle-star-command/animal-radio/">
+href="/jungle-star-command/transportation/">
 
-<div class="icon">🎵</div>
+<div class="icon">
+🚐
+</div>
 
-<h3>Animal Radio</h3>
+<h3>
+Transportation
+</h3>
 
 <p>
-Music catalog and destinations.
+Vehicles, bike motors,
+class transport and field logistics.
+</p>
+
+</a>
+
+
+<a class="room added"
+href="/jungle-star-command/capital-purchases/">
+
+<div class="icon">
+🏦
+</div>
+
+<h3>
+Capital Purchases
+</h3>
+
+<p>
+Big purchases required
+to increase capacity.
 </p>
 
 </a>
@@ -1595,13 +1615,256 @@ Music catalog and destinations.
 <a class="room added"
 href="/jungle-star-command/mint-press-express/">
 
-<div class="icon">🧵</div>
+<div class="icon">
+🧵
+</div>
 
-<h3>Mint Press Express</h3>
+<h3>
+Mint Press Express
+</h3>
 
 <p>
 Embroidery, apparel,
-orders, supplies and production.
+orders and production.
+</p>
+
+</a>
+
+
+<a class="room added"
+href="/jungle-star-command/jawnny-cash/">
+
+<div class="icon">
+💰
+</div>
+
+<h3>
+Jawnny Cash
+</h3>
+
+<p>
+Personal needs, operating money,
+budgets and purchase planning.
+</p>
+
+</a>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CREATIVE / IP
+===================================================== -->
+
+<section>
+
+<div class="eyebrow">
+Creative / IP
+</div>
+
+<h2 class="section-title">
+Build worlds without losing the source.
+</h2>
+
+
+<div class="room-grid">
+
+
+<a class="room added"
+href="/jungle-star-command/great-food-fight/">
+
+<div class="icon">
+🥦
+</div>
+
+<h3>
+Great Food Fight
+</h3>
+
+<p>
+Characters, game,
+missions, scripts,
+products and curriculum.
+</p>
+
+</a>
+
+
+<a class="room added"
+href="/jungle-star-command/jw-comics/">
+
+<div class="icon">
+🦸
+</div>
+
+<h3>
+JW Comics
+</h3>
+
+<p>
+Characters, stories,
+worlds and merchandise.
+</p>
+
+</a>
+
+
+<a class="room added"
+href="/jungle-star-command/publishing/">
+
+<div class="icon">
+📚
+</div>
+
+<h3>
+Publishing
+</h3>
+
+<p>
+Books, authors,
+manuscripts and releases.
+</p>
+
+</a>
+
+
+<a class="room added"
+href="/jungle-star-command/animal-radio/">
+
+<div class="icon">
+🎵
+</div>
+
+<h3>
+Animal Radio
+</h3>
+
+<p>
+Songs, albums,
+artists and releases.
+</p>
+
+</a>
+
+
+<a class="room added"
+href="/jungle-star-command/performance-scripts/">
+
+<div class="icon">
+🎭
+</div>
+
+<h3>
+Performance Scripts
+</h3>
+
+<p>
+Live, video, school
+and character performance material.
+</p>
+
+</a>
+
+
+<a class="room added"
+href="/jungle-star-command/merchandise/">
+
+<div class="icon">
+👕
+</div>
+
+<h3>
+Merchandise
+</h3>
+
+<p>
+Plush, cards, toys,
+bobbleheads, figures and apparel.
+</p>
+
+</a>
+
+
+<a class="room added"
+href="/jungle-star-command/curriculum/">
+
+<div class="icon">
+🎓
+</div>
+
+<h3>
+Curriculum
+</h3>
+
+<p>
+Classes, lessons,
+books and real-world learning.
+</p>
+
+</a>
+
+
+<a class="room added"
+href="/jungle-star-command/media/">
+
+<div class="icon">
+🎬
+</div>
+
+<h3>
+Media
+</h3>
+
+<p>
+Video, audio,
+performance and distribution.
+</p>
+
+</a>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     COMMUNITY
+===================================================== -->
+
+<section>
+
+<div class="eyebrow">
+Community
+</div>
+
+<h2 class="section-title">
+Do the real-world work.
+</h2>
+
+
+<div class="room-grid">
+
+
+<a class="room added"
+href="/jungle-star-command/choa/">
+
+<div class="icon">
+🏠
+</div>
+
+<h3>
+CHOA
+</h3>
+
+<p>
+Housing, neighborhood
+and field operations.
 </p>
 
 </a>
@@ -1610,246 +1873,401 @@ orders, supplies and production.
 <a class="room added"
 href="/jungle-star-command/academy/">
 
-<div class="icon">🎓</div>
+<div class="icon">
+🎓
+</div>
 
-<h3>Build-A-Better-World Academy</h3>
+<h3>
+Build-A-Better-World Academy
+</h3>
 
 <p>
 Classes, curriculum,
-kids and community learning.
+children and community learning.
 </p>
 
 </a>
 
 
 <a class="room added"
-href="/jungle-star-command/choa/">
+href="/jungle-star-command/community-needs/">
 
-<div class="icon">🏠</div>
+<div class="icon">
+🤝
+</div>
 
-<h3>CHOA</h3>
+<h3>
+Community Needs
+</h3>
 
 <p>
-Community housing,
-resources and field work.
+What people need,
+what exists and what must be built.
 </p>
 
 </a>
 
 
 <a class="room added"
-href="/jungle-star-command/tron/">
+href="/jungle-star-command/philanthropy/">
 
-<div class="icon">🧰</div>
+<div class="icon">
+❤️
+</div>
 
-<h3>TRON</h3>
+<h3>
+Philanthropy
+</h3>
 
 <p>
-Tactical Resource On-the-Ground Unit.
-Tools, equipment, boxes,
-locations and field readiness.
+Creative inventory,
+community investment
+and impact opportunities.
 </p>
 
 </a>
+
+
+<a class="room added"
+href="/jungle-star-command/partnerships/">
+
+<div class="icon">
+🤝
+</div>
+
+<h3>
+Partnerships
+</h3>
+
+<p>
+Organizations, schools,
+creators and collaborators.
+</p>
+
+</a>
+
 
 </div>
 
 </section>
 
 
+
+<!-- =====================================================
+     ROBOT HALL
+===================================================== -->
+
+<section>
+
+<div class="eyebrow">
+Robot Hall Dubai
+</div>
+
+<h2 class="section-title">
+Preserve the brains.
+</h2>
+
+
+<div class="robot-feature">
+
+
+<div>
+
+<div class="robot-feature-title">
+🤖 ROBOT HALL DUBAI
+</div>
+
+<p class="section-copy">
+
+Every robot gets its own room.
+
+Every room can have documents.
+
+Every room can have Markdown continuity.
+
+Every room can eventually import and export structured data.
+
+Training can grow without destroying prior source material.
+
+New canon does not erase old source history.
+
+</p>
+
+</div>
+
+
+<div class="robot-actions">
+
+<a href="/jungle-star-command/robot-hall/">
+Open Robot Hall
+</a>
+
+<a href="/jungle-star-command/robot-hall/registry/">
+Fleet Registry
+</a>
+
+<a href="/jungle-star-command/robot-hall/training/">
+Training
+</a>
+
+<a href="/jungle-star-command/robot-hall/documents/">
+Documents
+</a>
+
+<a href="/jungle-star-command/robot-hall/cattle-silver-gold/">
+Cattle / Silver / Gold
+</a>
+
+</div>
+
+
+<div class="room-grid robot-grid">
+
+
+<a
+  class="room robot-room"
+  href="/jungle-star-command/robot-hall/groovebot/"
+>
+
+<div class="icon">
+🎵
+</div>
+
+<h3>
+GrooveBot
+</h3>
+
+<p>
+Adult music.
+Kids music.
+Animal Radio.
+Features.
+International artists.
+Albums and releases.
+</p>
+
+</a>
+
+
+<a
+  class="room robot-room"
+  href="/jungle-star-command/robot-hall/docubot/"
+>
+
+<div class="icon">
+📄
+</div>
+
+<h3>
+DocuBot
+</h3>
+
+<p>
+IFPs, RFPs,
+contracts, forms,
+letters, legal packets
+and non-book documents.
+</p>
+
+</a>
+
+
+<a
+  class="room robot-room"
+  href="/jungle-star-command/robot-hall/linksmith/"
+>
+
+<div class="icon">
+🔗
+</div>
+
+<h3>
+LinkSmith
+</h3>
+
+<p>
+Canonical URLs,
+destinations,
+link health and where-used records.
+</p>
+
+</a>
+
+
+<a
+  class="room robot-room"
+  href="/jungle-star-command/robot-hall/tron/"
+>
+
+<div class="icon">
+🧰
+</div>
+
+<h3>
+TRON
+</h3>
+
+<p>
+Tools, toolboxes,
+equipment locations,
+field readiness
+and missing gear.
+</p>
+
+</a>
+
+
+<a
+  class="room robot-room"
+  href="/jungle-star-command/robot-hall/montage/"
+>
+
+<div class="icon">
+🎯
+</div>
+
+<h3>
+Montage
+</h3>
+
+<p>
+Mission.
+Obstacles.
+Needs.
+Timeline.
+Assets.
+Goals.
+Evidence.
+</p>
+
+</a>
+
+
+<a
+  class="room robot-room"
+  href="/jungle-star-command/robot-hall/general-pro/"
+>
+
+<div class="icon">
+🪖
+</div>
+
+<h3>
+General Pro
+</h3>
+
+<p>
+Operational training
+and future task execution.
+</p>
+
+</a>
+
+
+<a
+  class="room robot-room"
+  href="/jungle-star-command/robot-hall/star-selector/"
+>
+
+<div class="icon">
+⭐
+</div>
+
+<h3>
+Star Selector
+</h3>
+
+<p>
+Selection logic,
+training knowledge
+and approved lessons.
+</p>
+
+</a>
+
+
+<a
+  class="room robot-room"
+  href="/jungle-star-command/robot-hall/drj/"
+>
+
+<div class="icon">
+🧪
+</div>
+
+<h3>
+DRJ
+</h3>
+
+<p>
+Research, continuity
+and specialized knowledge.
+</p>
+
+</a>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
 </main>
 
 
-<footer>
 
-<div class="wrap">
+<footer class="site-footer">
 
-Jungle Star Command
-•
-Private Operations
-•
+<div class="wrap footer-grid">
+
+
+<div>
+
+<strong>
+★ JUNGLE STAR COMMAND
+</strong>
+
+<p>
+Private Operations Headquarters
+</p>
+
+</div>
+
+
+<div>
+
+<strong>
+Operating Law
+</strong>
+
+<p>
 Recover → Preserve → Add
+</p>
+
+</div>
+
+
+<div>
+
+<strong>
+Page
+</strong>
+
+<p>
+Updated 2026-10-01
+</p>
+
+</div>
+
 
 </div>
 
 </footer>
 
 
-<script>
-
-/* =========================================================
-   SUPABASE AUTH — PRESERVE WORKING LOGIN
-========================================================= */
-
-const SUPABASE_URL =
-  "https://xfknuiuqzihtgodnybwv.supabase.co";
-
-const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_GEtDFPOEv3WS2vo76wBd-g_7BgGEPQG";
-
-const commandSupabase =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY,
-    {
-      auth:{
-        persistSession:true,
-        autoRefreshToken:true,
-        detectSessionInUrl:true
-      }
-    }
-  );
-
-let authResolved = false;
-
-
-function sendToLogin(){
-
-  if(authResolved){
-    return;
-  }
-
-  authResolved = true;
-
-  window.location.replace(
-    "/jungle-star-command/login/"
-  );
-
-}
-
-
-function showCommand(session){
-
-  if(authResolved){
-    return;
-  }
-
-  authResolved = true;
-
-  const user =
-    session.user;
-
-  const metadata =
-    user.user_metadata || {};
-
-  const displayName =
-    metadata.full_name ||
-    metadata.name ||
-    user.email ||
-    "Command User";
-
-  const email =
-    user.email ||
-    "Authenticated";
-
-  const firstLetter =
-    displayName
-      .trim()
-      .charAt(0)
-      .toUpperCase() || "J";
-
-  document
-    .getElementById("account-name")
-    .textContent =
-      displayName;
-
-  document
-    .getElementById("account-email")
-    .textContent =
-      email;
-
-  document
-    .getElementById("account-avatar")
-    .textContent =
-      firstLetter;
-
-  document.body.classList.add(
-    "auth-ready"
-  );
-
-}
-
-
-commandSupabase.auth.onAuthStateChange(
-  (event, session) => {
-
-    if(event === "SIGNED_OUT"){
-
-      window.location.replace(
-        "/jungle-star-command/login/"
-      );
-
-      return;
-
-    }
-
-    if(
-      event === "INITIAL_SESSION" ||
-      event === "SIGNED_IN" ||
-      event === "TOKEN_REFRESHED"
-    ){
-
-      if(session){
-        showCommand(session);
-      }else{
-        sendToLogin();
-      }
-
-    }
-
-  }
-);
-
-
-async function signOutCommand(){
-
-  const { error } =
-    await commandSupabase.auth.signOut();
-
-  if(error){
-
-    alert(
-      "Sign out failed. Please try again."
-    );
-
-    return;
-
-  }
-
-  window.location.replace(
-    "/jungle-star-command/login/"
-  );
-
-}
-
-
-document
-  .getElementById("command-sign-out")
-  .addEventListener(
-    "click",
-    signOutCommand
-  );
-
-
-/* =========================================================
-   PAGE TIME
-========================================================= */
-
-document
-  .getElementById("page-opened")
-  .textContent =
-    "PAGE OPENED: " +
-    new Intl.DateTimeFormat(
-      "en-US",
-      {
-        dateStyle:"medium",
-        timeStyle:"short"
-      }
-    ).format(
-      new Date()
-    );
-
-</script>
-
 </body>
+
 </html>
