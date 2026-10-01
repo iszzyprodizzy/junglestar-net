@@ -1,16 +1,19 @@
 /* =========================================================
    JUNGLE STAR COMMAND
    BUILD: 2026-10-01
-   LAW: RECOVER → PRESERVE → ADD
+
+   LAW:
+   RECOVER → PRESERVE → ADD
 ========================================================= */
 
 
 /* =========================================================
-   SUPABASE AUTH
+   SUPABASE
 ========================================================= */
 
 const SUPABASE_URL =
   "https://xfknuiuqzihtgodnybwv.supabase.co";
+
 
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_GEtDFPOEv3WS2vo76wBd-g_7BgGEPQG";
@@ -34,32 +37,19 @@ let authResolved =
   false;
 
 
-function sendToLogin(){
-
-  if(authResolved){
-    return;
-  }
-
-  authResolved = true;
-
-  window.location.replace(
-    "/jungle-star-command/login/"
-  );
-
-}
-
+/* =========================================================
+   AUTH DISPLAY
+========================================================= */
 
 function showCommand(session){
 
-  if(authResolved){
+  const user =
+    session?.user;
+
+
+  if(!user){
     return;
   }
-
-  authResolved = true;
-
-
-  const user =
-    session.user;
 
 
   const metadata =
@@ -127,17 +117,105 @@ function showCommand(session){
   }
 
 
-  document.body.classList.add(
-    "auth-ready"
+  authResolved =
+    true;
+
+}
+
+
+/* =========================================================
+   SEND TO LOGIN
+========================================================= */
+
+function sendToLogin(){
+
+  if(authResolved){
+    return;
+  }
+
+
+  window.location.replace(
+    "/jungle-star-command/login/"
   );
 
 }
 
 
-commandSupabase.auth.onAuthStateChange(
-  (event,session) => {
+/* =========================================================
+   AUTH STARTUP
+========================================================= */
 
-    if(event === "SIGNED_OUT"){
+async function initializeCommandAuth(){
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await commandSupabase
+        .auth
+        .getSession();
+
+
+    if(error){
+
+      console.error(
+        "Command session check failed:",
+        error
+      );
+
+      sendToLogin();
+
+      return;
+
+    }
+
+
+    const session =
+      data?.session;
+
+
+    if(session){
+
+      showCommand(
+        session
+      );
+
+    }else{
+
+      sendToLogin();
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Command auth startup crashed:",
+      error
+    );
+
+
+    sendToLogin();
+
+  }
+
+}
+
+
+/* =========================================================
+   AUTH CHANGE LISTENER
+========================================================= */
+
+commandSupabase.auth.onAuthStateChange(
+  (
+    event,
+    session
+  ) => {
+
+    if(
+      event === "SIGNED_OUT"
+    ){
 
       window.location.replace(
         "/jungle-star-command/login/"
@@ -149,20 +227,17 @@ commandSupabase.auth.onAuthStateChange(
 
 
     if(
-      event === "INITIAL_SESSION" ||
-      event === "SIGNED_IN" ||
-      event === "TOKEN_REFRESHED"
+      session &&
+      (
+        event === "SIGNED_IN" ||
+        event === "TOKEN_REFRESHED" ||
+        event === "INITIAL_SESSION"
+      )
     ){
 
-      if(session){
-
-        showCommand(session);
-
-      }else{
-
-        sendToLogin();
-
-      }
+      showCommand(
+        session
+      );
 
     }
 
@@ -170,30 +245,57 @@ commandSupabase.auth.onAuthStateChange(
 );
 
 
+/* =========================================================
+   SIGN OUT
+========================================================= */
+
 async function signOutCommand(){
 
-  const {
-    error
-  } =
-    await commandSupabase
-      .auth
-      .signOut();
+  try{
+
+    const {
+      error
+    } =
+      await commandSupabase
+        .auth
+        .signOut();
 
 
-  if(error){
+    if(error){
+
+      console.error(
+        "Command sign out failed:",
+        error
+      );
+
+
+      alert(
+        "Sign out failed. Please try again."
+      );
+
+
+      return;
+
+    }
+
+
+    window.location.replace(
+      "/jungle-star-command/login/"
+    );
+
+  }catch(error){
+
+    console.error(
+      "Command sign out crashed:",
+      error
+    );
+
 
     alert(
       "Sign out failed. Please try again."
     );
 
-    return;
-
   }
-
-
-  window.location.replace(
-    "/jungle-star-command/login/"
-  );
 
 }
 
@@ -215,8 +317,45 @@ if(signOutButton){
 
 
 /* =========================================================
-   NAVIGATION
+   DEPARTMENT MENU
 ========================================================= */
+
+const navGroups =
+  document.querySelectorAll(
+    ".nav-group"
+  );
+
+
+function closeAllMenus(){
+
+  navGroups.forEach(
+    group => {
+
+      group.classList.remove(
+        "open"
+      );
+
+
+      const button =
+        group.querySelector(
+          ".nav-group-button"
+        );
+
+
+      if(button){
+
+        button.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+
+      }
+
+    }
+  );
+
+}
+
 
 document
   .querySelectorAll(
@@ -229,6 +368,8 @@ document
         "click",
         event => {
 
+          event.preventDefault();
+
           event.stopPropagation();
 
 
@@ -238,44 +379,21 @@ document
             );
 
 
-          const alreadyOpen =
-            group.classList.contains(
+          if(!group){
+            return;
+          }
+
+
+          const shouldOpen =
+            !group.classList.contains(
               "open"
             );
 
 
-          document
-            .querySelectorAll(
-              ".nav-group"
-            )
-            .forEach(
-              item => {
-
-                item.classList.remove(
-                  "open"
-                );
+          closeAllMenus();
 
 
-                const itemButton =
-                  item.querySelector(
-                    ".nav-group-button"
-                  );
-
-
-                if(itemButton){
-
-                  itemButton.setAttribute(
-                    "aria-expanded",
-                    "false"
-                  );
-
-                }
-
-              }
-            );
-
-
-          if(!alreadyOpen){
+          if(shouldOpen){
 
             group.classList.add(
               "open"
@@ -298,37 +416,17 @@ document
 
 document.addEventListener(
   "click",
-  () => {
+  event => {
 
-    document
-      .querySelectorAll(
+    if(
+      !event.target.closest(
         ".nav-group"
       )
-      .forEach(
-        group => {
+    ){
 
-          group.classList.remove(
-            "open"
-          );
+      closeAllMenus();
 
-
-          const button =
-            group.querySelector(
-              ".nav-group-button"
-            );
-
-
-          if(button){
-
-            button.setAttribute(
-              "aria-expanded",
-              "false"
-            );
-
-          }
-
-        }
-      );
+    }
 
   }
 );
@@ -375,9 +473,7 @@ if(pageOpened){
 
 
 /* =========================================================
-   TASK DATABASE V1
-   Browser-local now.
-   Supabase later.
+   TASK STORAGE
 ========================================================= */
 
 const TASK_KEY =
@@ -402,18 +498,35 @@ let activeProject =
 
 
 /* =========================================================
-   HELPERS
+   LOAD TASKS
 ========================================================= */
 
 function loadTasks(){
 
   try{
 
-    return JSON.parse(
+    const raw =
       localStorage.getItem(
         TASK_KEY
-      ) || "[]"
-    );
+      );
+
+
+    if(!raw){
+
+      return [];
+
+    }
+
+
+    const parsed =
+      JSON.parse(
+        raw
+      );
+
+
+    return Array.isArray(parsed)
+      ? parsed
+      : [];
 
   }catch(error){
 
@@ -422,6 +535,7 @@ function loadTasks(){
       error
     );
 
+
     return [];
 
   }
@@ -429,28 +543,52 @@ function loadTasks(){
 }
 
 
+/* =========================================================
+   SAVE TASKS
+========================================================= */
+
 function saveTasks(tasks){
 
-  localStorage.setItem(
-    TASK_KEY,
-    JSON.stringify(tasks)
-  );
+  try{
+
+    localStorage.setItem(
+      TASK_KEY,
+      JSON.stringify(tasks)
+    );
 
 
-  const timestamp =
-    new Date().toISOString();
+    const timestamp =
+      new Date().toISOString();
 
 
-  localStorage.setItem(
-    TASK_UPDATED_KEY,
-    timestamp
-  );
+    localStorage.setItem(
+      TASK_UPDATED_KEY,
+      timestamp
+    );
 
 
-  updateTaskTimestamp();
+    updateTaskTimestamp();
+
+  }catch(error){
+
+    console.error(
+      "Task save failed:",
+      error
+    );
+
+
+    alert(
+      "Task save failed in this browser."
+    );
+
+  }
 
 }
 
+
+/* =========================================================
+   TASK TIMESTAMP
+========================================================= */
 
 function updateTaskTimestamp(){
 
@@ -483,14 +621,22 @@ function updateTaskTimestamp(){
 
   element.textContent =
     "TASK DATA UPDATED: " +
-    formatTime(value);
+    formatTime(
+      value
+    );
 
 }
 
 
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
 function escapeHTML(value){
 
-  return String(value || "")
+  return String(
+    value ?? ""
+  )
 
     .replaceAll(
       "&",
@@ -521,6 +667,34 @@ function escapeHTML(value){
 
 
 /* =========================================================
+   NEW ID
+========================================================= */
+
+function makeTaskId(){
+
+  if(
+    window.crypto &&
+    typeof window.crypto.randomUUID === "function"
+  ){
+
+    return window.crypto.randomUUID();
+
+  }
+
+
+  return (
+    "task-" +
+    Date.now() +
+    "-" +
+    Math.random()
+      .toString(16)
+      .slice(2)
+  );
+
+}
+
+
+/* =========================================================
    ADD TASK
 ========================================================= */
 
@@ -532,15 +706,54 @@ function addTask(){
     );
 
 
-  if(!titleElement){
+  const statusElement =
+    document.getElementById(
+      "task-status"
+    );
+
+
+  const projectElement =
+    document.getElementById(
+      "task-project"
+    );
+
+
+  const categoryElement =
+    document.getElementById(
+      "task-category"
+    );
+
+
+  const ownerElement =
+    document.getElementById(
+      "task-owner"
+    );
+
+
+  const dueElement =
+    document.getElementById(
+      "task-due"
+    );
+
+
+  const notesElement =
+    document.getElementById(
+      "task-notes"
+    );
+
+
+  if(
+    !titleElement ||
+    !statusElement
+  ){
+
     return;
+
   }
 
 
   const title =
-    titleElement
-      .value
-      .trim();
+    titleElement.value.trim();
 
 
   if(!title){
@@ -549,74 +762,62 @@ function addTask(){
       "Add a task title first."
     );
 
+    titleElement.focus();
+
     return;
 
   }
 
 
+  const now =
+    new Date().toISOString();
+
+
   const task = {
 
     id:
-      crypto.randomUUID
-        ? crypto.randomUUID()
-        : String(Date.now()),
+      makeTaskId(),
 
     title,
 
     status:
-      document
-        .getElementById(
-          "task-status"
-        )
-        .value,
+      statusElement.value,
 
     project:
-      document
-        .getElementById(
-          "task-project"
-        )
-        .value
-        .trim(),
+      projectElement
+        ? projectElement.value.trim()
+        : "",
 
     category:
-      document
-        .getElementById(
-          "task-category"
-        )
-        .value
-        .trim(),
+      categoryElement
+        ? categoryElement.value.trim()
+        : "",
 
     owner:
-      document
-        .getElementById(
-          "task-owner"
-        )
-        .value
-        .trim(),
+      ownerElement
+        ? ownerElement.value.trim()
+        : "",
 
     due:
-      document
-        .getElementById(
-          "task-due"
-        )
-        .value,
+      dueElement
+        ? dueElement.value
+        : "",
 
     notes:
-      document
-        .getElementById(
-          "task-notes"
-        )
-        .value
-        .trim(),
+      notesElement
+        ? notesElement.value.trim()
+        : "",
 
     created_at:
-      new Date().toISOString(),
+      now,
 
     updated_at:
-      new Date().toISOString(),
+      now,
 
     completed_at:
-      null
+      statusElement.value === "done"
+        ? now
+        : null
 
   };
 
@@ -642,17 +843,23 @@ function addTask(){
 }
 
 
+/* =========================================================
+   CLEAR FORM
+========================================================= */
+
 function clearTaskForm(){
 
-  [
+  const ids = [
     "task-title",
     "task-project",
     "task-category",
     "task-owner",
     "task-due",
     "task-notes"
-  ]
-  .forEach(
+  ];
+
+
+  ids.forEach(
     id => {
 
       const element =
@@ -671,17 +878,41 @@ function clearTaskForm(){
     }
   );
 
+
+  const titleElement =
+    document.getElementById(
+      "task-title"
+    );
+
+
+  if(titleElement){
+
+    titleElement.focus();
+
+  }
+
 }
 
 
 /* =========================================================
-   MOVE / DELETE
+   MOVE TASK
 ========================================================= */
 
 function moveTask(
   id,
   status
 ){
+
+  if(
+    !STATUSES.includes(
+      status
+    )
+  ){
+
+    return;
+
+  }
+
 
   const tasks =
     loadTasks();
@@ -699,17 +930,21 @@ function moveTask(
   }
 
 
+  const now =
+    new Date().toISOString();
+
+
   task.status =
     status;
 
 
   task.updated_at =
-    new Date().toISOString();
+    now;
 
 
   task.completed_at =
     status === "done"
-      ? new Date().toISOString()
+      ? now
       : null;
 
 
@@ -723,10 +958,14 @@ function moveTask(
 }
 
 
+/* =========================================================
+   DELETE TASK
+========================================================= */
+
 function deleteTask(id){
 
   const confirmed =
-    confirm(
+    window.confirm(
       "Delete this task?"
     );
 
@@ -755,7 +994,7 @@ function deleteTask(id){
 
 
 /* =========================================================
-   RENDER
+   TASK HTML
 ========================================================= */
 
 function taskHTML(task){
@@ -800,6 +1039,16 @@ function taskHTML(task){
       : "";
 
 
+  const notes =
+    task.notes
+      ? `
+        <div class="task-notes">
+          ${escapeHTML(task.notes)}
+        </div>
+      `
+      : "";
+
+
   return `
 
   <article class="task-card">
@@ -811,24 +1060,13 @@ function taskHTML(task){
     <div class="task-meta">
 
       ${project}
-
       ${category}
-
       ${owner}
-
       ${due}
 
     </div>
 
-    ${
-      task.notes
-        ? `
-        <div class="task-notes">
-          ${escapeHTML(task.notes)}
-        </div>
-        `
-        : ""
-    }
+    ${notes}
 
     <div class="task-actions">
 
@@ -883,6 +1121,10 @@ function taskHTML(task){
 }
 
 
+/* =========================================================
+   RENDER TASKS
+========================================================= */
+
 function renderTasks(){
 
   const allTasks =
@@ -896,8 +1138,11 @@ function renderTasks(){
             String(
               task.project || ""
             )
+            .trim()
             .toLowerCase() ===
-            activeProject.toLowerCase()
+            activeProject
+              .trim()
+              .toLowerCase()
         )
       : allTasks;
 
@@ -921,7 +1166,9 @@ function renderTasks(){
         !list ||
         !count
       ){
+
         return;
+
       }
 
 
@@ -938,12 +1185,12 @@ function renderTasks(){
 
       if(!matching.length){
 
-        list.innerHTML =
-          `
+        list.innerHTML = `
           <div class="task-empty">
             Nothing here.
           </div>
-          `;
+        `;
+
 
         return;
 
@@ -954,7 +1201,9 @@ function renderTasks(){
         matching
           .map(
             task =>
-              taskHTML(task)
+              taskHTML(
+                task
+              )
           )
           .join("");
 
@@ -984,10 +1233,13 @@ document
               ".project-filter"
             )
             .forEach(
-              item =>
+              item => {
+
                 item.classList.remove(
                   "active"
-                )
+                );
+
+              }
             );
 
 
@@ -1010,14 +1262,16 @@ document
 
 
 /* =========================================================
-   CSV EXPORT
+   CSV CELL
 ========================================================= */
 
 function csvCell(value){
 
   return (
     '"' +
-    String(value ?? "")
+    String(
+      value ?? ""
+    )
       .replaceAll(
         '"',
         '""'
@@ -1028,6 +1282,10 @@ function csvCell(value){
 }
 
 
+/* =========================================================
+   CSV EXPORT
+========================================================= */
+
 function exportTasksCSV(){
 
   const tasks =
@@ -1035,6 +1293,7 @@ function exportTasksCSV(){
 
 
   const columns = [
+
     "id",
     "title",
     "status",
@@ -1046,6 +1305,7 @@ function exportTasksCSV(){
     "created_at",
     "updated_at",
     "completed_at"
+
   ];
 
 
@@ -1111,7 +1371,15 @@ function exportTasksCSV(){
     "jungle-star-command-master-tasks.csv";
 
 
+  document.body.appendChild(
+    link
+  );
+
+
   link.click();
+
+
+  link.remove();
 
 
   URL.revokeObjectURL(
@@ -1122,214 +1390,323 @@ function exportTasksCSV(){
 
 
 /* =========================================================
-   CSV IMPORT
+   FULL CSV PARSER
 ========================================================= */
 
-function parseCSVLine(line){
+function parseCSV(text){
 
-  const result = [];
+  const rows = [];
 
-  let current = "";
+  let row = [];
 
-  let quoted = false;
+  let field = "";
+
+  let insideQuotes =
+    false;
 
 
   for(
     let index = 0;
-    index < line.length;
+    index < text.length;
     index++
   ){
 
     const character =
-      line[index];
+      text[index];
+
+
+    const nextCharacter =
+      text[index + 1];
+
+
+    if(
+      character === '"' &&
+      insideQuotes &&
+      nextCharacter === '"'
+    ){
+
+      field += '"';
+
+      index++;
+
+      continue;
+
+    }
 
 
     if(character === '"'){
 
-      if(
-        quoted &&
-        line[index + 1] === '"'
-      ){
+      insideQuotes =
+        !insideQuotes;
 
-        current += '"';
+      continue;
+
+    }
+
+
+    if(
+      character === "," &&
+      !insideQuotes
+    ){
+
+      row.push(
+        field
+      );
+
+      field =
+        "";
+
+      continue;
+
+    }
+
+
+    if(
+      (
+        character === "\n" ||
+        character === "\r"
+      ) &&
+      !insideQuotes
+    ){
+
+      if(
+        character === "\r" &&
+        nextCharacter === "\n"
+      ){
 
         index++;
 
-      }else{
+      }
 
-        quoted =
-          !quoted;
+
+      row.push(
+        field
+      );
+
+
+      field =
+        "";
+
+
+      if(
+        row.some(
+          value =>
+            String(value).trim() !== ""
+        )
+      ){
+
+        rows.push(
+          row
+        );
 
       }
 
-    }else if(
-      character === "," &&
-      !quoted
+
+      row =
+        [];
+
+
+      continue;
+
+    }
+
+
+    field +=
+      character;
+
+  }
+
+
+  if(
+    field !== "" ||
+    row.length
+  ){
+
+    row.push(
+      field
+    );
+
+
+    if(
+      row.some(
+        value =>
+          String(value).trim() !== ""
+      )
     ){
 
-      result.push(
-        current
+      rows.push(
+        row
       );
-
-      current = "";
-
-    }else{
-
-      current +=
-        character;
 
     }
 
   }
 
 
-  result.push(
-    current
-  );
-
-
-  return result;
+  return rows;
 
 }
 
 
+/* =========================================================
+   CSV IMPORT
+========================================================= */
+
 async function importTasksCSV(file){
 
-  const text =
-    await file.text();
+  try{
+
+    const text =
+      await file.text();
 
 
-  const lines =
-    text
-      .split(
-        /\r?\n/
-      )
-      .filter(
-        line =>
-          line.trim()
+    const rows =
+      parseCSV(
+        text
       );
 
 
-  if(lines.length < 2){
+    if(rows.length < 2){
 
-    alert(
-      "That CSV does not contain task rows."
-    );
+      alert(
+        "That CSV does not contain task rows."
+      );
 
-    return;
+      return;
 
-  }
-
-
-  const headers =
-    parseCSVLine(
-      lines[0]
-    );
+    }
 
 
-  const imported = [];
+    const headers =
+      rows[0].map(
+        value =>
+          String(value).trim()
+      );
 
 
-  lines
-    .slice(1)
-    .forEach(
-      line => {
+    const imported =
+      [];
 
-        const values =
-          parseCSVLine(
-            line
+
+    rows
+      .slice(1)
+      .forEach(
+        values => {
+
+          const row =
+            {};
+
+
+          headers.forEach(
+            (
+              header,
+              index
+            ) => {
+
+              row[header] =
+                values[index] ?? "";
+
+            }
           );
 
 
-        const row = {};
+          if(
+            !String(
+              row.title || ""
+            ).trim()
+          ){
 
-
-        headers.forEach(
-          (
-            header,
-            index
-          ) => {
-
-            row[header] =
-              values[index] || "";
+            return;
 
           }
-        );
 
 
-        imported.push({
-          id:
-            row.id ||
-            (
-              crypto.randomUUID
-                ? crypto.randomUUID()
-                : String(
-                    Date.now() +
-                    Math.random()
-                  )
-            ),
+          const now =
+            new Date().toISOString();
 
-          title:
-            row.title || "",
 
-          status:
-            STATUSES.includes(
-              row.status
-            )
-              ? row.status
-              : "later",
+          imported.push({
 
-          project:
-            row.project || "",
+            id:
+              row.id ||
+              makeTaskId(),
 
-          category:
-            row.category || "",
+            title:
+              row.title || "",
 
-          owner:
-            row.owner || "",
+            status:
+              STATUSES.includes(
+                row.status
+              )
+                ? row.status
+                : "later",
 
-          due:
-            row.due || "",
+            project:
+              row.project || "",
 
-          notes:
-            row.notes || "",
+            category:
+              row.category || "",
 
-          created_at:
-            row.created_at ||
-            new Date().toISOString(),
+            owner:
+              row.owner || "",
 
-          updated_at:
-            row.updated_at ||
-            new Date().toISOString(),
+            due:
+              row.due || "",
 
-          completed_at:
-            row.completed_at ||
-            null
+            notes:
+              row.notes || "",
 
-        });
+            created_at:
+              row.created_at ||
+              now,
 
-      }
+            updated_at:
+              row.updated_at ||
+              now,
+
+            completed_at:
+              row.completed_at ||
+              null
+
+          });
+
+        }
+      );
+
+
+    const current =
+      loadTasks();
+
+
+    saveTasks(
+      [
+        ...imported,
+        ...current
+      ]
     );
 
 
-  const current =
-    loadTasks();
+    renderTasks();
 
 
-  saveTasks(
-    [
-      ...imported,
-      ...current
-    ]
-  );
+    alert(
+      imported.length +
+      " tasks imported."
+    );
+
+  }catch(error){
+
+    console.error(
+      "CSV import failed:",
+      error
+    );
 
 
-  renderTasks();
+    alert(
+      "CSV import failed."
+    );
 
-
-  alert(
-    `${imported.length} tasks imported.`
-  );
+  }
 
 }
 
@@ -1344,7 +1721,8 @@ function buildTaskHandoff(){
     loadTasks();
 
 
-  const output = [];
+  const output =
+    [];
 
 
   output.push(
@@ -1463,24 +1841,89 @@ function buildTaskHandoff(){
 }
 
 
+/* =========================================================
+   COPY HANDOFF
+========================================================= */
+
 async function copyTasksForAI(){
 
-  await navigator
-    .clipboard
-    .writeText(
-      buildTaskHandoff()
+  try{
+
+    const text =
+      buildTaskHandoff();
+
+
+    if(
+      navigator.clipboard &&
+      navigator.clipboard.writeText
+    ){
+
+      await navigator
+        .clipboard
+        .writeText(
+          text
+        );
+
+
+      alert(
+        "Master task handoff copied."
+      );
+
+
+      return;
+
+    }
+
+
+    const textarea =
+      document.createElement(
+        "textarea"
+      );
+
+
+    textarea.value =
+      text;
+
+
+    document.body.appendChild(
+      textarea
     );
 
 
-  alert(
-    "Master task handoff copied."
-  );
+    textarea.select();
+
+
+    document.execCommand(
+      "copy"
+    );
+
+
+    textarea.remove();
+
+
+    alert(
+      "Master task handoff copied."
+    );
+
+  }catch(error){
+
+    console.error(
+      "Copy failed:",
+      error
+    );
+
+
+    alert(
+      "Copy failed."
+    );
+
+  }
 
 }
 
 
 /* =========================================================
-   BUTTON WIRING
+   BUTTONS
 ========================================================= */
 
 const addTaskButton =
@@ -1544,9 +1987,7 @@ if(importInput){
     event => {
 
       const file =
-        event
-          .target
-          .files[0];
+        event.target.files?.[0];
 
 
       if(file){
@@ -1568,9 +2009,55 @@ if(importInput){
 
 
 /* =========================================================
+   ENTER ADDS TASK
+========================================================= */
+
+const taskTitle =
+  document.getElementById(
+    "task-title"
+  );
+
+
+if(taskTitle){
+
+  taskTitle.addEventListener(
+    "keydown",
+    event => {
+
+      if(
+        event.key === "Enter"
+      ){
+
+        event.preventDefault();
+
+        addTask();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   MAKE INLINE TASK BUTTONS AVAILABLE
+========================================================= */
+
+window.moveTask =
+  moveTask;
+
+
+window.deleteTask =
+  deleteTask;
+
+
+/* =========================================================
    START
 ========================================================= */
 
 updateTaskTimestamp();
 
 renderTasks();
+
+initializeCommandAuth();
