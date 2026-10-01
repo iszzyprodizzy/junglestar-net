@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Jungle Star Command | Sign In</title>
+
+<meta name="robots" content="noindex,nofollow">
+
+<style>
+
+:root{
+  --bg:#06080c;
+  --panel:#111722;
+  --panel2:#171e2b;
+  --text:#f8f9fc;
+  --muted:#9ea8b8;
+  --line:#2d394b;
+  --gold:#e6bd62;
+  --green:#7ee39e;
+  --max:480px;
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  min-height:100%;
+}
+
+body{
+  margin:0;
+
+  display:grid;
+  place-items:center;
+
+  background:
+    radial-gradient(circle at 50% 0%,#243047 0,#0b0e14 45%,#050608 100%);
+
+  color:var(--text);
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.shell{
+  width:min(var(--max),92vw);
+}
+
+.logo{
+  text-align:center;
+  margin-bottom:25px;
+
+  font-weight:950;
+  letter-spacing:.08em;
+}
+
+.logo span{
+  color:var(--gold);
+}
+
+.card{
+  padding:32px;
+
+  border:1px solid var(--line);
+  border-radius:28px;
+
+  background:
+    linear-gradient(
+      155deg,
+      rgba(24,31,44,.97),
+      rgba(13,17,25,.97)
+    );
+
+  box-shadow:
+    0 30px 100px rgba(0,0,0,.5);
+}
+
+.eyebrow{
+  color:var(--gold);
+
+  text-transform:uppercase;
+  letter-spacing:.16em;
+
+  font-size:.75rem;
+  font-weight:950;
+}
+
+h1{
+  margin:.2em 0;
+
+  font-size:clamp(2.9rem,10vw,4.8rem);
+
+  line-height:.88;
+  letter-spacing:-.05em;
+}
+
+.lead{
+  color:var(--muted);
+  line-height:1.6;
+}
+
+label{
+  display:block;
+
+  margin-top:17px;
+
+  font-weight:850;
+}
+
+input{
+  width:100%;
+
+  margin-top:7px;
+  padding:14px 15px;
+
+  border:1px solid #3b485b;
+  border-radius:13px;
+
+  background:#080c12;
+  color:#fff;
+
+  font:inherit;
+}
+
+button{
+  width:100%;
+
+  margin-top:22px;
+  padding:14px 18px;
+
+  border:0;
+  border-radius:999px;
+
+  background:var(--gold);
+  color:#111;
+
+  font-weight:950;
+
+  cursor:pointer;
+}
+
+.status{
+  min-height:24px;
+
+  margin-top:15px;
+
+  color:var(--muted);
+
+  font-size:.88rem;
+}
+
+.security{
+  margin-top:22px;
+
+  padding:14px;
+
+  border:1px solid rgba(230,189,98,.25);
+  border-radius:14px;
+
+  background:rgba(230,189,98,.06);
+
+  color:#c7ced9;
+
+  font-size:.84rem;
+}
+
+.home{
+  display:block;
+
+  margin-top:19px;
+
+  text-align:center;
+
+  color:var(--muted);
+
+  text-decoration:none;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="shell">
+
+  <div class="logo">
+    <span>★</span>
+    JUNGLE STAR COMMAND
+  </div>
+
+
+  <main class="card">
+
+    <div class="eyebrow">
+      Private Operations
+    </div>
+
+    <h1>
+      COMMAND<br>
+      SIGN-IN
+    </h1>
+
+    <p class="lead">
+      Founder, administrator, staff and approved-team access.
+      Public Jungle Star accounts are separate.
+    </p>
+
+
+    <form id="loginForm">
+
+      <label>
+        Email
+
+        <input
+          id="email"
+          type="email"
+          autocomplete="email"
+          required
+        >
+      </label>
+
+
+      <label>
+        Password
+
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          required
+        >
+      </label>
+
+
+      <button type="submit">
+        Enter Jungle Star Command
+      </button>
+
+    </form>
+
+
+    <div
+      id="status"
+      class="status"
+    ></div>
+
+
+    <div class="security">
+
+      <strong>ADMINISTRATION GATE</strong><br>
+
+      This interface is ready for the independent
+      Jungle Star Command authentication service.
+
+      It is intentionally not connected to
+      JawnSort Pro or public Jungle Star accounts.
+
+    </div>
+
+  </main>
+
+
+  <a
+    class="home"
+    href="/"
+  >
+    ← Jungle Star Home
+  </a>
+
+</div>
+
+
+<script>
+
+const form =
+  document.getElementById("loginForm");
+
+const status =
+  document.getElementById("status");
+
+
+form.addEventListener(
+  "submit",
+  event => {
+
+    event.preventDefault();
+
+    status.textContent =
+      "Jungle Star Command authentication is not connected yet.";
+
+  }
+);
+
+</script>
+
+</body>
+</html>
