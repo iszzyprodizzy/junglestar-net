@@ -10,6 +10,8 @@
 
 <meta name="robots" content="noindex,nofollow">
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 
 :root{
@@ -300,7 +302,6 @@ footer{
   color:var(--muted);
 }
 
-
 @media(max-width:1000px){
 
   .quick{
@@ -317,7 +318,6 @@ footer{
 
 }
 
-
 @media(max-width:650px){
 
   .quick,
@@ -327,7 +327,6 @@ footer{
   }
 
 }
-
 
 @media print{
 
@@ -367,9 +366,7 @@ footer{
 
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -383,7 +380,6 @@ footer{
 JUNGLE STAR COMMAND
 
 </div>
-
 
 <div class="top-actions">
 
@@ -401,12 +397,13 @@ JUNGLE STAR COMMAND
   Jungle Star
 </a>
 
-<a
+<button
   class="btn"
-  href="/jungle-star-command/login/"
+  id="command-sign-out"
+  type="button"
 >
   Sign Out
-</a>
+</button>
 
 </div>
 
@@ -416,10 +413,7 @@ JUNGLE STAR COMMAND
 
 </header>
 
-
-
 <main class="wrap">
-
 
 <section class="hero">
 
@@ -458,10 +452,7 @@ and become a next move.
 
 </section>
 
-
-
 <div class="quick">
-
 
 <a class="quick-card" href="#todos">
 
@@ -477,7 +468,6 @@ Today, next, later, waiting, done.
 
 </a>
 
-
 <a class="quick-card" href="#projects">
 
 <span>🧱</span>
@@ -491,7 +481,6 @@ Construction, company and creative work.
 </small>
 
 </a>
-
 
 <a class="quick-card" href="#purchases">
 
@@ -507,7 +496,6 @@ Materials, supplies, tools and receipts.
 
 </a>
 
-
 <a class="quick-card" href="#documents">
 
 <span>📂</span>
@@ -521,7 +509,6 @@ Top documents, evidence and next moves.
 </small>
 
 </a>
-
 
 <a class="quick-card" href="#people">
 
@@ -537,7 +524,6 @@ Assignments, blockers and ownership.
 
 </a>
 
-
 <a class="quick-card" href="#legal">
 
 <span>⚖️</span>
@@ -551,7 +537,6 @@ Source-controlled follow-up.
 </small>
 
 </a>
-
 
 <a class="quick-card" href="#cash">
 
@@ -567,7 +552,6 @@ Money in, money out and project budgets.
 
 </a>
 
-
 <a class="quick-card" href="#decisions">
 
 <span>🧠</span>
@@ -582,10 +566,7 @@ What was decided and what happens next.
 
 </a>
 
-
 </div>
-
-
 
 <section id="todos">
 
@@ -597,9 +578,7 @@ Principal To-Do
 Move the work.
 </h2>
 
-
 <div class="board">
-
 
 <div class="column">
 
@@ -615,7 +594,6 @@ Daily tasks will live here.
 
 </div>
 
-
 <div class="column">
 
 <div class="column-head">
@@ -629,7 +607,6 @@ Upcoming work.
 </div>
 
 </div>
-
 
 <div class="column">
 
@@ -645,7 +622,6 @@ Not forgotten. Not today.
 
 </div>
 
-
 <div class="column">
 
 <div class="column-head">
@@ -659,7 +635,6 @@ Waiting on people, money or materials.
 </div>
 
 </div>
-
 
 <div class="column">
 
@@ -675,12 +650,9 @@ Finished work becomes receipts.
 
 </div>
 
-
 </div>
 
 </section>
-
-
 
 <section>
 
@@ -692,9 +664,7 @@ Command Modules
 One headquarters. Clear jobs.
 </h2>
 
-
 <div class="module-grid">
-
 
 <article
   class="module"
@@ -712,7 +682,6 @@ evidence and next action.
 </p>
 
 </article>
-
 
 <article
   class="module"
@@ -733,7 +702,6 @@ technology and headquarters needs.
 
 </article>
 
-
 <article
   class="module"
   id="documents"
@@ -752,7 +720,6 @@ and what needs to happen next.
 </p>
 
 </article>
-
 
 <article
   class="module"
@@ -774,7 +741,6 @@ evidence and next action.
 
 </article>
 
-
 <article
   class="module"
   id="legal"
@@ -793,7 +759,6 @@ proof and source-controlled deadlines.
 </p>
 
 </article>
-
 
 <article
   class="module"
@@ -816,7 +781,6 @@ deals and snapshots.
 
 </article>
 
-
 <article
   class="module"
   id="decisions"
@@ -837,7 +801,6 @@ and next move.
 
 </article>
 
-
 <article class="module">
 
 <h3>
@@ -853,7 +816,6 @@ evidence and source material.
 </p>
 
 </article>
-
 
 <article class="module">
 
@@ -871,9 +833,7 @@ Your company information remains portable.
 
 </article>
 
-
 </div>
-
 
 <div class="status">
 
@@ -881,16 +841,15 @@ Your company information remains portable.
 JUNGLE STAR COMMAND V1
 </strong>
 
-<br>
+<br><br>
 
 Authentication:
-waiting for an independent
-Jungle Star Command auth backend.
+Google + Supabase Auth.
 
 <br>
 
 JawnSort Pro:
-not required.
+separate.
 
 <br>
 
@@ -901,10 +860,7 @@ separate.
 
 </section>
 
-
 </main>
-
-
 
 <footer>
 
@@ -918,6 +874,89 @@ Private Operations
 
 </footer>
 
+<script>
+
+const SUPABASE_URL =
+  "https://xfknuiuqzihtgodnybwv.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "YOUR_SUPABASE_PUBLISHABLE_KEY";
+
+const commandSupabase =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+async function protectCommand(){
+
+  const {
+    data: { session },
+    error
+  } = await commandSupabase.auth.getSession();
+
+  if(error){
+
+    console.error(
+      "Command auth check failed:",
+      error
+    );
+
+  }
+
+  if(!session){
+
+    window.location.replace(
+      "/jungle-star-command/login/"
+    );
+
+    return;
+
+  }
+
+  console.log(
+    "Jungle Star Command authenticated:",
+    session.user.email
+  );
+
+}
+
+async function signOutCommand(){
+
+  const { error } =
+    await commandSupabase.auth.signOut();
+
+  if(error){
+
+    console.error(
+      "Command sign out failed:",
+      error
+    );
+
+    alert(
+      "Sign out failed. Please try again."
+    );
+
+    return;
+
+  }
+
+  window.location.replace(
+    "/jungle-star-command/login/"
+  );
+
+}
+
+document
+  .getElementById("command-sign-out")
+  .addEventListener(
+    "click",
+    signOutCommand
+  );
+
+protectCommand();
+
+</script>
 
 </body>
 </html>
