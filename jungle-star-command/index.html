@@ -28,7 +28,9 @@
   --max:1280px;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 html{
   scroll-behavior:smooth;
@@ -38,7 +40,11 @@ body{
   margin:0;
 
   background:
-    radial-gradient(circle at 50% 0%,#1b2639,#080b10 48%);
+    radial-gradient(
+      circle at 50% 0%,
+      #1b2639,
+      #080b10 48%
+    );
 
   color:var(--text);
 
@@ -49,6 +55,12 @@ body{
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
+
+  visibility:hidden;
+}
+
+body.auth-ready{
+  visibility:visible;
 }
 
 a{
@@ -93,8 +105,63 @@ nav{
 
 .top-actions{
   display:flex;
+  align-items:center;
   gap:9px;
   flex-wrap:wrap;
+}
+
+.account-pill{
+  display:flex;
+  align-items:center;
+  gap:9px;
+
+  padding:6px 11px 6px 7px;
+
+  border:1px solid var(--line);
+  border-radius:999px;
+
+  background:#111722;
+}
+
+.avatar{
+  width:34px;
+  height:34px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:50%;
+
+  background:var(--blue);
+  color:#071018;
+
+  font-weight:950;
+}
+
+.account-copy{
+  max-width:200px;
+  line-height:1.1;
+}
+
+.account-name{
+  display:block;
+
+  font-size:.82rem;
+  font-weight:900;
+}
+
+.account-email{
+  display:block;
+
+  margin-top:3px;
+
+  color:var(--muted);
+
+  font-size:.68rem;
+
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
 .btn{
@@ -326,6 +393,10 @@ footer{
     grid-template-columns:1fr;
   }
 
+  .account-copy{
+    display:none;
+  }
+
 }
 
 @media print{
@@ -375,13 +446,43 @@ footer{
 <nav>
 
 <div class="brand">
-
-<span>★</span>
-JUNGLE STAR COMMAND
-
+  <span>★</span>
+  JUNGLE STAR COMMAND
 </div>
 
 <div class="top-actions">
+
+<div
+  id="account-pill"
+  class="account-pill"
+>
+
+  <div
+    id="account-avatar"
+    class="avatar"
+  >
+    J
+  </div>
+
+  <div class="account-copy">
+
+    <span
+      id="account-name"
+      class="account-name"
+    >
+      Signed In
+    </span>
+
+    <span
+      id="account-email"
+      class="account-email"
+    >
+      Jungle Star Command
+    </span>
+
+  </div>
+
+</div>
 
 <button
   class="btn"
@@ -848,6 +949,11 @@ Google + Supabase Auth.
 
 <br>
 
+Command access:
+session protected.
+
+<br>
+
 JawnSort Pro:
 separate.
 
@@ -885,41 +991,127 @@ const SUPABASE_PUBLISHABLE_KEY =
 const commandSupabase =
   window.supabase.createClient(
     SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
+    SUPABASE_PUBLISHABLE_KEY,
+    {
+      auth:{
+        persistSession:true,
+        autoRefreshToken:true,
+        detectSessionInUrl:true
+      }
+    }
   );
 
-async function protectCommand(){
+let authResolved = false;
 
-  const {
-    data: { session },
-    error
-  } = await commandSupabase.auth.getSession();
 
-  if(error){
+function sendToLogin(){
 
-    console.error(
-      "Command auth check failed:",
-      error
-    );
-
-  }
-
-  if(!session){
-
-    window.location.replace(
-      "/jungle-star-command/login/"
-    );
-
+  if(authResolved){
     return;
-
   }
 
-  console.log(
-    "Jungle Star Command authenticated:",
-    session.user.email
+  authResolved = true;
+
+  window.location.replace(
+    "/jungle-star-command/login/"
   );
 
 }
+
+
+function showCommand(session){
+
+  if(authResolved){
+    return;
+  }
+
+  authResolved = true;
+
+  const user =
+    session.user;
+
+  const metadata =
+    user.user_metadata || {};
+
+  const displayName =
+    metadata.full_name ||
+    metadata.name ||
+    user.email ||
+    "Command User";
+
+  const email =
+    user.email ||
+    "Authenticated";
+
+  const firstLetter =
+    displayName
+      .trim()
+      .charAt(0)
+      .toUpperCase() || "J";
+
+  document
+    .getElementById("account-name")
+    .textContent =
+      displayName;
+
+  document
+    .getElementById("account-email")
+    .textContent =
+      email;
+
+  document
+    .getElementById("account-avatar")
+    .textContent =
+      firstLetter;
+
+  document.body.classList.add(
+    "auth-ready"
+  );
+
+}
+
+
+commandSupabase.auth.onAuthStateChange(
+  (event, session) => {
+
+    console.log(
+      "Jungle Star Command auth event:",
+      event
+    );
+
+    if(
+      event === "SIGNED_OUT"
+    ){
+
+      window.location.replace(
+        "/jungle-star-command/login/"
+      );
+
+      return;
+
+    }
+
+    if(
+      event === "INITIAL_SESSION" ||
+      event === "SIGNED_IN" ||
+      event === "TOKEN_REFRESHED"
+    ){
+
+      if(session){
+
+        showCommand(session);
+
+      }else{
+
+        sendToLogin();
+
+      }
+
+    }
+
+  }
+);
+
 
 async function signOutCommand(){
 
@@ -947,14 +1139,13 @@ async function signOutCommand(){
 
 }
 
+
 document
   .getElementById("command-sign-out")
   .addEventListener(
     "click",
     signOutCommand
   );
-
-protectCommand();
 
 </script>
 
