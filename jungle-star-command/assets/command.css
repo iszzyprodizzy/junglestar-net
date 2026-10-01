@@ -15,13 +15,16 @@
   --max:1500px;
 }
 
+
 *{
   box-sizing:border-box;
 }
 
+
 html{
   scroll-behavior:smooth;
 }
+
 
 body{
   margin:0;
@@ -43,16 +46,14 @@ body{
     "Segoe UI",
     sans-serif;
 
-  visibility:hidden;
-}
-
-body.auth-ready{
   visibility:visible;
 }
+
 
 a{
   color:inherit;
 }
+
 
 button,
 input,
@@ -61,9 +62,11 @@ textarea{
   font:inherit;
 }
 
+
 button{
   color:inherit;
 }
+
 
 .wrap{
   width:min(var(--max),96vw);
@@ -87,6 +90,7 @@ button{
   backdrop-filter:blur(16px);
 }
 
+
 .main-nav{
   min-height:70px;
 
@@ -97,28 +101,38 @@ button{
   gap:16px;
 }
 
+
 .brand{
   font-weight:950;
   letter-spacing:.06em;
+
   white-space:nowrap;
+
   text-decoration:none;
 }
+
 
 .brand span{
   color:var(--gold);
 }
 
+
 .account-actions{
   display:flex;
   align-items:center;
+
   gap:8px;
+
   flex-wrap:wrap;
+
   justify-content:flex-end;
 }
+
 
 .account-pill{
   display:flex;
   align-items:center;
+
   gap:9px;
 
   padding:6px 11px 6px 7px;
@@ -128,6 +142,7 @@ button{
 
   background:#111722;
 }
+
 
 .avatar{
   width:35px;
@@ -144,10 +159,12 @@ button{
   font-weight:950;
 }
 
+
 .account-copy{
   max-width:220px;
   line-height:1.1;
 }
+
 
 .account-name{
   display:block;
@@ -155,6 +172,7 @@ button{
   font-size:.82rem;
   font-weight:900;
 }
+
 
 .account-email{
   display:block;
@@ -165,6 +183,7 @@ button{
 
   font-size:.67rem;
 }
+
 
 .btn{
   display:inline-flex;
@@ -188,19 +207,22 @@ button{
   cursor:pointer;
 }
 
+
 .btn:hover{
   border-color:var(--gold);
 }
 
+
 .btn-primary{
   background:var(--gold);
   border-color:var(--gold);
+
   color:#111;
 }
 
 
 /* =========================================================
-   COMMAND DEPARTMENT NAVIGATION
+   COMMAND MENU
 ========================================================= */
 
 .command-menu{
@@ -208,6 +230,7 @@ button{
 
   padding:10px 0 12px;
 }
+
 
 .command-menu-inner{
   display:grid;
@@ -218,9 +241,11 @@ button{
   gap:8px;
 }
 
+
 .nav-group{
   position:relative;
 }
+
 
 .nav-group-button{
   width:100%;
@@ -239,6 +264,7 @@ button{
   cursor:pointer;
 }
 
+
 .nav-group-button:hover,
 .nav-group.open > .nav-group-button,
 .nav-group:focus-within > .nav-group-button{
@@ -246,10 +272,12 @@ button{
   color:var(--gold);
 }
 
+
 .nav-group.robot .nav-group-button{
   border-color:#594c88;
   color:#d8ceff;
 }
+
 
 .nav-panel{
   display:none;
@@ -277,12 +305,14 @@ button{
     0 25px 70px rgba(0,0,0,.55);
 }
 
+
 .nav-group.open .nav-panel,
 .nav-group:hover .nav-panel,
 .nav-group:focus-within .nav-panel{
   display:grid;
   gap:5px;
 }
+
 
 .nav-panel a{
   display:block;
@@ -299,10 +329,12 @@ button{
   font-weight:750;
 }
 
+
 .nav-panel a:hover{
   background:#182231;
   color:var(--gold);
 }
+
 
 .nav-heading{
   padding:7px 10px 5px;
@@ -325,6 +357,7 @@ button{
   padding:58px 0 28px;
 }
 
+
 .eyebrow{
   color:var(--gold);
 
@@ -334,6 +367,7 @@ button{
   font-weight:950;
   font-size:.76rem;
 }
+
 
 h1{
   margin:.15em 0;
@@ -345,6 +379,7 @@ h1{
   letter-spacing:-.055em;
 }
 
+
 .lead{
   max-width:1050px;
 
@@ -354,6 +389,7 @@ h1{
   line-height:1.6;
 }
 
+
 .stamps{
   display:flex;
   flex-wrap:wrap;
@@ -362,6 +398,7 @@ h1{
 
   margin-top:22px;
 }
+
 
 .stamp{
   padding:7px 10px;
@@ -384,6 +421,7 @@ section{
   padding:40px 0;
 }
 
+
 .section-title{
   margin:.12em 0 .35em;
 
@@ -392,6 +430,7 @@ section{
 
   letter-spacing:-.04em;
 }
+
 
 .section-copy{
   max-width:1000px;
@@ -417,6 +456,7 @@ section{
   margin-top:22px;
 }
 
+
 .room{
   min-height:155px;
 
@@ -436,18 +476,23 @@ section{
     border-color .15s ease;
 }
 
+
 .room:hover{
   border-color:var(--gold);
+
   transform:translateY(-2px);
 }
+
 
 .room.original{
   border-color:#39495f;
 }
 
+
 .room.added{
   border-color:#685d35;
 }
+
 
 .room.robot-room{
   border-color:#594c88;
@@ -460,13 +505,16 @@ section{
     );
 }
 
+
 .icon{
   font-size:1.55rem;
 }
 
+
 .room h3{
   margin:9px 0 6px;
 }
+
 
 .room p{
   margin:0;
@@ -476,6 +524,7 @@ section{
   font-size:.86rem;
   line-height:1.45;
 }
+
 
 .label{
   display:inline-block;
@@ -494,6 +543,7 @@ section{
 
   letter-spacing:.05em;
 }
+
 
 .original .label{
   color:#9bc9ff;
@@ -515,6 +565,7 @@ section{
   margin:24px 0 16px;
 }
 
+
 .field{
   width:100%;
 
@@ -527,14 +578,17 @@ section{
   color:#fff;
 }
 
+
 .field:focus{
   outline:none;
   border-color:var(--gold);
 }
 
+
 .task-title-input{
   grid-column:span 2;
 }
+
 
 .task-notes-input{
   min-height:78px;
@@ -543,6 +597,7 @@ section{
 
   resize:vertical;
 }
+
 
 .file-button{
   position:relative;
@@ -562,6 +617,7 @@ section{
   margin:18px 0;
 }
 
+
 .project-filter{
   padding:8px 11px;
 
@@ -576,6 +632,7 @@ section{
 
   cursor:pointer;
 }
+
 
 .project-filter.active,
 .project-filter:hover{
@@ -599,6 +656,7 @@ section{
   align-items:start;
 }
 
+
 .column{
   min-height:230px;
 
@@ -609,6 +667,7 @@ section{
 
   overflow:hidden;
 }
+
 
 .column-head{
   padding:14px;
@@ -624,10 +683,12 @@ section{
   font-weight:950;
 }
 
+
 .column-head span{
   color:var(--muted);
   font-size:.78rem;
 }
+
 
 .task-list{
   min-height:180px;
@@ -638,6 +699,7 @@ section{
   gap:8px;
 }
 
+
 .task-empty{
   padding:12px;
 
@@ -645,6 +707,7 @@ section{
 
   font-size:.8rem;
 }
+
 
 .task-card{
   padding:12px;
@@ -655,11 +718,13 @@ section{
   background:#131b27;
 }
 
+
 .task-name{
   margin-bottom:7px;
 
   font-weight:900;
 }
+
 
 .task-meta{
   display:flex;
@@ -667,6 +732,7 @@ section{
 
   gap:5px;
 }
+
 
 .task-tag{
   padding:3px 6px;
@@ -679,6 +745,7 @@ section{
   font-size:.63rem;
 }
 
+
 .task-notes{
   margin-top:8px;
 
@@ -690,6 +757,7 @@ section{
   white-space:pre-wrap;
 }
 
+
 .task-actions{
   display:flex;
   flex-wrap:wrap;
@@ -698,6 +766,7 @@ section{
 
   margin-top:9px;
 }
+
 
 .task-actions button{
   padding:5px 7px;
@@ -712,6 +781,7 @@ section{
 
   cursor:pointer;
 }
+
 
 .task-actions button:hover{
   border-color:var(--gold);
@@ -738,10 +808,12 @@ section{
     );
 }
 
+
 .robot-feature-title{
   font-size:1.5rem;
   font-weight:950;
 }
+
 
 .robot-actions{
   display:flex;
@@ -751,6 +823,7 @@ section{
 
   margin-top:18px;
 }
+
 
 .robot-actions a{
   padding:10px 14px;
@@ -763,9 +836,11 @@ section{
   font-weight:850;
 }
 
+
 .robot-actions a:hover{
   background:#211b3b;
 }
+
 
 .robot-grid{
   margin-top:24px;
@@ -786,6 +861,7 @@ section{
   color:var(--muted);
 }
 
+
 .footer-grid{
   display:grid;
 
@@ -794,6 +870,7 @@ section{
 
   gap:20px;
 }
+
 
 .footer-grid strong{
   color:#fff;
@@ -811,20 +888,24 @@ section{
       repeat(3,1fr);
   }
 
+
   .room-grid{
     grid-template-columns:
       repeat(3,1fr);
   }
+
 
   .task-toolbar{
     grid-template-columns:
       repeat(3,1fr);
   }
 
+
   .task-title-input,
   .task-notes-input{
     grid-column:span 3;
   }
+
 
   .board{
     grid-template-columns:
@@ -842,14 +923,17 @@ section{
     padding:10px 0;
   }
 
+
   .account-copy{
     display:none;
   }
+
 
   .command-menu-inner{
     grid-template-columns:
       repeat(2,1fr);
   }
+
 
   .nav-panel{
     position:static;
@@ -860,20 +944,24 @@ section{
     margin-top:7px;
   }
 
+
   .room-grid{
     grid-template-columns:
       1fr 1fr;
   }
+
 
   .task-toolbar{
     grid-template-columns:
       1fr 1fr;
   }
 
+
   .task-title-input,
   .task-notes-input{
     grid-column:span 2;
   }
+
 
   .footer-grid{
     grid-template-columns:1fr;
@@ -890,6 +978,7 @@ section{
   .board{
     grid-template-columns:1fr;
   }
+
 
   .task-title-input,
   .task-notes-input{
@@ -912,16 +1001,17 @@ section{
     display:none;
   }
 
-  body{
-    visibility:visible;
 
+  body{
     background:#fff;
     color:#000;
   }
 
+
   .wrap{
     width:100%;
   }
+
 
   .room{
     break-inside:avoid;
