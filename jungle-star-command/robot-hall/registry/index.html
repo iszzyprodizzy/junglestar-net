@@ -5,43 +5,697 @@
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script defer src="/jungle-star-command/assets/command.js"></script>
 <style>
-.registry-tools{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}.registry-tools input{flex:1;min-width:260px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#0e141d;color:var(--text)}
+.registry-tools{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}.registry-tools input,.registry-tools select{padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#0e141d;color:var(--text)}.registry-tools input{flex:1;min-width:280px}
 .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:20px;background:var(--panel)}
-table{width:100%;border-collapse:collapse;min-width:980px}th,td{padding:14px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}th{position:sticky;top:0;background:#0d131c;color:var(--gold);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase}td{color:var(--muted)}td strong{color:var(--text)}td a{text-decoration:none}.status-chip{display:inline-block;padding:4px 8px;border:1px solid #4a5668;border-radius:999px;font-size:.68rem;color:#dce4ef;background:#0d131c}
-.registry-note{margin-top:18px;padding:18px;border:1px solid #594c88;border-radius:18px;background:#14152a;color:var(--muted)}
+table{width:100%;border-collapse:collapse;min-width:1500px}th,td{padding:13px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}th{position:sticky;top:0;background:#0d131c;color:var(--gold);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;z-index:2}td{color:var(--muted);font-size:.82rem}td strong{color:var(--text);font-size:.92rem}.sub{margin-top:4px;font-size:.7rem;color:#8190a4}.mission{min-width:300px;max-width:430px}.status-chip,.source-chip,.power{display:inline-block;padding:4px 8px;border:1px solid #4a5668;border-radius:999px;font-size:.64rem;color:#dce4ef;background:#0d131c;white-space:nowrap}.source-chip{color:#9bc9ff}.pending{color:#e5bd66;font-weight:800}.room-link{font-weight:850;text-decoration:none}.registry-note{margin:18px 0;padding:18px;border:1px solid #594c88;border-radius:18px;background:#14152a;color:var(--muted)}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.metric{padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}.metric strong{display:block;font-size:1.8rem;color:var(--text)}.metric span{color:var(--muted);font-size:.76rem}
+@media(max-width:850px){.metrics{grid-template-columns:1fr 1fr}}
 </style></head><body>
 <header class="site-header"><div class="wrap"><div class="main-nav"><a class="brand" href="/jungle-star-command/"><span>★</span> JUNGLE STAR COMMAND</a><div class="account-actions"><div class="account-pill"><div id="account-avatar" class="avatar">J</div><div class="account-copy"><span id="account-name" class="account-name">Checking session…</span><span id="account-email" class="account-email">Robot Hall Dubai</span></div></div><a class="btn" href="/jungle-star-command/robot-hall/">Robot Hall</a><a class="btn" href="/jungle-star-command/">Command Home</a><button class="btn" id="command-sign-out" type="button">Sign Out</button></div></div></div></header>
-<main class="wrap"><section class="hero"><div class="eyebrow">Robot Hall Dubai</div><h1>FLEET REGISTRY.</h1><p class="lead">One visible directory for every verified robot name we have in hand right now. Roles marked SOURCE RECOVERY stay deliberately incomplete until the source record supplies the missing detail.</p><div class="stamps"><div class="stamp">VERIFIED NAMES ONLY</div><div class="stamp">20 SEEDED ROOMS</div><div id="page-opened" class="stamp">PAGE OPENED: —</div><div class="stamp">NO INVENTED CANON</div></div></section>
-<section><div class="eyebrow">Directory</div><h2 class="section-title">Find the right brain fast.</h2>
-<div class="registry-tools"><input id="robot-search" type="search" placeholder="Search robot name or role…"><button class="btn" id="copy-registry" type="button">Copy for AI</button><button class="btn" id="export-registry" type="button">Export CSV</button></div>
-<div class="table-wrap"><table><thead><tr><th>#</th><th>Robot</th><th>Current Role / Lane</th><th>Status</th><th>Room</th></tr></thead><tbody id="registry-body"><tr data-name="00 code bro" data-role="code / release / repair continuity">
-<td>01</td><td><a href="/jungle-star-command/robot-hall/00-code-bro/">💻 <strong>00 Code Bro</strong></a></td><td>Code / release / repair continuity</td><td><span class="status-chip">ACTIVE SEED</span></td><td><a href="/jungle-star-command/robot-hall/00-code-bro/">Open room →</a></td></tr><tr data-name="groovebot" data-role="music, tracks, versions, releases and artist continuity">
-<td>02</td><td><a href="/jungle-star-command/robot-hall/groovebot/">🎵 <strong>GrooveBot</strong></a></td><td>Music, tracks, versions, releases and artist continuity</td><td><span class="status-chip">ACTIVE SEED</span></td><td><a href="/jungle-star-command/robot-hall/groovebot/">Open room →</a></td></tr><tr data-name="docubot" data-role="applications, rfps/ifps, forms, legal/admin and non-book paperwork">
-<td>03</td><td><a href="/jungle-star-command/robot-hall/docubot/">📄 <strong>DocuBot</strong></a></td><td>Applications, RFPs/IFPs, forms, legal/admin and non-book paperwork</td><td><span class="status-chip">LIVE</span></td><td><a href="/jungle-star-command/robot-hall/docubot/">Open room →</a></td></tr><tr data-name="pressforge" data-role="books, manuscripts, posters and publishing continuity">
-<td>04</td><td><a href="/jungle-star-command/robot-hall/pressforge/">📚 <strong>PressForge</strong></a></td><td>Books, manuscripts, posters and publishing continuity</td><td><span class="status-chip">LIVE</span></td><td><a href="/jungle-star-command/robot-hall/pressforge/">Open room →</a></td></tr><tr data-name="merchbot" data-role="dtg, embroidery, product continuity and future 3d-print assets">
-<td>05</td><td><a href="/jungle-star-command/robot-hall/merchbot/">👕 <strong>MerchBot</strong></a></td><td>DTG, embroidery, product continuity and future 3D-print assets</td><td><span class="status-chip">LIVE</span></td><td><a href="/jungle-star-command/robot-hall/merchbot/">Open room →</a></td></tr><tr data-name="gamemaster" data-role="games, mechanics, missions, characters, assets and builds">
-<td>06</td><td><a href="/jungle-star-command/robot-hall/gamemaster/">🎮 <strong>GameMaster</strong></a></td><td>Games, mechanics, missions, characters, assets and builds</td><td><span class="status-chip">ACTIVE SEED</span></td><td><a href="/jungle-star-command/robot-hall/gamemaster/">Open room →</a></td></tr><tr data-name="drawsword" data-role="images, character art, references and visual continuity">
-<td>07</td><td><a href="/jungle-star-command/robot-hall/drawsword/">🎨 <strong>DrawSword</strong></a></td><td>Images, character art, references and visual continuity</td><td><span class="status-chip">ACTIVE SEED</span></td><td><a href="/jungle-star-command/robot-hall/drawsword/">Open room →</a></td></tr><tr data-name="cinemabot" data-role="movies, critique, taste memory, reviews and producer scouting">
-<td>08</td><td><a href="/jungle-star-command/robot-hall/cinemabot/">🎬 <strong>CinemaBot</strong></a></td><td>Movies, critique, taste memory, reviews and producer scouting</td><td><span class="status-chip">ACTIVE SEED</span></td><td><a href="/jungle-star-command/robot-hall/cinemabot/">Open room →</a></td></tr><tr data-name="linksmith" data-role="canonical links, cross-project routing and broken-link recovery">
-<td>09</td><td><a href="/jungle-star-command/robot-hall/linksmith/">🔗 <strong>LinkSmith</strong></a></td><td>Canonical links, cross-project routing and broken-link recovery</td><td><span class="status-chip">LIVE</span></td><td><a href="/jungle-star-command/robot-hall/linksmith/">Open room →</a></td></tr><tr data-name="tron" data-role="field equipment and physical-resource knowledge">
-<td>10</td><td><a href="/jungle-star-command/robot-hall/tron/">🧰 <strong>TRON</strong></a></td><td>Field equipment and physical-resource knowledge</td><td><span class="status-chip">SEE GP TRON</span></td><td><a href="/jungle-star-command/robot-hall/tron/">Open room →</a></td></tr><tr data-name="gp tron" data-role="tools, locations, worksites and physical/mobile deployment">
-<td>11</td><td><a href="/jungle-star-command/robot-hall/gp-tron/">🧰 <strong>GP Tron</strong></a></td><td>Tools, locations, worksites and physical/mobile deployment</td><td><span class="status-chip">LIVE</span></td><td><a href="/jungle-star-command/robot-hall/gp-tron/">Open room →</a></td></tr><tr data-name="montage" data-role="mission, obstacles, needs, timeline, assets, goals & evidence">
-<td>12</td><td><a href="/jungle-star-command/robot-hall/montage/">🎯 <strong>Montage</strong></a></td><td>Mission, Obstacles, Needs, Timeline, Assets, Goals & Evidence</td><td><span class="status-chip">ACTIVE SEED</span></td><td><a href="/jungle-star-command/robot-hall/montage/">Open room →</a></td></tr><tr data-name="general pro" data-role="general operational coordination; detailed role still source-recovery controlled">
-<td>13</td><td><a href="/jungle-star-command/robot-hall/general-pro/">🪖 <strong>General Pro</strong></a></td><td>General operational coordination; detailed role still source-recovery controlled</td><td><span class="status-chip">SOURCE RECOVERY</span></td><td><a href="/jungle-star-command/robot-hall/general-pro/">Open room →</a></td></tr><tr data-name="star selector" data-role="selection/routing role; detailed role still source-recovery controlled">
-<td>14</td><td><a href="/jungle-star-command/robot-hall/star-selector/">⭐ <strong>Star Selector</strong></a></td><td>Selection/routing role; detailed role still source-recovery controlled</td><td><span class="status-chip">SOURCE RECOVERY</span></td><td><a href="/jungle-star-command/robot-hall/star-selector/">Open room →</a></td></tr><tr data-name="drj" data-role="role-specific continuity; detailed role still source-recovery controlled">
-<td>15</td><td><a href="/jungle-star-command/robot-hall/drj/">🧪 <strong>DRJ</strong></a></td><td>Role-specific continuity; detailed role still source-recovery controlled</td><td><span class="status-chip">SOURCE RECOVERY</span></td><td><a href="/jungle-star-command/robot-hall/drj/">Open room →</a></td></tr><tr data-name="marcus margin" data-role="pricing, costs, margins and product economics">
-<td>16</td><td><a href="/jungle-star-command/robot-hall/marcus-margin/">📈 <strong>Marcus Margin</strong></a></td><td>Pricing, costs, margins and product economics</td><td><span class="status-chip">LIVE</span></td><td><a href="/jungle-star-command/robot-hall/marcus-margin/">Open room →</a></td></tr><tr data-name="chef bot" data-role="kitchen, restaurant operations, equipment and hospitality continuity">
-<td>17</td><td><a href="/jungle-star-command/robot-hall/chef-bot/">👨‍🍳 <strong>Chef Bot</strong></a></td><td>Kitchen, restaurant operations, equipment and hospitality continuity</td><td><span class="status-chip">LIVE</span></td><td><a href="/jungle-star-command/robot-hall/chef-bot/">Open room →</a></td></tr><tr data-name="gp tina" data-role="role-specific approved knowledge and deployment notes">
-<td>18</td><td><a href="/jungle-star-command/robot-hall/gp-tina/">🧠 <strong>GP Tina</strong></a></td><td>Role-specific approved knowledge and deployment notes</td><td><span class="status-chip">LIVE</span></td><td><a href="/jungle-star-command/robot-hall/gp-tina/">Open room →</a></td></tr><tr data-name="gp tuna" data-role="role-specific approved knowledge and deployment notes">
-<td>19</td><td><a href="/jungle-star-command/robot-hall/gp-tuna/">🐟 <strong>GP Tuna</strong></a></td><td>Role-specific approved knowledge and deployment notes</td><td><span class="status-chip">LIVE</span></td><td><a href="/jungle-star-command/robot-hall/gp-tuna/">Open room →</a></td></tr><tr data-name="gp don" data-role="music, symbolism, performance and connected-ip continuity">
-<td>20</td><td><a href="/jungle-star-command/robot-hall/gp-don/">🎤 <strong>GP Don</strong></a></td><td>Music, symbolism, performance and connected-IP continuity</td><td><span class="status-chip">LIVE</span></td><td><a href="/jungle-star-command/robot-hall/gp-don/">Open room →</a></td></tr></tbody></table></div>
-<div class="registry-note"><strong>Registry law:</strong> This is not claiming the complete canonical 62-room roster yet. It is a live, usable seed built only from robot names and roles already present in the recovered Command/Robot Hall work. Missing canonical robots get added from source recovery, not guesswork.</div>
+<main class="wrap">
+<section class="hero"><div class="eyebrow">Robot Hall Dubai • Source-backed Fleet Registry</div><h1>FLEET REGISTRY.</h1><p class="lead">Recovered directly from the Jungle Star Robot Family Master Registry. Names, missions, power classes, training states and placement come from the workbook instead of a hand-built 20-row seed.</p>
+<div class="stamps"><div class="stamp">MASTER REGISTRY RECOVERED</div><div class="stamp">61 NAMED ROWS LOADED</div><div class="stamp">CSG SUMMARY STATES 62 CANONICAL</div><div id="page-opened" class="stamp">PAGE OPENED: —</div></div></section>
+<section>
+<div class="metrics"><div class="metric"><strong>61</strong><span>named source-backed registry rows</span></div><div class="metric"><strong>62</strong><span>canonical count stated by CSG Summary</span></div><div class="metric"><strong>14</strong><span>robot rooms currently built on JungleStar.net</span></div><div class="metric"><strong>4</strong><span>rows currently marked PROVEN in this workbook</span></div></div>
+<div class="registry-note"><strong>Source discrepancy preserved, not guessed:</strong> the workbook's Master Registry contains 61 named rows, while its CSG Summary says <strong>62 canonical robots</strong>. The missing canonical identity remains a source-recovery gap until a supporting source names it. Nothing was invented to force the count to 62.</div>
+<div class="registry-tools"><input id="robot-search" type="search" placeholder="Search robot, mission, power class, training state…"><select id="power-filter"><option value="">All power classes</option><option>CODE-FIRST</option><option>HYBRID</option><option>AI-FIRST</option></select><button class="btn" id="copy-registry" type="button">Copy for AI</button><button class="btn" id="export-registry" type="button">Export CSV</button></div>
+<div class="table-wrap"><table><thead><tr><th>#</th><th>Robot / Canonical Name</th><th>Power Class</th><th>Exact Mission</th><th>Training State</th><th>Visibility</th><th>Suite / Tier</th><th>Source Provenance</th><th>Room Route</th></tr></thead><tbody id="registry-body"><tr data-search="cuz conversation universe zone welcome-back intake concierge that preserves new material and asks the user what should enter the archive. hybrid in training core / creator">
+<td>01</td>
+<td><strong>CUZ</strong><div class="sub">Conversation Universe Zone</div></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Welcome-back intake concierge that preserves new material and asks the user what should enter the archive.</td>
+<td><span class="status-chip">IN TRAINING</span></td>
+<td>USER-FACING</td>
+<td>Core / Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="robot aza archive/state awareness robot; human aza is separate detect what changed and tell cuz that the user universe has new activity. code-first mapped infrastructure">
+<td>02</td>
+<td><strong>Robot Aza</strong><div class="sub">Archive/state awareness robot; human Aza is separate</div></td>
+<td><span class="power code-first">CODE-FIRST</span></td>
+<td class="mission">Detect what changed and tell CUZ that the user universe has new activity.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>BACKSTAGE</td>
+<td>Infrastructure</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="transfer tank  move or copy digital cargo safely with verification. code-first proven core">
+<td>03</td>
+<td><strong>Transfer Tank</strong></td>
+<td><span class="power code-first">CODE-FIRST</span></td>
+<td class="mission">Move or copy digital cargo safely with verification.</td>
+<td><span class="status-chip">PROVEN</span></td>
+<td>USER-FACING</td>
+<td>Core</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="file feed  know what files exist, where they are, and whether they changed or duplicate. code-first mapped infrastructure">
+<td>04</td>
+<td><strong>File Feed</strong></td>
+<td><span class="power code-first">CODE-FIRST</span></td>
+<td class="mission">Know what files exist, where they are, and whether they changed or duplicate.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>BACKSTAGE</td>
+<td>Infrastructure</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="chaos capture, hold, organize, assess, and sort process approved preserved material into useful structured meaning and route-ready findings. hybrid in training creator+">
+<td>05</td>
+<td><strong>CHAOS</strong><div class="sub">Capture, Hold, Organize, Assess, and Sort</div></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Process approved preserved material into useful structured meaning and route-ready findings.</td>
+<td><span class="status-chip">IN TRAINING</span></td>
+<td>BACKSTAGE</td>
+<td>Creator+</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="star selector  route extracted material to the right room, robot, project or mission. hybrid mapped creator">
+<td>06</td>
+<td><strong>Star Selector</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Route extracted material to the right room, robot, project or mission.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="general pro  collapse enormous evidence into the few missions and next actions that matter. hybrid in training creator">
+<td>07</td>
+<td><strong>General Pro</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Collapse enormous evidence into the few missions and next actions that matter.</td>
+<td><span class="status-chip">IN TRAINING</span></td>
+<td>USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="gptina canonical spelling: gptina clarity, context, translation and coaching voice for the user and fleet. ai-first in training creator">
+<td>08</td>
+<td><strong>GPTina</strong><div class="sub">Canonical spelling: GPTina</div></td>
+<td><span class="power ai-first">AI-FIRST</span></td>
+<td class="mission">Clarity, context, translation and coaching voice for the user and fleet.</td>
+<td><span class="status-chip">IN TRAINING</span></td>
+<td>USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><a class="room-link" href="/jungle-star-command/robot-hall/gp-tina/">Open room →</a></td>
+</tr>
+<tr data-search="gptron canonical spelling: gptron tactical execution and real-time field-chaos processing. ai-first mapped creator">
+<td>09</td>
+<td><strong>GPTron</strong><div class="sub">Canonical spelling: GPTron</div></td>
+<td><span class="power ai-first">AI-FIRST</span></td>
+<td class="mission">Tactical execution and real-time field-chaos processing.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><a class="room-link" href="/jungle-star-command/robot-hall/gp-tron/">Open room →</a></td>
+</tr>
+<tr data-search="gp don  groove, culture and morale layer that keeps the mission moving. ai-first mapped creator">
+<td>10</td>
+<td><strong>GP Don</strong></td>
+<td><span class="power ai-first">AI-FIRST</span></td>
+<td class="mission">Groove, culture and morale layer that keeps the mission moving.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><a class="room-link" href="/jungle-star-command/robot-hall/gp-don/">Open room →</a></td>
+</tr>
+<tr data-search="montage  explain what changed over time and turn receipts into journey, coaching and continuity. ai-first in training creator">
+<td>11</td>
+<td><strong>Montage</strong></td>
+<td><span class="power ai-first">AI-FIRST</span></td>
+<td class="mission">Explain what changed over time and turn receipts into journey, coaching and continuity.</td>
+<td><span class="status-chip">IN TRAINING</span></td>
+<td>USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><a class="room-link" href="/jungle-star-command/robot-hall/montage/">Open room →</a></td>
+</tr>
+<tr data-search="michelangelo  protect symbolism, canon, brand continuity and recurring identity across the whole authorized system. ai-first in training power">
+<td>12</td>
+<td><strong>Michelangelo</strong></td>
+<td><span class="power ai-first">AI-FIRST</span></td>
+<td class="mission">Protect symbolism, canon, brand continuity and recurring identity across the whole authorized system.</td>
+<td><span class="status-chip">IN TRAINING</span></td>
+<td>USER-FACING / BACKSTAGE</td>
+<td>Power</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="sightsmith  inspect how builds look and catch visual/layout/responsive problems, especially gamemaster outputs. hybrid mapped power">
+<td>13</td>
+<td><strong>SightSmith</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Inspect how builds look and catch visual/layout/responsive problems, especially GameMaster outputs.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>BACKSTAGE / USER-FACING</td>
+<td>Power</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="drawsword  create or refine consistent artwork for comics, characters and visual projects. ai-first mapped creator+">
+<td>14</td>
+<td><strong>DrawSword</strong></td>
+<td><span class="power ai-first">AI-FIRST</span></td>
+<td class="mission">Create or refine consistent artwork for comics, characters and visual projects.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>Creator+</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><a class="room-link" href="/jungle-star-command/robot-hall/drawsword/">Open room →</a></td>
+</tr>
+<tr data-search="pressforge  turn manuscripts, fragments and approved source material into books/articles/publishing projects. hybrid in training creator">
+<td>15</td>
+<td><strong>PressForge</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Turn manuscripts, fragments and approved source material into books/articles/publishing projects.</td>
+<td><span class="status-chip">IN TRAINING</span></td>
+<td>USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><a class="room-link" href="/jungle-star-command/robot-hall/pressforge/">Open room →</a></td>
+</tr>
+<tr data-search="memory forge  govern durable memory, context packs, vocabulary and reusable approved knowledge. hybrid mapped creator+">
+<td>16</td>
+<td><strong>Memory Forge</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Govern durable memory, context packs, vocabulary and reusable approved knowledge.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>BACKSTAGE</td>
+<td>Creator+</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="diesel distributed intelligence engine for sorting, execution &amp; learning train the robot fleet from approved laws, decisions, examples, corrections and preferences. ai-first mapped power">
+<td>17</td>
+<td><strong>DIESEL</strong><div class="sub">Distributed Intelligence Engine for Sorting, Execution &amp; Learning</div></td>
+<td><span class="power ai-first">AI-FIRST</span></td>
+<td class="mission">Train the robot fleet from approved laws, decisions, examples, corrections and preferences.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>BACKSTAGE</td>
+<td>Power</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="denzel decision engine for navigation, zero-loss evidence &amp; learning support consequential decisions with navigation, evidence preservation and learning. ai-first mapped power">
+<td>18</td>
+<td><strong>DENZEL</strong><div class="sub">Decision Engine for Navigation, Zero-loss Evidence &amp; Learning</div></td>
+<td><span class="power ai-first">AI-FIRST</span></td>
+<td class="mission">Support consequential decisions with navigation, evidence preservation and learning.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>BACKSTAGE</td>
+<td>Power</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="00 code bro  build, fix, test and package software changes without turning the user into terminal staff. hybrid mapped power">
+<td>19</td>
+<td><strong>00 Code Bro</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Build, fix, test and package software changes without turning the user into terminal staff.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>BACKSTAGE</td>
+<td>Power</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><a class="room-link" href="/jungle-star-command/robot-hall/00-code-bro/">Open room →</a></td>
+</tr>
+<tr data-search="glitchbot  verify evidence, protect against overwrite, and keep pretty dashboards honest. code-first proven all">
+<td>20</td>
+<td><strong>GlitchBot</strong></td>
+<td><span class="power code-first">CODE-FIRST</span></td>
+<td class="mission">Verify evidence, protect against overwrite, and keep pretty dashboards honest.</td>
+<td><span class="status-chip">PROVEN</span></td>
+<td>BACKSTAGE</td>
+<td>All</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="dunzo  decide whether work is actually done and issue completion proof. code-first proven all">
+<td>21</td>
+<td><strong>Dunzo</strong></td>
+<td><span class="power code-first">CODE-FIRST</span></td>
+<td class="mission">Decide whether work is actually done and issue completion proof.</td>
+<td><span class="status-chip">PROVEN</span></td>
+<td>BACKSTAGE</td>
+<td>All</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="jawn rail jawn rail automation system the whole governed automation rail that moves approved work through execution systems. code-first mapped infrastructure">
+<td>22</td>
+<td><strong>JAWN RAIL</strong><div class="sub">JAWN RAIL automation system</div></td>
+<td><span class="power code-first">CODE-FIRST</span></td>
+<td class="mission">The whole governed automation rail that moves approved work through execution systems.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>BACKSTAGE</td>
+<td>Infrastructure</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="railjohn r-a-i-l-j-o-h-n cowboy/mafioso execution robot and simple front-facing button for governed install/update actions. code-first proven core / power">
+<td>23</td>
+<td><strong>RailJohn</strong><div class="sub">R-A-I-L-J-o-h-n</div></td>
+<td><span class="power code-first">CODE-FIRST</span></td>
+<td class="mission">Cowboy/mafioso execution robot and simple front-facing button for governed install/update actions.</td>
+<td><span class="status-chip">PROVEN</span></td>
+<td>USER-FACING</td>
+<td>Core / Power</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="bridgesmith  translate/bridge structured data and code paths so approved work can pass the gates and reach downstream systems. code-first mapped infrastructure">
+<td>24</td>
+<td><strong>BridgeSmith</strong></td>
+<td><span class="power code-first">CODE-FIRST</span></td>
+<td class="mission">Translate/bridge structured data and code paths so approved work can pass the gates and reach downstream systems.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>BACKSTAGE</td>
+<td>Infrastructure</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="towerbot  downstream protected execution destination behind glitchbot gates. code-first needs definition infrastructure">
+<td>25</td>
+<td><strong>TowerBot</strong></td>
+<td><span class="power code-first">CODE-FIRST</span></td>
+<td class="mission">Downstream protected execution destination behind GlitchBot gates.</td>
+<td><span class="status-chip">NEEDS DEFINITION</span></td>
+<td>BACKSTAGE</td>
+<td>Infrastructure</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="deep street  backstage infrastructure district that houses most coding/automation machinery without cluttering normal creative work. code-first mapped power">
+<td>26</td>
+<td><strong>Deep Street</strong></td>
+<td><span class="power code-first">CODE-FIRST</span></td>
+<td class="mission">Backstage infrastructure district that houses most coding/automation machinery without cluttering normal creative work.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>BACKSTAGE</td>
+<td>Power</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="jawnlink  carry continuity across devices, providers and workspaces without forcing extra api billing. hybrid in training core">
+<td>27</td>
+<td><strong>JawnLink</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Carry continuity across devices, providers and workspaces without forcing extra API billing.</td>
+<td><span class="status-chip">IN TRAINING</span></td>
+<td>USER-FACING / BACKSTAGE</td>
+<td>Core</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="linksmith  test routes, links, device bridges and cross-device behavior. hybrid mapped power">
+<td>28</td>
+<td><strong>LinkSmith</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Test routes, links, device bridges and cross-device behavior.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>BACKSTAGE</td>
+<td>Power</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><a class="room-link" href="/jungle-star-command/robot-hall/linksmith/">Open room →</a></td>
+</tr>
+<tr data-search="sitesmith  build and manage websites, pages, domains, embeds and deployment. hybrid in training creator+">
+<td>29</td>
+<td><strong>SiteSmith</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Build and manage websites, pages, domains, embeds and deployment.</td>
+<td><span class="status-chip">IN TRAINING</span></td>
+<td>USER-FACING</td>
+<td>Creator+</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><a class="room-link" href="/jungle-star-command/robot-hall/sitesmith/">Open room →</a></td>
+</tr>
+<tr data-search="sitesmith link guard  check and guard site links deterministically. code-first mapped infrastructure">
+<td>30</td>
+<td><strong>SiteSmith Link Guard</strong></td>
+<td><span class="power code-first">CODE-FIRST</span></td>
+<td class="mission">Check and guard site links deterministically.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>BACKSTAGE</td>
+<td>Infrastructure</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="gamemaster / game master pro  turn ideas into game mechanics, prototypes and higher-tier game packages. hybrid mapped creator+">
+<td>31</td>
+<td><strong>GameMaster / Game Master Pro</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Turn ideas into game mechanics, prototypes and higher-tier game packages.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>Creator+</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><a class="room-link" href="/jungle-star-command/robot-hall/gamemaster/">Open room →</a></td>
+</tr>
+<tr data-search="groovebot  remember songs, lyrics, versions, canon and release logic. hybrid mapped creator">
+<td>32</td>
+<td><strong>GrooveBot</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Remember songs, lyrics, versions, canon and release logic.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><a class="room-link" href="/jungle-star-command/robot-hall/groovebot/">Open room →</a></td>
+</tr>
+<tr data-search="animal radio  player, catalog and distribution surface for personal/world radio and persistent soundtrack. hybrid mapped creator">
+<td>33</td>
+<td><strong>Animal Radio</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Player, catalog and distribution surface for personal/world radio and persistent soundtrack.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="jungle star tv  video/media surface for approved videos and playlists. hybrid mapped creator">
+<td>34</td>
+<td><strong>Jungle Star TV</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Video/media surface for approved videos and playlists.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="jawncast  schedule approved content and control publishing traffic across channels. hybrid mapped creator">
+<td>35</td>
+<td><strong>JAWNcast</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Schedule approved content and control publishing traffic across channels.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="vox / clark jawn  source-backed news/editorial/public communication intelligence. ai-first mapped creator">
+<td>36</td>
+<td><strong>VOX / Clark Jawn</strong></td>
+<td><span class="power ai-first">AI-FIRST</span></td>
+<td class="mission">Source-backed news/editorial/public communication intelligence.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="jawnny cash  track bills, revenue, wallet and money operations. hybrid mapped core / command">
+<td>37</td>
+<td><strong>JAWNNY CASH</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Track bills, revenue, wallet and money operations.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>Core / Command</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="marcus margin canonical: marcus margin protect sustainable pricing by accounting for materials, labor, investment, research and margin. hybrid in training $30 creator">
+<td>38</td>
+<td><strong>Marcus Margin</strong><div class="sub">Canonical: Marcus Margin</div></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Protect sustainable pricing by accounting for materials, labor, investment, research and margin.</td>
+<td><span class="status-chip">IN TRAINING</span></td>
+<td>USER-FACING</td>
+<td>$30 Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><a class="room-link" href="/jungle-star-command/robot-hall/marcus-margin/">Open room →</a></td>
+</tr>
+<tr data-search="merchbot  manage merchandise products, mockups, store links and site/promotion handoffs. hybrid mapped creator">
+<td>39</td>
+<td><strong>MerchBot</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Manage merchandise products, mockups, store links and site/promotion handoffs.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><a class="room-link" href="/jungle-star-command/robot-hall/merchbot/">Open room →</a></td>
+</tr>
+<tr data-search="temper t = time; ending &quot;er&quot; = emergency router per founder doctrine daily scheduler and notification hub that helps users watch their temper by seeing time, money, bills, email and emergency changes together. hybrid in training core / creator">
+<td>40</td>
+<td><strong>TEMPER</strong><div class="sub">T = Time; ending &quot;ER&quot; = Emergency Router per founder doctrine</div></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Daily scheduler and notification hub that helps users watch their temper by seeing time, money, bills, email and emergency changes together.</td>
+<td><span class="status-chip">IN TRAINING</span></td>
+<td>USER-FACING</td>
+<td>Core / Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="docbot wellness  help the user track wellness observations and prepare concise history to share with clinicians; not a diagnosing medical system. hybrid in training core / creator">
+<td>41</td>
+<td><strong>DocBot Wellness</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Help the user track wellness observations and prepare concise history to share with clinicians; not a diagnosing medical system.</td>
+<td><span class="status-chip">IN TRAINING</span></td>
+<td>USER-FACING</td>
+<td>Core / Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="ankh autonomous network health keeper (working expansion from user recollection) future smartwatch/wearable lane for steps, blood pressure, sleep and wellness signals feeding docbot wellness. code-first / hybrid return when future">
+<td>42</td>
+<td><strong>ANKH</strong><div class="sub">Autonomous Network Health Keeper (working expansion from user recollection)</div></td>
+<td><span class="power code-first-hybrid">CODE-FIRST / HYBRID</span></td>
+<td class="mission">Future smartwatch/wearable lane for steps, blood pressure, sleep and wellness signals feeding DocBot Wellness.</td>
+<td><span class="status-chip">RETURN WHEN</span></td>
+<td>USER-FACING</td>
+<td>Future</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="kintsugi heart  private repair/reflection room for hard valleys, emotional processing and recovery without making private pain public. ai-first mapped creator">
+<td>43</td>
+<td><strong>Kintsugi Heart</strong></td>
+<td><span class="power ai-first">AI-FIRST</span></td>
+<td class="mission">Private repair/reflection room for hard valleys, emotional processing and recovery without making private pain public.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>PRIVATE</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="mountains &amp; valleys  separate and visualize the highs and lows of a life/project journey while preserving raw evidence privately. hybrid mapped creator">
+<td>44</td>
+<td><strong>Mountains &amp; Valleys</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Separate and visualize the highs and lows of a life/project journey while preserving raw evidence privately.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>PRIVATE / USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="swagger room  show approved accomplishments, trophies, creator identity and save-the-world-in-style wins. hybrid mapped creator">
+<td>45</td>
+<td><strong>Swagger Room</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Show approved accomplishments, trophies, creator identity and save-the-world-in-style wins.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING / PUBLIC-OPTIONAL</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="legacy room  human-facing sector combining proof, journey, private repair and approved public wins without collapsing the underlying bots. hybrid mapped creator">
+<td>46</td>
+<td><strong>Legacy Room</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Human-facing sector combining proof, journey, private repair and approved public wins without collapsing the underlying bots.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="spark saver  capture a thought instantly, timestamp it, tag it optionally, preserve it through cuz, then return the user to work. code-first / hybrid mapped core">
+<td>47</td>
+<td><strong>Spark Saver</strong></td>
+<td><span class="power code-first-hybrid">CODE-FIRST / HYBRID</span></td>
+<td class="mission">Capture a thought instantly, timestamp it, tag it optionally, preserve it through CUZ, then return the user to work.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>Core</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="cinemabot  analyze story/media/creative structure and turn viewing/reflection into useful creative insight. ai-first mapped creator">
+<td>48</td>
+<td><strong>CinemaBot</strong></td>
+<td><span class="power ai-first">AI-FIRST</span></td>
+<td class="mission">Analyze story/media/creative structure and turn viewing/reflection into useful creative insight.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><a class="room-link" href="/jungle-star-command/robot-hall/cinemabot/">Open room →</a></td>
+</tr>
+<tr data-search="crackbot  use comedy as pressure-release and morale technology without hiding operational truth. ai-first mapped creator">
+<td>49</td>
+<td><strong>CrackBot</strong></td>
+<td><span class="power ai-first">AI-FIRST</span></td>
+<td class="mission">Use comedy as pressure-release and morale technology without hiding operational truth.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="family calm  private family/co-parent support and calmer communication workflows. ai-first mapped creator">
+<td>50</td>
+<td><strong>Family Calm</strong></td>
+<td><span class="power ai-first">AI-FIRST</span></td>
+<td class="mission">Private family/co-parent support and calmer communication workflows.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>PRIVATE</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="sarah story, affection, relationship, archetype &amp; heart reflect on attraction, compatibility, communication, expectations and stories people tell themselves about love. ai-first mapped creator">
+<td>51</td>
+<td><strong>SARAH</strong><div class="sub">Story, Affection, Relationship, Archetype &amp; Heart</div></td>
+<td><span class="power ai-first">AI-FIRST</span></td>
+<td class="mission">Reflect on attraction, compatibility, communication, expectations and stories people tell themselves about love.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>PRIVATE</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="bluebot  scout creator potential/opportunities and surface builder-detected signals. ai-first needs definition future">
+<td>52</td>
+<td><strong>BlueBot</strong></td>
+<td><span class="power ai-first">AI-FIRST</span></td>
+<td class="mission">Scout creator potential/opportunities and surface builder-detected signals.</td>
+<td><span class="status-chip">NEEDS DEFINITION</span></td>
+<td>BACKSTAGE / USER-FACING</td>
+<td>Future</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="robot context  generate runtime context packs/views so robots receive approved relevant context without manual brain feeding. code-first / hybrid mapped infrastructure">
+<td>53</td>
+<td><strong>Robot Context</strong></td>
+<td><span class="power code-first-hybrid">CODE-FIRST / HYBRID</span></td>
+<td class="mission">Generate runtime context packs/views so robots receive approved relevant context without manual brain feeding.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>BACKSTAGE</td>
+<td>Infrastructure</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="training registry  store approved robot laws, decisions, examples, corrections, preferences and questions. code-first mapped power">
+<td>54</td>
+<td><strong>Training Registry</strong></td>
+<td><span class="power code-first">CODE-FIRST</span></td>
+<td class="mission">Store approved robot laws, decisions, examples, corrections, preferences and questions.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>BACKSTAGE</td>
+<td>Power</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="phase runner  escort users across internal and external steps jawnsort cannot itself complete, then wait at the other door. hybrid mapped creator+">
+<td>55</td>
+<td><strong>Phase Runner</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Escort users across internal and external steps JawnSort cannot itself complete, then wait at the other door.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>BACKSTAGE / USER-FACING</td>
+<td>Creator+</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="drj dream review judge challenge unnecessary reinvention and prefer reuse/integration before custom building. ai-first mapped creator">
+<td>56</td>
+<td><strong>DRJ</strong><div class="sub">Dream Review Judge</div></td>
+<td><span class="power ai-first">AI-FIRST</span></td>
+<td class="mission">Challenge unnecessary reinvention and prefer reuse/integration before custom building.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>BACKSTAGE / USER-FACING</td>
+<td>Creator</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="social jawn / jungle star city  public/social community surface for approved sharing and interaction. hybrid return when future">
+<td>57</td>
+<td><strong>Social Jawn / Jungle Star City</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Public/social community surface for approved sharing and interaction.</td>
+<td><span class="status-chip">RETURN WHEN</span></td>
+<td>PUBLIC</td>
+<td>Future</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="command center / command suite  business/nonprofit/team operations environment for serious workflows. hybrid mapped $100 command">
+<td>58</td>
+<td><strong>Command Center / Command Suite</strong></td>
+<td><span class="power hybrid">HYBRID</span></td>
+<td class="mission">Business/nonprofit/team operations environment for serious workflows.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>$100 Command</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="jungle star apps sandbox  safe create/run/test/break/fix/verify workspace for future app building. code-first / hybrid return when power">
+<td>59</td>
+<td><strong>Jungle Star Apps Sandbox</strong></td>
+<td><span class="power code-first-hybrid">CODE-FIRST / HYBRID</span></td>
+<td class="mission">Safe CREATE/RUN/TEST/BREAK/FIX/VERIFY workspace for future app building.</td>
+<td><span class="status-chip">RETURN WHEN</span></td>
+<td>BACKSTAGE</td>
+<td>Power</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="package forge  future packaging capability under 00 code bro. code-first return when future">
+<td>60</td>
+<td><strong>Package Forge</strong></td>
+<td><span class="power code-first">CODE-FIRST</span></td>
+<td class="mission">Future packaging capability under 00 Code Bro.</td>
+<td><span class="status-chip">RETURN WHEN</span></td>
+<td>BACKSTAGE</td>
+<td>Future</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr>
+<tr data-search="penman penman — project voice &amp; author voice intelligence write and revise in the authorized voice of a project, franchise, or author by grounding style decisions in approved source material. ai-first mapped creator / pressforge / robot hall">
+<td>61</td>
+<td><strong>Penman</strong><div class="sub">Penman — Project Voice &amp; Author Voice Intelligence</div></td>
+<td><span class="power ai-first">AI-FIRST</span></td>
+<td class="mission">Write and revise in the authorized voice of a project, franchise, or author by grounding style decisions in approved source material.</td>
+<td><span class="status-chip">MAPPED</span></td>
+<td>USER-FACING</td>
+<td>Creator / PressForge / Robot Hall</td>
+<td><span class="source-chip">Master Registry v2 • CSG</span></td>
+<td><span class="pending">Room not built</span></td>
+</tr></tbody></table></div>
 </section></main>
-<footer class="site-footer"><div class="wrap footer-grid"><div><strong>Fleet Registry</strong><p>Robot Hall Dubai</p></div><div><strong>Mode</strong><p>Verified seed → source recovery → expansion</p></div><div><strong>Portable</strong><p>Copy + CSV export built in.</p></div></div></footer>
+<footer class="site-footer"><div class="wrap footer-grid"><div><strong>Fleet Registry</strong><p>Robot Hall Dubai</p></div><div><strong>Law</strong><p>Recover → Preserve → Add. Do not invent missing canon.</p></div><div><strong>Source</strong><p>JawnSort Robot Family Master Registry v2 • CSG Filled</p></div></div></footer>
 <script>
-const seed=[{"name":"00 Code Bro","icon":"💻","url":"/jungle-star-command/robot-hall/00-code-bro/","role":"Code / release / repair continuity","status":"ACTIVE SEED"},{"name":"GrooveBot","icon":"🎵","url":"/jungle-star-command/robot-hall/groovebot/","role":"Music, tracks, versions, releases and artist continuity","status":"ACTIVE SEED"},{"name":"DocuBot","icon":"📄","url":"/jungle-star-command/robot-hall/docubot/","role":"Applications, RFPs/IFPs, forms, legal/admin and non-book paperwork","status":"LIVE"},{"name":"PressForge","icon":"📚","url":"/jungle-star-command/robot-hall/pressforge/","role":"Books, manuscripts, posters and publishing continuity","status":"LIVE"},{"name":"MerchBot","icon":"👕","url":"/jungle-star-command/robot-hall/merchbot/","role":"DTG, embroidery, product continuity and future 3D-print assets","status":"LIVE"},{"name":"GameMaster","icon":"🎮","url":"/jungle-star-command/robot-hall/gamemaster/","role":"Games, mechanics, missions, characters, assets and builds","status":"ACTIVE SEED"},{"name":"DrawSword","icon":"🎨","url":"/jungle-star-command/robot-hall/drawsword/","role":"Images, character art, references and visual continuity","status":"ACTIVE SEED"},{"name":"CinemaBot","icon":"🎬","url":"/jungle-star-command/robot-hall/cinemabot/","role":"Movies, critique, taste memory, reviews and producer scouting","status":"ACTIVE SEED"},{"name":"LinkSmith","icon":"🔗","url":"/jungle-star-command/robot-hall/linksmith/","role":"Canonical links, cross-project routing and broken-link recovery","status":"LIVE"},{"name":"TRON","icon":"🧰","url":"/jungle-star-command/robot-hall/tron/","role":"Field equipment and physical-resource knowledge","status":"SEE GP TRON"},{"name":"GP Tron","icon":"🧰","url":"/jungle-star-command/robot-hall/gp-tron/","role":"Tools, locations, worksites and physical/mobile deployment","status":"LIVE"},{"name":"Montage","icon":"🎯","url":"/jungle-star-command/robot-hall/montage/","role":"Mission, Obstacles, Needs, Timeline, Assets, Goals & Evidence","status":"ACTIVE SEED"},{"name":"General Pro","icon":"🪖","url":"/jungle-star-command/robot-hall/general-pro/","role":"General operational coordination; detailed role still source-recovery controlled","status":"SOURCE RECOVERY"},{"name":"Star Selector","icon":"⭐","url":"/jungle-star-command/robot-hall/star-selector/","role":"Selection/routing role; detailed role still source-recovery controlled","status":"SOURCE RECOVERY"},{"name":"DRJ","icon":"🧪","url":"/jungle-star-command/robot-hall/drj/","role":"Role-specific continuity; detailed role still source-recovery controlled","status":"SOURCE RECOVERY"},{"name":"Marcus Margin","icon":"📈","url":"/jungle-star-command/robot-hall/marcus-margin/","role":"Pricing, costs, margins and product economics","status":"LIVE"},{"name":"Chef Bot","icon":"👨‍🍳","url":"/jungle-star-command/robot-hall/chef-bot/","role":"Kitchen, restaurant operations, equipment and hospitality continuity","status":"LIVE"},{"name":"GP Tina","icon":"🧠","url":"/jungle-star-command/robot-hall/gp-tina/","role":"Role-specific approved knowledge and deployment notes","status":"LIVE"},{"name":"GP Tuna","icon":"🐟","url":"/jungle-star-command/robot-hall/gp-tuna/","role":"Role-specific approved knowledge and deployment notes","status":"LIVE"},{"name":"GP Don","icon":"🎤","url":"/jungle-star-command/robot-hall/gp-don/","role":"Music, symbolism, performance and connected-IP continuity","status":"LIVE"}];
-const q=document.getElementById("robot-search"), body=document.getElementById("registry-body");
-q.addEventListener("input",()=>{const s=q.value.toLowerCase().trim();[...body.rows].forEach(r=>r.hidden=s&&!((r.dataset.name+" "+r.dataset.role).includes(s)));});
-document.getElementById("copy-registry").addEventListener("click",async()=>{const t=["ROBOT HALL DUBAI — FLEET REGISTRY",...seed.map((r,i)=>String(i+1).padStart(2,"0")+" | "+r.name+" | "+r.role+" | "+r.status+" | "+r.url)].join("\n");await navigator.clipboard.writeText(t);alert("Fleet registry copied.");});
-document.getElementById("export-registry").addEventListener("click",()=>{const esc=v=>'"'+String(v).replaceAll('"','""')+'"';const rows=[["name","role","status","room_url"],...seed.map(r=>[r.name,r.role,r.status,r.url])];const csv=rows.map(r=>r.map(esc).join(",")).join("\n");const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="robot-hall-fleet-registry.csv";a.click();URL.revokeObjectURL(a.href);});
+const registry=[{"n":1,"name":"CUZ","canonical":"Conversation Universe Zone","power":"HYBRID","mission":"Welcome-back intake concierge that preserves new material and asks the user what should enter the archive.","training":"IN TRAINING","progress":"0","visibility":"USER-FACING","suite":"Core / Creator","type":"ROOM / ROBOT / BACKGROUND SERVICE","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":2,"name":"Robot Aza","canonical":"Archive/state awareness robot; human Aza is separate","power":"CODE-FIRST","mission":"Detect what changed and tell CUZ that the user universe has new activity.","training":"MAPPED","progress":"0","visibility":"BACKSTAGE","suite":"Infrastructure","type":"BACKGROUND SERVICE / MEMORY-AWARENESS","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":3,"name":"Transfer Tank","canonical":"","power":"CODE-FIRST","mission":"Move or copy digital cargo safely with verification.","training":"PROVEN","progress":"0","visibility":"USER-FACING","suite":"Core","type":"ROOM / BACKGROUND SERVICE / PIPELINE","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":4,"name":"File Feed","canonical":"","power":"CODE-FIRST","mission":"Know what files exist, where they are, and whether they changed or duplicate.","training":"MAPPED","progress":"0","visibility":"BACKSTAGE","suite":"Infrastructure","type":"BACKGROUND SERVICE / FOREGROUND VIEW","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":5,"name":"CHAOS","canonical":"Capture, Hold, Organize, Assess, and Sort","power":"HYBRID","mission":"Process approved preserved material into useful structured meaning and route-ready findings.","training":"IN TRAINING","progress":"0","visibility":"BACKSTAGE","suite":"Creator+","type":"ROBOT / BACKGROUND PROCESSOR","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":6,"name":"Star Selector","canonical":"","power":"HYBRID","mission":"Route extracted material to the right room, robot, project or mission.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"Creator","type":"ROBOT / ROUTER","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":7,"name":"General Pro","canonical":"","power":"HYBRID","mission":"Collapse enormous evidence into the few missions and next actions that matter.","training":"IN TRAINING","progress":"0","visibility":"USER-FACING","suite":"Creator","type":"ROOM / ROBOT / COACH","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":8,"name":"GPTina","canonical":"Canonical spelling: GPTina","power":"AI-FIRST","mission":"Clarity, context, translation and coaching voice for the user and fleet.","training":"IN TRAINING","progress":"0","visibility":"USER-FACING","suite":"Creator","type":"ROBOT / COACH","route":"/jungle-star-command/robot-hall/gp-tina/","routeState":"LIVE ROUTE","source":"Master Registry v2 • CSG"},{"n":9,"name":"GPTron","canonical":"Canonical spelling: GPTron","power":"AI-FIRST","mission":"Tactical execution and real-time field-chaos processing.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"Creator","type":"ROBOT / FIELD COACH","route":"/jungle-star-command/robot-hall/gp-tron/","routeState":"LIVE ROUTE","source":"Master Registry v2 • CSG"},{"n":10,"name":"GP Don","canonical":"","power":"AI-FIRST","mission":"Groove, culture and morale layer that keeps the mission moving.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"Creator","type":"ROBOT / COACH","route":"/jungle-star-command/robot-hall/gp-don/","routeState":"LIVE ROUTE","source":"Master Registry v2 • CSG"},{"n":11,"name":"Montage","canonical":"","power":"AI-FIRST","mission":"Explain what changed over time and turn receipts into journey, coaching and continuity.","training":"IN TRAINING","progress":"0","visibility":"USER-FACING","suite":"Creator","type":"ROOM / ROBOT / COACH","route":"/jungle-star-command/robot-hall/montage/","routeState":"LIVE ROUTE","source":"Master Registry v2 • CSG"},{"n":12,"name":"Michelangelo","canonical":"","power":"AI-FIRST","mission":"Protect symbolism, canon, brand continuity and recurring identity across the whole authorized system.","training":"IN TRAINING","progress":"0","visibility":"USER-FACING / BACKSTAGE","suite":"Power","type":"ROBOT / SYMBOLISM + CONTINUITY INTELLIGENCE","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":13,"name":"SightSmith","canonical":"","power":"HYBRID","mission":"Inspect how builds look and catch visual/layout/responsive problems, especially GameMaster outputs.","training":"MAPPED","progress":"0","visibility":"BACKSTAGE / USER-FACING","suite":"Power","type":"ROBOT / VISUAL QA","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":14,"name":"DrawSword","canonical":"","power":"AI-FIRST","mission":"Create or refine consistent artwork for comics, characters and visual projects.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"Creator+","type":"FOREGROUND TOOL / VISUAL CREATION INTELLIGENCE","route":"/jungle-star-command/robot-hall/drawsword/","routeState":"LIVE ROUTE","source":"Master Registry v2 • CSG"},{"n":15,"name":"PressForge","canonical":"","power":"HYBRID","mission":"Turn manuscripts, fragments and approved source material into books/articles/publishing projects.","training":"IN TRAINING","progress":"0","visibility":"USER-FACING","suite":"Creator","type":"ROOM / APP / ROBOT-ASSISTED TOOL","route":"/jungle-star-command/robot-hall/pressforge/","routeState":"LIVE ROUTE","source":"Master Registry v2 • CSG"},{"n":16,"name":"Memory Forge","canonical":"","power":"HYBRID","mission":"Govern durable memory, context packs, vocabulary and reusable approved knowledge.","training":"MAPPED","progress":"0","visibility":"BACKSTAGE","suite":"Creator+","type":"MEMORY / REGISTRY / BACKGROUND SERVICE","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":17,"name":"DIESEL","canonical":"Distributed Intelligence Engine for Sorting, Execution & Learning","power":"AI-FIRST","mission":"Train the robot fleet from approved laws, decisions, examples, corrections and preferences.","training":"MAPPED","progress":"0","visibility":"BACKSTAGE","suite":"Power","type":"BACKGROUND TRAINING ENGINE / ROBOT","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":18,"name":"DENZEL","canonical":"Decision Engine for Navigation, Zero-loss Evidence & Learning","power":"AI-FIRST","mission":"Support consequential decisions with navigation, evidence preservation and learning.","training":"MAPPED","progress":"0","visibility":"BACKSTAGE","suite":"Power","type":"BACKGROUND DECISION ENGINE / ROBOT","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":19,"name":"00 Code Bro","canonical":"","power":"HYBRID","mission":"Build, fix, test and package software changes without turning the user into terminal staff.","training":"MAPPED","progress":"0","visibility":"BACKSTAGE","suite":"Power","type":"ROBOT / BUILD-FIX-TEST-PACKAGE WORKER","route":"/jungle-star-command/robot-hall/00-code-bro/","routeState":"LIVE ROUTE","source":"Master Registry v2 • CSG"},{"n":20,"name":"GlitchBot","canonical":"","power":"CODE-FIRST","mission":"Verify evidence, protect against overwrite, and keep pretty dashboards honest.","training":"PROVEN","progress":"1","visibility":"BACKSTAGE","suite":"All","type":"GATE / PROOF / ROBOT PERSONA","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":21,"name":"Dunzo","canonical":"","power":"CODE-FIRST","mission":"Decide whether work is actually done and issue completion proof.","training":"PROVEN","progress":"1","visibility":"BACKSTAGE","suite":"All","type":"GATE / COMPLETION JUDGE","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":22,"name":"JAWN RAIL","canonical":"JAWN RAIL automation system","power":"CODE-FIRST","mission":"The whole governed automation rail that moves approved work through execution systems.","training":"MAPPED","progress":"0","visibility":"BACKSTAGE","suite":"Infrastructure","type":"AUTOMATION SYSTEM / PIPELINE","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":23,"name":"RailJohn","canonical":"R-A-I-L-J-o-h-n","power":"CODE-FIRST","mission":"Cowboy/mafioso execution robot and simple front-facing button for governed install/update actions.","training":"PROVEN","progress":"1","visibility":"USER-FACING","suite":"Core / Power","type":"ROOM / EXECUTOR / ROBOT PERSONA","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":24,"name":"BridgeSmith","canonical":"","power":"CODE-FIRST","mission":"Translate/bridge structured data and code paths so approved work can pass the gates and reach downstream systems.","training":"MAPPED","progress":"0","visibility":"BACKSTAGE","suite":"Infrastructure","type":"CONNECTOR / BRIDGE / CODE-FIRST WORKER","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":25,"name":"TowerBot","canonical":"","power":"CODE-FIRST","mission":"Downstream protected execution destination behind GlitchBot gates.","training":"NEEDS DEFINITION","progress":"0","visibility":"BACKSTAGE","suite":"Infrastructure","type":"BACKGROUND EXECUTION / INFRASTRUCTURE BOT","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":26,"name":"Deep Street","canonical":"","power":"CODE-FIRST","mission":"Backstage infrastructure district that houses most coding/automation machinery without cluttering normal creative work.","training":"MAPPED","progress":"0","visibility":"BACKSTAGE","suite":"Power","type":"INFRASTRUCTURE ENVIRONMENT / ROOM","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":27,"name":"JawnLink","canonical":"","power":"HYBRID","mission":"Carry continuity across devices, providers and workspaces without forcing extra API billing.","training":"IN TRAINING","progress":"0","visibility":"USER-FACING / BACKSTAGE","suite":"Core","type":"CONNECTOR / BRIDGE / INFRASTRUCTURE","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":28,"name":"LinkSmith","canonical":"","power":"HYBRID","mission":"Test routes, links, device bridges and cross-device behavior.","training":"MAPPED","progress":"0","visibility":"BACKSTAGE","suite":"Power","type":"ROBOT / CONNECTIVITY QA","route":"/jungle-star-command/robot-hall/linksmith/","routeState":"LIVE ROUTE","source":"Master Registry v2 • CSG"},{"n":29,"name":"SiteSmith","canonical":"","power":"HYBRID","mission":"Build and manage websites, pages, domains, embeds and deployment.","training":"IN TRAINING","progress":"0","visibility":"USER-FACING","suite":"Creator+","type":"ROOM / APP / BUILDER","route":"/jungle-star-command/robot-hall/sitesmith/","routeState":"LIVE ROUTE","source":"Master Registry v2 • CSG"},{"n":30,"name":"SiteSmith Link Guard","canonical":"","power":"CODE-FIRST","mission":"Check and guard site links deterministically.","training":"MAPPED","progress":"0","visibility":"BACKSTAGE","suite":"Infrastructure","type":"FOREGROUND/BACKGROUND SUB-TOOL","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":31,"name":"GameMaster / Game Master Pro","canonical":"","power":"HYBRID","mission":"Turn ideas into game mechanics, prototypes and higher-tier game packages.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"Creator+","type":"ROOM / APP / ROBOT-ASSISTED TOOL","route":"/jungle-star-command/robot-hall/gamemaster/","routeState":"LIVE ROUTE","source":"Master Registry v2 • CSG"},{"n":32,"name":"GrooveBot","canonical":"","power":"HYBRID","mission":"Remember songs, lyrics, versions, canon and release logic.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"Creator","type":"ROOM / ROBOT","route":"/jungle-star-command/robot-hall/groovebot/","routeState":"LIVE ROUTE","source":"Master Registry v2 • CSG"},{"n":33,"name":"Animal Radio","canonical":"","power":"HYBRID","mission":"Player, catalog and distribution surface for personal/world radio and persistent soundtrack.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"Creator","type":"ROOM / MEDIA SURFACE","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":34,"name":"Jungle Star TV","canonical":"","power":"HYBRID","mission":"Video/media surface for approved videos and playlists.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"Creator","type":"ROOM / MEDIA SURFACE","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":35,"name":"JAWNcast","canonical":"","power":"HYBRID","mission":"Schedule approved content and control publishing traffic across channels.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"Creator","type":"ROOM / MEDIA SCHEDULER","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":36,"name":"VOX / Clark Jawn","canonical":"","power":"AI-FIRST","mission":"Source-backed news/editorial/public communication intelligence.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"Creator","type":"ROOM / ROBOT / EDITORIAL","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":37,"name":"JAWNNY CASH","canonical":"","power":"HYBRID","mission":"Track bills, revenue, wallet and money operations.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"Core / Command","type":"ROOM / MONEY TOOL / ROBOT PERSONA","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":38,"name":"Marcus Margin","canonical":"Canonical: Marcus Margin","power":"HYBRID","mission":"Protect sustainable pricing by accounting for materials, labor, investment, research and margin.","training":"IN TRAINING","progress":"0","visibility":"USER-FACING","suite":"$30 Creator","type":"ROBOT / BUSINESS PRICING COACH","route":"/jungle-star-command/robot-hall/marcus-margin/","routeState":"LIVE ROUTE","source":"Master Registry v2 • CSG"},{"n":39,"name":"MerchBot","canonical":"","power":"HYBRID","mission":"Manage merchandise products, mockups, store links and site/promotion handoffs.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"Creator","type":"ROOM / APP / ROBOT","route":"/jungle-star-command/robot-hall/merchbot/","routeState":"LIVE ROUTE","source":"Master Registry v2 • CSG"},{"n":40,"name":"TEMPER","canonical":"T = Time; ending \"ER\" = Emergency Router per founder doctrine","power":"HYBRID","mission":"Daily scheduler and notification hub that helps users watch their temper by seeing time, money, bills, email and emergency changes together.","training":"IN TRAINING","progress":"0","visibility":"USER-FACING","suite":"Core / Creator","type":"ROOM / SCHEDULER / ROUTER","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":41,"name":"DocBot Wellness","canonical":"","power":"HYBRID","mission":"Help the user track wellness observations and prepare concise history to share with clinicians; not a diagnosing medical system.","training":"IN TRAINING","progress":"0","visibility":"USER-FACING","suite":"Core / Creator","type":"ROOM / WELLNESS LOG / ROBOT COMPANION","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":42,"name":"ANKH","canonical":"Autonomous Network Health Keeper (working expansion from user recollection)","power":"CODE-FIRST / HYBRID","mission":"Future smartwatch/wearable lane for steps, blood pressure, sleep and wellness signals feeding DocBot Wellness.","training":"RETURN WHEN","progress":"0","visibility":"USER-FACING","suite":"Future","type":"DEVICE / CONNECTOR / HEALTH TRACKER","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":43,"name":"Kintsugi Heart","canonical":"","power":"AI-FIRST","mission":"Private repair/reflection room for hard valleys, emotional processing and recovery without making private pain public.","training":"MAPPED","progress":"0","visibility":"PRIVATE","suite":"Creator","type":"ROOM / ROBOT / PRIVATE REFLECTION","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":44,"name":"Mountains & Valleys","canonical":"","power":"HYBRID","mission":"Separate and visualize the highs and lows of a life/project journey while preserving raw evidence privately.","training":"MAPPED","progress":"0","visibility":"PRIVATE / USER-FACING","suite":"Creator","type":"ROOM / JOURNEY LAYER","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":45,"name":"Swagger Room","canonical":"","power":"HYBRID","mission":"Show approved accomplishments, trophies, creator identity and save-the-world-in-style wins.","training":"MAPPED","progress":"0","visibility":"USER-FACING / PUBLIC-OPTIONAL","suite":"Creator","type":"ROOM / PUBLIC IDENTITY + WINS","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":46,"name":"Legacy Room","canonical":"","power":"HYBRID","mission":"Human-facing sector combining proof, journey, private repair and approved public wins without collapsing the underlying bots.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"Creator","type":"ROOM / AGGREGATOR","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":47,"name":"Spark Saver","canonical":"","power":"CODE-FIRST / HYBRID","mission":"Capture a thought instantly, timestamp it, tag it optionally, preserve it through CUZ, then return the user to work.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"Core","type":"FOREGROUND TOOL / GLOBAL CAPTURE","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":48,"name":"CinemaBot","canonical":"","power":"AI-FIRST","mission":"Analyze story/media/creative structure and turn viewing/reflection into useful creative insight.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"Creator","type":"ROBOT / CREATIVE MEDIA REFLECTION","route":"/jungle-star-command/robot-hall/cinemabot/","routeState":"LIVE ROUTE","source":"Master Registry v2 • CSG"},{"n":49,"name":"CrackBot","canonical":"","power":"AI-FIRST","mission":"Use comedy as pressure-release and morale technology without hiding operational truth.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"Creator","type":"ROBOT / COMEDY PRESSURE-RELIEF","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":50,"name":"Family Calm","canonical":"","power":"AI-FIRST","mission":"Private family/co-parent support and calmer communication workflows.","training":"MAPPED","progress":"0","visibility":"PRIVATE","suite":"Creator","type":"ROBOT / PRIVATE SUPPORT","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":51,"name":"SARAH","canonical":"Story, Affection, Relationship, Archetype & Heart","power":"AI-FIRST","mission":"Reflect on attraction, compatibility, communication, expectations and stories people tell themselves about love.","training":"MAPPED","progress":"0","visibility":"PRIVATE","suite":"Creator","type":"ROBOT / RELATIONSHIP REFLECTION","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":52,"name":"BlueBot","canonical":"","power":"AI-FIRST","mission":"Scout creator potential/opportunities and surface builder-detected signals.","training":"NEEDS DEFINITION","progress":"0","visibility":"BACKSTAGE / USER-FACING","suite":"Future","type":"ROBOT / CREATOR SCOUT","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":53,"name":"Robot Context","canonical":"","power":"CODE-FIRST / HYBRID","mission":"Generate runtime context packs/views so robots receive approved relevant context without manual brain feeding.","training":"MAPPED","progress":"0","visibility":"BACKSTAGE","suite":"Infrastructure","type":"MEMORY/CONTEXT VIEW / BACKGROUND FUNCTION","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":54,"name":"Training Registry","canonical":"","power":"CODE-FIRST","mission":"Store approved robot laws, decisions, examples, corrections, preferences and questions.","training":"MAPPED","progress":"0","visibility":"BACKSTAGE","suite":"Power","type":"MEMORY / REGISTRY","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":55,"name":"Phase Runner","canonical":"","power":"HYBRID","mission":"Escort users across internal and external steps JawnSort cannot itself complete, then wait at the other door.","training":"MAPPED","progress":"0","visibility":"BACKSTAGE / USER-FACING","suite":"Creator+","type":"PIPELINE / GUIDE","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":56,"name":"DRJ","canonical":"Dream Review Judge","power":"AI-FIRST","mission":"Challenge unnecessary reinvention and prefer reuse/integration before custom building.","training":"MAPPED","progress":"0","visibility":"BACKSTAGE / USER-FACING","suite":"Creator","type":"ROBOT / GATE / STRATEGY","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":57,"name":"Social Jawn / Jungle Star City","canonical":"","power":"HYBRID","mission":"Public/social community surface for approved sharing and interaction.","training":"RETURN WHEN","progress":"0","visibility":"PUBLIC","suite":"Future","type":"ROOM / SOCIAL SURFACE","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":58,"name":"Command Center / Command Suite","canonical":"","power":"HYBRID","mission":"Business/nonprofit/team operations environment for serious workflows.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"$100 Command","type":"ROOM / BUSINESS OPERATIONS","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":59,"name":"Jungle Star Apps Sandbox","canonical":"","power":"CODE-FIRST / HYBRID","mission":"Safe CREATE/RUN/TEST/BREAK/FIX/VERIFY workspace for future app building.","training":"RETURN WHEN","progress":"0","visibility":"BACKSTAGE","suite":"Power","type":"ROOM / SAFE BUILD-TEST WORKSPACE","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":60,"name":"Package Forge","canonical":"","power":"CODE-FIRST","mission":"Future packaging capability under 00 Code Bro.","training":"RETURN WHEN","progress":"0","visibility":"BACKSTAGE","suite":"Future","type":"FOREGROUND/BACKGROUND PACKAGING TOOL","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"},{"n":61,"name":"Penman","canonical":"Penman — Project Voice & Author Voice Intelligence","power":"AI-FIRST","mission":"Write and revise in the authorized voice of a project, franchise, or author by grounding style decisions in approved source material.","training":"MAPPED","progress":"0","visibility":"USER-FACING","suite":"Creator / PressForge / Robot Hall","type":"ROBOT / VOICE + STYLE INTELLIGENCE","route":"","routeState":"ROOM NOT BUILT","source":"Master Registry v2 • CSG"}];
+const q=document.getElementById("robot-search"), pf=document.getElementById("power-filter"), body=document.getElementById("registry-body");
+function apply(){const s=q.value.toLowerCase().trim(),p=pf.value;[...body.rows].forEach(r=>{const txt=r.dataset.search||"";const power=r.cells[2].textContent.trim();r.hidden=!!((s&&!txt.includes(s))||(p&&power!==p));});}
+q.addEventListener("input",apply);pf.addEventListener("change",apply);
+document.getElementById("copy-registry").addEventListener("click",async()=>{const t=["ROBOT HALL DUBAI — SOURCE-BACKED FLEET REGISTRY","Workbook Master Registry: 61 named rows | CSG Summary: 62 canonical | 1 identity pending source recovery",...registry.map(r=>String(r.n).padStart(2,"0")+" | "+r.name+" | "+r.power+" | "+r.mission+" | "+r.training+" | "+(r.route||"ROOM NOT BUILT"))].join("\n");await navigator.clipboard.writeText(t);alert("Fleet registry copied.");});
+document.getElementById("export-registry").addEventListener("click",()=>{const esc=v=>'"'+String(v??"").replaceAll('"','""')+'"';const rows=[["number","name","canonical_name","power_class","mission","training_state","training_progress","visibility","suite_tier","source_provenance","room_route"],...registry.map(r=>[r.n,r.name,r.canonical,r.power,r.mission,r.training,r.progress,r.visibility,r.suite,r.source,r.route])];const csv=rows.map(r=>r.map(esc).join(",")).join("\n");const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="robot-hall-source-backed-fleet-registry.csv";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);});
 </script></body></html>
