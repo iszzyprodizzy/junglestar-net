@@ -8,6 +8,28 @@
 <link rel="stylesheet" href="/jungle-star-command/assets/command.css">
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script defer src="/jungle-star-command/assets/command.js"></script>
+<style>
+.doc-toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.doc-toolbar button,.doc-toolbar label{padding:9px 12px;border:1px solid #45536a;border-radius:999px;background:#111722;color:#fff;font-weight:850;cursor:pointer}
+.doc-toolbar button:hover,.doc-toolbar label:hover{border-color:var(--gold)}
+.doc-table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:#0e131b}
+.doc-table{width:100%;border-collapse:collapse;min-width:1450px}
+.doc-table th,.doc-table td{padding:10px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:top;text-align:left;font-size:.78rem;line-height:1.35}
+.doc-table th{position:sticky;top:0;background:#151e2b;color:#fff;font-size:.72rem;z-index:2}
+.doc-table td[contenteditable="true"]{background:#101722}
+.doc-table td[contenteditable="true"]:focus{outline:2px solid var(--gold);outline-offset:-2px;background:#182231}
+.doc-table tr:last-child td{border-bottom:0}
+.doc-table th:last-child,.doc-table td:last-child{border-right:0}
+.doc-actions{white-space:nowrap}
+.doc-actions button{padding:5px 7px;border:1px solid #344357;border-radius:7px;background:#0c121a;color:#fff;cursor:pointer}
+.doc-actions button:hover{border-color:var(--gold)}
+.doc-note{margin-top:10px;color:var(--muted);font-size:.8rem;line-height:1.45}
+.counter-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}
+.counter{padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
+.counter strong{display:block;font-size:1.7rem}
+.counter span{color:var(--muted);font-size:.75rem}
+@media(max-width:760px){.counter-row{grid-template-columns:1fr 1fr}}
+</style>
 </head>
 <body>
 <header class="site-header"><div class="wrap"><div class="main-nav">
@@ -21,74 +43,150 @@
 
 <main class="wrap">
 <section class="hero">
-<div class="eyebrow">Robot Hall Dubai • Individual Room</div>
+<div class="eyebrow">Robot Hall Dubai • Documents / Court / Forms / Packets</div>
 <h1>📄 DOCUBOT.</h1>
-<p class="lead">Non-book paperwork: restaurant applications, community RFPs/IFPs, forms, letters, legal packets, proposals, contracts, government paperwork and reusable business documents.</p>
+<p class="lead">A working digital filing cabinet for non-book paperwork. Put the real document here, extract what it is for, preserve its source, record what it proves, track what is missing, and export the registry back to GPT, Claude, JawnSort Pro or a future database.</p>
 <div class="stamps"><div class="stamp">ROOM: LIVE</div><div class="stamp">BUILD: 2026-10-01</div><div id="page-opened" class="stamp">PAGE OPENED: —</div><div class="stamp">SOURCE HISTORY STAYS</div></div>
 </section>
 
 <section>
-<div class="eyebrow">Continuity Lanes</div>
-<h2 class="section-title">Give this robot its body.</h2>
+<div class="eyebrow">Working Cabinet</div>
+<h2 class="section-title">Documents you can actually work.</h2>
+<p class="section-copy">This table is the DocuBot body. Click any cell and type. Save locally. Export CSV, JSON or Markdown. The buttons above are not decoration.</p>
+
+<div class="counter-row">
+<div class="counter"><strong id="count-docs">0</strong><span>documents / records</span></div>
+<div class="counter"><strong id="count-live">0</strong><span>source received / active</span></div>
+<div class="counter"><strong id="count-waiting">0</strong><span>awaiting source</span></div>
+<div class="counter"><strong id="count-legal">0</strong><span>legal / court rows</span></div>
+</div>
+
+<div class="doc-toolbar">
+<button type="button" id="add-row">+ Blank Row</button>
+<button type="button" id="save-docs">Save Changes</button>
+<button type="button" id="export-csv">Export CSV</button>
+<button type="button" id="export-json">Export JSON</button>
+<button type="button" id="export-md">Export Markdown</button>
+<label>Import JSON<input id="import-json" type="file" accept=".json,application/json" hidden></label>
+</div>
+
+<div class="doc-table-wrap">
+<table class="doc-table" id="doc-table">
+<thead><tr>
+<th>ID</th>
+<th>Title</th>
+<th>Document Type</th>
+<th>Matter / Project</th>
+<th>Jurisdiction / Organization</th>
+<th>Purpose / What It Does</th>
+<th>What It Proves / Reuse Value</th>
+<th>Required Facts / Inputs</th>
+<th>Exhibits / Attachments</th>
+<th>Deadlines / Service / Follow-Up</th>
+<th>Status</th>
+<th>Source / File / URL</th>
+<th>Next Action</th>
+<th>Related Robots / Rooms</th>
+<th></th>
+</tr></thead>
+<tbody id="doc-body"></tbody>
+</table>
+</div>
+<p class="doc-note">Until Supabase write-back is wired, this cabinet saves in this browser's localStorage. Export regularly so the data remains portable.</p>
+</section>
+
+<section id="legal">
+<div class="eyebrow">Seeded Source • Conservatorship Packet</div>
+<h2 class="section-title">What this 14-page packet gives DocuBot.</h2>
+<p class="section-copy">The packet is not just “a PDF.” It is a reusable court-workflow template with distinct sections, required facts, exhibits, service steps and follow-up points. This map is seeded so the next time you need similar work, you start from structure instead of memory.</p>
+
+<div class="doc-table-wrap">
+<table class="doc-table">
+<thead><tr><th>Packet Section</th><th>Pages</th><th>What It Contains</th><th>Reusable DocuBot Value</th><th>What To Collect Before Reuse</th></tr></thead>
+<tbody>
+<tr><td>Petition for Appointment of Conservator</td><td>1–6</td><td>Jurisdiction/venue, property, petitioner, respondent, lienholders/secured creditors, conservatorship conditions, proposed conservator, preliminary rehabilitation plan, lis pendens and requested relief.</td><td>Primary petition template + case intake checklist.</td><td>Property identity/address/BRT, deed/title report, owner/respondent data, lienholder searches, vacancy/marketing facts, inspection facts, proposed conservator qualifications/resources, preliminary rehab scope.</td></tr>
+<tr><td>Verification of Petitioner</td><td>7</td><td>Verification that statements are true and acknowledgement of penalties for unsworn falsification.</td><td>Signature / verification checklist.</td><td>Correct petitioner/title, signature authority, date.</td></tr>
+<tr><td>Certification to Serve as Conservator</td><td>8</td><td>Corporate/nonprofit eligibility, tax-exempt status, good standing, conflicts, bylaws/resolution authority and reporting obligations.</td><td>Proposed-conservator qualification checklist.</td><td>Entity status, IRS status, Pennsylvania good standing, bylaws, conflict review, board authority.</td></tr>
+<tr><td>Exhibit A — Resolution</td><td>9</td><td>Corporate resolution authorizing acceptance of appointment and duties.</td><td>Board-resolution exhibit template.</td><td>Board action, authorized officer, resolution text/date.</td></tr>
+<tr><td>Notice of Filing</td><td>10–11</td><td>Notice to owner, lienholder/secured creditor and City; hearing notice language and legal-help information.</td><td>Notice/service package checklist.</td><td>Recipients, addresses, hearing information, copies of petition/exhibits/order.</td></tr>
+<tr><td>Order for Rule to Show Cause</td><td>12–13</td><td>Service instructions, response/intervention timing, hearing scheduling and court directives.</td><td>Court-order/service tracker.</td><td>Service dates, recipients, return-of-service proof, hearing date, response deadlines.</td></tr>
+<tr><td>Lis Pendens</td><td>14</td><td>Recorder of Deeds notice identifying the property and action.</td><td>Recording checklist / property-litigation notice template.</td><td>Property legal description, address/BRT, case information, attorney/petitioner details.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section id="government">
+<div class="eyebrow">Why IFPs / RFPs belong here</div>
+<h2 class="section-title">Old paperwork becomes reusable intelligence.</h2>
 <div class="room-grid">
-<a class="room added" href="#">
-  <div class="icon">📂</div>
-  <h3>Source Documents</h3>
-  <p>Original forms, prior applications, packets, evidence, dates, versions and what each document proves.</p>
-</a>
-
-<a class="room added" href="#">
-  <div class="icon">🏛️</div>
-  <h3>RFP / IFP / Government</h3>
-  <p>Community proposals, government opportunities, requirements, drafts, submission status and follow-up.</p>
-</a>
-
-<a class="room added" href="#">
-  <div class="icon">🍽️</div>
-  <h3>Restaurant / Licensing</h3>
-  <p>Applications, approvals, inspection paperwork, operating documents and reusable restaurant knowledge.</p>
-</a>
-
-<a class="room added" href="#">
-  <div class="icon">⚖️</div>
-  <h3>Legal / Administrative</h3>
-  <p>Letters, forms, packets, deadlines, filings, supporting evidence and next required action.</p>
-</a>
-
-<a class="room added" href="#">
-  <div class="icon">🔁</div>
-  <h3>Reuse / Version History</h3>
-  <p>Never destroy the older document. Build the next version from preserved source history.</p>
-</a></div>
+<div class="room added"><div class="icon">🏛️</div><h3>2023 IFP</h3><p>Not “old junk.” It can preserve agency language, eligibility rules, scoring criteria, required attachments, project descriptions, budget assumptions, deadlines, contacts and what you already wrote once.</p></div>
+<div class="room added"><div class="icon">📑</div><h3>New RFP</h3><p>DocuBot can compare the new solicitation against prior language and flag what is reusable, what changed, what is missing and what must be newly sourced.</p></div>
+<div class="room added"><div class="icon">🧾</div><h3>Machinery / Equipment Appraisal</h3><p>Useful as evidence and asset inventory: item, manufacturer/model/serial, condition, valuation date, appraised value, source photos, location, ownership and the matter/project it supports.</p></div>
+<div class="room added"><div class="icon">🍽️</div><h3>Restaurant / Licensing</h3><p>Applications become a reusable launch checklist: agency, permit/license, required documents, fee, inspection, submission date, approval date, renewals, deficiencies and next action.</p></div>
+</div>
 </section>
 
 <section>
 <div class="eyebrow">Recovered Cattle / Silver / Gold</div>
-<h2 class="section-title">DocuBot already has governing boundaries.</h2>
+<h2 class="section-title">DocuBot governing boundaries.</h2>
 <div class="room-grid">
-<div class="room original"><div class="icon">📄</div><h3>Craft Boundary</h3><p>CSG-112: PressForge = books/worlds/publishing. DocuBot = documents/court/forms/packets. DocBot Wellness remains a separate private wellness craft.</p><span class="label">APPROVED DOMAIN LAW</span></div>
-<div class="room original"><div class="icon">🧠</div><h3>Founder Chooses The Room</h3><p>Recovered workboard law: robots prepare, warn and recommend; they do not automatically hijack Founder priority.</p><span class="label">AVAILABLE / NOT FORCED</span></div>
-<div class="room original"><div class="icon">📚</div><h3>Archive ≠ To-Do</h3><p>CSG-005: preserve document history and surface the Gold instead of turning every archived item into a task.</p><span class="label">APPROVED</span></div>
-<div class="room original"><div class="icon">🔗</div><h3>Many-to-Many Routing</h3><p>CSG-050: one source can create many meanings; one meaning can route to many rooms. The human should not have to remember the routes.</p><span class="label">APPROVED CORE LAW</span></div>
-</div>
-<div class="status"><strong>CSG TRAINING SNAPSHOT</strong><br>62 canonical robots • 298 approved/current findings • 13 visibly trained • 59 private/never-train held • 18 review-held.</div>
-</section>
-<section>
-<div class="robot-feature">
-<div class="robot-feature-title">ROBOT TRAINING CONTRACT</div>
-<p class="section-copy">Preserve raw source. Preserve older versions. Separate source from approved lesson. Connect this robot to the projects, products, people, files, and tasks it serves. Do not flatten cross-project relationships.</p>
-<div class="robot-actions">
-<a href="/jungle-star-command/robot-hall/training/">Training Registry</a>
-<a href="/jungle-star-command/robot-hall/cattle-silver-gold/">Cattle / Silver / Gold</a>
-<a href="/jungle-star-command/#master-to-do">Master To-Do</a>
-</div>
+<div class="room original"><div class="icon">📄</div><h3>Craft Boundary</h3><p>CSG-112: PressForge = books/worlds/publishing. DocuBot = documents/court/forms/packets. DocBot Wellness remains separate.</p><span class="label">APPROVED DOMAIN LAW</span></div>
+<div class="room original"><div class="icon">📚</div><h3>Archive ≠ To-Do</h3><p>Preserve document history and surface reusable value instead of turning every archived item into a task.</p><span class="label">APPROVED</span></div>
+<div class="room original"><div class="icon">🔗</div><h3>Many-to-Many Routing</h3><p>One document can support multiple matters and robots without duplicating or flattening the original source.</p><span class="label">APPROVED CORE LAW</span></div>
 </div>
 </section>
 </main>
 
 <footer class="site-footer"><div class="wrap footer-grid">
-<div><strong>📄 DocuBot</strong><p>Robot Hall Dubai</p></div>
-<div><strong>Role</strong><p>Non-book paperwork: restaurant applications, community RFPs/IFPs, forms, letters, legal packets, proposals, contracts, government paperwork and reusable business documents.</p></div>
-<div><strong>Law</strong><p>Recover → Preserve → Add</p></div>
+<div><strong>📄 DocuBot</strong><p>Working document cabinet</p></div>
+<div><strong>Role</strong><p>Documents, court papers, forms, packets, applications, RFPs/IFPs and reusable administrative knowledge.</p></div>
+<div><strong>Law</strong><p>Source once → preserve history → extract structure → reuse safely.</p></div>
 </div></footer>
-</body></html>
+
+<script>
+(function(){
+const KEY="junglestar.docubot.records.v1";
+const seed=[
+{ID:"DOC-001",Title:"Conservatorship Packet",Type:"Legal / Court Packet",Matter:"Property / Conservatorship",Jurisdiction:"Court of Common Pleas • Philadelphia County • Civil Trial Division",Purpose:"Petition / notice / order / lis pendens workflow for appointment of a conservator",Reuse:"Reusable petition structure, court-service workflow and evidence checklist",Inputs:"Property/BRT; deed/title; owner/respondent; lienholders; vacancy/marketing; inspection; proposed conservator; rehab plan",Exhibits:"Deed; title report; legal description; inspection/code evidence; corporate documents; resolution; other supporting exhibits",Deadlines:"Track service, return of service, response/intervention timing, hearing and recording steps from the active case/order",Status:"Source received",Source:"Conservatorship packet.pdf • 14 pages",Next:"Index case-specific facts and missing exhibits before any reuse; preserve original packet",Related:"DocuBot • Packets / Legal • LinkSmith"},
+{ID:"DOC-002",Title:"Machinery and Equipment Appraisal",Type:"Appraisal / Evidence",Matter:"Assets / Equipment",Jurisdiction:"—",Purpose:"Inventory and valuation evidence for machinery/equipment",Reuse:"Asset register, valuation history, insurance/court/business evidence",Inputs:"Item; make/model/serial; condition; location; owner; valuation date",Exhibits:"Appraisal PDF; photos; receipts; ownership records",Deadlines:"—",Status:"Awaiting source",Source:"Upload / link source appraisal",Next:"Upload appraisal and extract each item into asset rows",Related:"DocuBot • Marcus Margin • TRON"},
+{ID:"DOC-003",Title:"2023 IFP",Type:"Government / IFP",Matter:"Community / Government Opportunity",Jurisdiction:"To be identified from source",Purpose:"Preserve prior solicitation + response intelligence for reuse",Reuse:"Requirements, agency language, eligibility, attachments, scope, budget, scoring and prior response text",Inputs:"Source IFP; prior response; attachments; submission evidence",Exhibits:"Prior exhibits / forms / budget / certifications",Deadlines:"Historical; extract reusable dates/rules, do not treat old deadline as current",Status:"Awaiting source",Source:"Upload 2023 IFP / prior response",Next:"Upload source and split requirements from response content",Related:"DocuBot • LinkSmith • Master To-Do"},
+{ID:"DOC-004",Title:"RFP / Opportunity",Type:"Government / RFP",Matter:"Proposal Pipeline",Jurisdiction:"Agency / City / Funder",Purpose:"Track live opportunity requirements against reusable company material",Reuse:"Requirement matrix + response checklist + reusable proposal blocks",Inputs:"RFP; amendments; Q&A; eligibility; scope; budget template; evaluation criteria",Exhibits:"Required forms / certifications / resumes / budgets / attachments",Deadlines:"Enter issue date, questions deadline, submission deadline, award/follow-up",Status:"Awaiting source",Source:"Paste URL or upload RFP",Next:"Add live RFP and compare against prior DocuBot records",Related:"DocuBot • Master To-Do • LinkSmith"}
+];
+const cols=["ID","Title","Type","Matter","Jurisdiction","Purpose","Reuse","Inputs","Exhibits","Deadlines","Status","Source","Next","Related"];
+let records;
+try{records=JSON.parse(localStorage.getItem(KEY))||seed}catch(e){records=seed}
+const body=document.getElementById("doc-body");
+function esc(s){return String(s??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]))}
+function render(){
+body.innerHTML="";
+records.forEach((r,i)=>{
+const tr=document.createElement("tr");
+cols.forEach(c=>{const td=document.createElement("td");td.contentEditable="true";td.dataset.i=i;td.dataset.c=c;td.innerHTML=esc(r[c]||"");tr.appendChild(td)});
+const a=document.createElement("td");a.className="doc-actions";a.innerHTML='<button type="button" data-del="'+i+'">Delete</button>';tr.appendChild(a);body.appendChild(tr)
+});
+updateCounts();
+}
+function sync(){document.querySelectorAll('#doc-body td[contenteditable="true"]').forEach(td=>{records[+td.dataset.i][td.dataset.c]=td.innerText.trim()})}
+function save(){sync();localStorage.setItem(KEY,JSON.stringify(records));updateCounts()}
+function updateCounts(){
+document.getElementById("count-docs").textContent=records.length;
+document.getElementById("count-live").textContent=records.filter(r=>/received|active|live/i.test(r.Status||"")).length;
+document.getElementById("count-waiting").textContent=records.filter(r=>/awaiting/i.test(r.Status||"")).length;
+document.getElementById("count-legal").textContent=records.filter(r=>/legal|court/i.test((r.Type||"")+" "+(r.Matter||""))).length;
+}
+function download(name,type,text){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},0)}
+function csv(){sync();const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';return [cols.join(","),...records.map(r=>cols.map(c=>q(r[c])).join(","))].join("\n")}
+function md(){sync();return "# DocuBot Document Registry\n\n| "+cols.join(" | ")+" |\n| "+cols.map(()=> "---").join(" | ")+" |\n"+records.map(r=>"| "+cols.map(c=>String(r[c]??"").replace(/\|/g,"\\|").replace(/\n/g," ")).join(" | ")+" |").join("\n")}
+document.getElementById("add-row").addEventListener("click",()=>{sync();records.push({ID:"DOC-"+String(records.length+1).padStart(3,"0"),Title:"",Type:"",Matter:"",Jurisdiction:"",Purpose:"",Reuse:"",Inputs:"",Exhibits:"",Deadlines:"",Status:"New",Source:"",Next:"",Related:""});render()});
+document.getElementById("save-docs").addEventListener("click",save);
+body.addEventListener("click",e=>{if(e.target.matches("[data-del]")){sync();records.splice(+e.target.dataset.del,1);save();render()}});
+document.getElementById("export-csv").addEventListener("click",()=>download("docubot-registry.csv","text/csv",csv()));
+document.getElementById("export-json").addEventListener("click",()=>{sync();download("docubot-registry.json","application/json",JSON.stringify(records,null,2))});
+document.getElementById("export-md").addEventListener("click",()=>download("docubot-registry.md","text/markdown",md()));
+document.getElementById("import-json").addEventListener("change",async e=>{const f=e.target.files[0];if(!f)return;try{const j=JSON.parse(await f.text());if(!Array.isArray(j))throw new Error("JSON must be an array");records=j;save();render()}catch(err){alert("Import failed: "+err.message)}e.target.value=""});
+render();
+})();
+</script>
+</body>
+</html>
