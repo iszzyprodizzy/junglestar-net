@@ -89,6 +89,49 @@
 </div>
 </div>
 </section>
+<!-- LINKSMITH_AUDIT_START -->
+<section id="route-audit">
+<style>
+.audit-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.82rem}
+.audit-table th,.audit-table td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
+.audit-table th{background:#151e2b}
+.audit-pass{color:#72dfa0;font-weight:900}.audit-warn{color:#e5bd66;font-weight:900}.audit-bad{color:#ff8f8f;font-weight:900}
+.audit-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.audit-card{padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}.audit-card strong{display:block;font-size:1.8rem}
+@media(max-width:850px){.audit-cards{grid-template-columns:1fr 1fr}.audit-table{font-size:.74rem}}
+</style>
+<div class="eyebrow">LinkSmith Health Board • 2026-10-02</div>
+<h2 class="section-title">Public route inventory.</h2>
+<p class="section-copy">Repository inspection of the current JungleStar.net body. This board checks route targets and placeholder controls from source. It is not pretending a source-level check is a live HTTP uptime probe.</p>
+<div class="audit-cards">
+  <div class="audit-card"><strong>71</strong><span>public HTML files in repository</span></div>
+  <div class="audit-card"><strong>16</strong><span>priority public surfaces audited now</span></div>
+  <div class="audit-card"><strong>145</strong><span>href references across these 16 surfaces</span></div>
+  <div class="audit-card"><strong>15</strong><span>known non-working controls: 11 placeholders + 4 missing route targets</span></div>
+</div>
+<table class="audit-table">
+<thead><tr><th>Public route</th><th>Responsibility</th><th>Links</th><th># placeholders</th><th>Missing targets</th><th>Health</th></tr></thead>
+<tbody>
+<tr><td><a href="/">/</a></td><td>HOME</td><td>42</td><td>0</td><td>0</td><td class="audit-pass">REPO PASS</td></tr>
+<tr><td><a href="/book-club/">/book-club/</a></td><td>BOOK CLUB</td><td>5</td><td>2</td><td>0</td><td class="audit-warn">PLACEHOLDERS</td></tr>
+<tr><td><a href="/cinemabot/">/cinemabot/</a></td><td>CINEMABOT</td><td>13</td><td>0</td><td>0</td><td class="audit-pass">REPO PASS</td></tr>
+<tr><td><a href="/jungle-star-tv/">/jungle-star-tv/</a></td><td>JUNGLE STAR TV</td><td>5</td><td>3</td><td>0</td><td class="audit-warn">PLACEHOLDERS</td></tr>
+<tr><td><a href="/social-jawn/">/social-jawn/</a></td><td>SOCIAL JAWN</td><td>5</td><td>1</td><td>1</td><td class="audit-bad">MISSING TARGET</td></tr>
+<tr><td><a href="/shop/">/shop/</a></td><td>SHOP</td><td>5</td><td>1</td><td>0</td><td class="audit-warn">PLACEHOLDER</td></tr>
+<tr><td><a href="/animal-radio/">/animal-radio/</a></td><td>ANIMAL RADIO</td><td>5</td><td>0</td><td>3</td><td class="audit-bad">MISSING TARGETS</td></tr>
+<tr><td><a href="/vox-news/">/vox-news/</a></td><td>VOX</td><td>5</td><td>3</td><td>0</td><td class="audit-warn">PLACEHOLDERS</td></tr>
+<tr><td><a href="/jw-comics/">/jw-comics/</a></td><td>JW COMICS</td><td>9</td><td>0</td><td>0</td><td class="audit-pass">REPO PASS</td></tr>
+<tr><td><a href="/academy/">/academy/</a></td><td>ACADEMY</td><td>5</td><td>1</td><td>0</td><td class="audit-warn">PLACEHOLDER</td></tr>
+<tr><td><a href="/choa/">/choa/</a></td><td>CHOA</td><td>2</td><td>0</td><td>0</td><td class="audit-pass">REPO PASS</td></tr>
+<tr><td><a href="/saving-the-world/">/saving-the-world/</a></td><td>SAVING THE WORLD</td><td>5</td><td>0</td><td>0</td><td class="audit-pass">REPO PASS</td></tr>
+<tr><td><a href="/sponsor/">/sponsor/</a></td><td>SPONSOR</td><td>6</td><td>0</td><td>0</td><td class="audit-pass">REPO PASS</td></tr>
+<tr><td><a href="/kids/">/kids/</a></td><td>KIDS</td><td>8</td><td>0</td><td>0</td><td class="audit-pass">REPO PASS</td></tr>
+<tr><td><a href="/publishing/">/publishing/</a></td><td>PUBLISHING</td><td>5</td><td>0</td><td>0</td><td class="audit-pass">REPO PASS</td></tr>
+<tr><td><a href="/games.html">/games.html</a></td><td>GAMES</td><td>20</td><td>0</td><td>0</td><td class="audit-pass">REPO PASS</td></tr>
+</tbody></table>
+<div class="status"><strong>KNOWN REPAIRS</strong><br>
+Animal Radio currently points to missing <code>albums/</code>, <code>playlists/</code>, and <code>artists/</code> routes. Social Jawn points to a missing <code>man-vs-the-myth/</code> route. Book Club, Jungle Star TV, Shop, Vox and Academy contain one or more <code>href="#"</code> controls that look clickable but do not yet travel anywhere.</div>
+</section>
+<!-- LINKSMITH_AUDIT_END -->
 </main>
 
 <footer class="site-footer"><div class="wrap footer-grid">
