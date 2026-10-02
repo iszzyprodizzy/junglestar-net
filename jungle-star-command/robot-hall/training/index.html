@@ -1,1 +1,49 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Training Registry • Jungle Star Command</title><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="/jungle-star-command/assets/command.css"><script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script defer src="/jungle-star-command/assets/command.js"></script></head><body><header class="site-header"><div class="wrap"><div class="main-nav"><a class="brand" href="/jungle-star-command/"><span>★</span> JUNGLE STAR COMMAND</a><div class="account-actions"><div class="account-pill"><div id="account-avatar" class="avatar">J</div><div class="account-copy"><span id="account-name" class="account-name">Checking session…</span><span id="account-email" class="account-email">Jungle Star Command</span></div></div><a class="btn" href="/jungle-star-command/robot-hall/">Back</a><a class="btn" href="/jungle-star-command/">Command Home</a><button class="btn" id="command-sign-out" type="button">Sign Out</button></div></div></div></header><main class="wrap"><section class="hero"><div class="eyebrow">Robot Hall Dubai</div><h1>TRAINING REGISTRY.</h1><p class="lead">One place to record what a robot is being taught, where the source came from, whether the meaning is approved, where it belongs and whether retrieval has been proven.</p><div class="stamps"><div class="stamp">ROOM: LIVE</div><div class="stamp">BUILD: 2026-10-01</div><div id="page-opened" class="stamp">PAGE OPENED: —</div><div class="stamp">RECOVER → PRESERVE → ADD</div></div></section><section><div class="eyebrow">Working Lanes</div><h2 class="section-title">Load the body.</h2><div class="room-grid"><div class="room added"><div class="icon">📥</div><h3>1. Source</h3><p>Conversation, spreadsheet, Markdown, document, file, receipt or preserved evidence.</p></div><div class="room added"><div class="icon">🧩</div><h3>2. Candidate Meaning</h3><p>What the source appears to teach, kept separate from raw source.</p></div><div class="room added"><div class="icon">✅</div><h3>3. Approval</h3><p>Approved, needs review, conflicting or parked.</p></div><div class="room added"><div class="icon">🤖</div><h3>4. Target Robot</h3><p>Only the robot whose job needs the approved lesson.</p></div><div class="room added"><div class="icon">📡</div><h3>5. Retrieval Proof</h3><p>Prove the lesson can be retrieved and used without altering source history.</p></div></div></section></main><footer class="site-footer"><div class="wrap footer-grid"><div><strong>Training Registry</strong><p>Robot Hall Dubai</p></div><div><strong>Continuity</strong><p>Source history stays.</p></div><div><strong>Status</strong><p>Skeleton live — load data next.</p></div></div></footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Training Registry • Robot Hall Dubai</title><meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="/jungle-star-command/assets/command.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="/jungle-star-command/assets/training-registry.js"></script>
+<style>
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}.field{display:grid;gap:6px}.full{grid-column:1/-1}.field label{color:var(--gold);font-size:.7rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.field input,.field textarea,.field select{padding:12px;border:1px solid var(--line);border-radius:12px;background:#0b1119;color:var(--text);font:inherit}.field textarea{min-height:100px;resize:vertical}.actions,.tools{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.notice{min-height:24px;margin-top:10px;color:var(--muted)}.tools input{flex:1;min-width:240px;padding:11px;border:1px solid var(--line);border-radius:12px;background:#0b1119;color:var(--text)}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:#0e131b}table{width:100%;border-collapse:collapse;min-width:1100px}th,td{padding:12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}th{background:#0d131c;color:var(--gold);font-size:.68rem;text-transform:uppercase;letter-spacing:.07em}td{color:var(--muted);font-size:.82rem}td strong{color:var(--text)}@media(max-width:760px){.form-grid{grid-template-columns:1fr}.full{grid-column:auto}}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="wrap"><div class="main-nav">
+<a class="brand" href="/jungle-star-command/"><span>★</span> JUNGLE STAR COMMAND</a>
+<div class="account-actions"><div class="account-pill"><div id="account-avatar" class="avatar">J</div><div class="account-copy"><span id="account-name" class="account-name">Checking session…</span><span id="account-email" class="account-email">Robot Hall Dubai</span></div></div>
+<a class="btn" href="/jungle-star-command/robot-hall/">Robot Hall</a><a class="btn" href="/jungle-star-command/robot-hall/registry/">Fleet Registry</a><a class="btn" href="/jungle-star-command/">Command Home</a><button class="btn" id="command-sign-out">Sign Out</button></div>
+</div></div></header>
+
+<main class="wrap">
+<section class="hero"><div class="eyebrow">Robot Hall Dubai</div><h1>TRAINING REGISTRY.</h1>
+<p class="lead">Put one document, note, source, correction, lesson, Cattle/Silver/Gold finding, or continuity record into Robot Hall at a time. This page now writes to Jungle Star Command's Supabase database.</p>
+<div class="stamps"><div class="stamp">DATABASE: LIVE</div><div class="stamp">SIGNED-IN OWNER ONLY</div><div id="page-opened" class="stamp">PAGE OPENED: —</div><div class="stamp">SOURCE → MEANING → APPROVAL → ROBOT → PROOF</div></div></section>
+
+<section><div class="eyebrow">New Record</div><h2 class="section-title">Feed the nervous system.</h2>
+<div class="robot-feature"><form id="training-form"><div class="form-grid">
+<div class="field"><label>Robot</label><input id="robot-name" required placeholder="DocuBot, GrooveBot, MerchBot…"></div>
+<div class="field"><label>Record Type</label><select id="record-type"><option>training</option><option>source</option><option>continuity</option><option>document</option><option>decision</option><option>correction</option><option>cattle</option><option>silver</option><option>gold</option></select></div>
+<div class="field full"><label>Title</label><input id="title" required placeholder="What is this record?"></div>
+<div class="field full"><label>Body / Source Notes</label><textarea id="body" placeholder="Paste the useful source text, notes, document summary, continuity, or instructions here."></textarea></div>
+<div class="field"><label>Source Type</label><input id="source-type" placeholder="PDF, XLSX, chat, URL, receipt…"></div>
+<div class="field"><label>Source URL</label><input id="source-url" type="url" placeholder="https://…"></div>
+<div class="field full"><label>Source Reference / Filename</label><input id="source-reference" placeholder="Filename, sheet tab, conversation, commit, receipt…"></div>
+<div class="field full"><label>Candidate Meaning / Lesson</label><textarea id="candidate-meaning" placeholder="What should this teach the robot?"></textarea></div>
+<div class="field"><label>Approval</label><select id="approval-state"><option value="needs_review">Needs Review</option><option value="approved">Approved</option><option value="conflicting">Conflicting</option><option value="parked">Parked</option></select></div>
+<div class="field"><label>Training State</label><select id="training-state"><option value="untrained">Untrained</option><option value="queued">Queued</option><option value="trained">Trained</option><option value="retrieval_proven">Retrieval Proven</option></select></div>
+<div class="field"><label>Project / Business</label><input id="project" placeholder="Great Food Fight, CHOA, JW Comics…"></div>
+<div class="field"><label>Related IP / Product</label><input id="related-ip" placeholder="Character, shirt, song, book…"></div>
+<div class="field full"><label>Tags</label><input id="tags" placeholder="comma, separated, tags"></div>
+<div class="field full"><label>Next Action / Notes</label><textarea id="notes" placeholder="What still needs to happen?"></textarea></div>
+</div><div class="actions"><button class="btn primary" type="submit">SAVE TO ROBOT HALL</button></div><div id="save-status" class="notice"></div></form></div></section>
+
+<section><div class="eyebrow">Saved Records</div><h2 class="section-title">What is already inside.</h2>
+<div class="tools"><input id="search-records" type="search" placeholder="Search robot, project, title, source, tags…"><button class="btn" id="refresh-records" type="button">Refresh</button></div>
+<div class="table-wrap"><table><thead><tr><th>Updated</th><th>Robot</th><th>Type</th><th>Title / Body</th><th>Project</th><th>Approval</th><th>Training</th><th>Source</th><th>Next</th></tr></thead><tbody id="records-body"><tr><td colspan="9">Loading…</td></tr></tbody></table></div>
+</section></main>
+
+<footer class="site-footer"><div class="wrap footer-grid"><div><strong>Training Registry</strong><p>Robot Hall Dubai</p></div><div><strong>Storage</strong><p>Supabase + owner-only RLS</p></div><div><strong>Rule</strong><p>Raw source stays preserved.</p></div></div></footer>
+</body></html>
