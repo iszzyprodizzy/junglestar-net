@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Command Calendar • Jungle Star Command</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="/jungle-star-command/assets/command.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="/jungle-star-command/assets/command.js"></script>
+<style>
+.cal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:16px 0}
+.cal-head button,.toolbar button{padding:9px 12px;border:1px solid #45536a;border-radius:999px;background:#111722;color:#fff;font-weight:850;cursor:pointer}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#0e131b}
+.dayname,.cell{border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.dayname{padding:9px;background:#151e2b;font-weight:900;text-align:center;font-size:.75rem}
+.cell{min-height:130px;padding:8px;position:relative}
+.cell:nth-child(7n){border-right:0}
+.date{font-weight:900;font-size:.78rem}
+.muted{opacity:.35}
+.event{display:block;margin-top:5px;padding:5px 6px;border:1px solid #39495f;border-radius:7px;background:#111722;font-size:.67rem;line-height:1.25}
+.event strong{display:block}
+.form-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.form-grid label{display:grid;gap:5px;color:var(--muted);font-size:.75rem}
+.form-grid input,.form-grid select,.form-grid textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:#0e131b;color:#fff;font:inherit}
+.form-grid textarea{min-height:80px;resize:vertical}
+.span2{grid-column:span 2}.span4{grid-column:1/-1}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:#0e131b}
+table{width:100%;border-collapse:collapse;min-width:1050px}
+th,td{padding:9px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:.75rem}
+th{background:#151e2b}
+td[contenteditable=true]{background:#101722}
+@media(max-width:900px){.cal-grid{grid-template-columns:repeat(7,minmax(110px,1fr));overflow:auto}.calendar-scroll{overflow:auto}.form-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.form-grid{grid-template-columns:1fr}.span2,.span4{grid-column:auto}}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="wrap"><div class="main-nav">
+<a class="brand" href="/jungle-star-command/"><span>★</span> JUNGLE STAR COMMAND</a>
+<div class="account-actions">
+<div class="account-pill"><div id="account-avatar" class="avatar">J</div><div class="account-copy"><span id="account-name" class="account-name">Checking session…</span><span id="account-email" class="account-email">Calendar</span></div></div>
+<a class="btn" href="/jungle-star-command/choa/">CHOA</a><a class="btn" href="/jungle-star-command/">Command Home</a>
+<button class="btn" id="command-sign-out" type="button">Sign Out</button>
+</div></div></div></header>
+
+<main class="wrap">
+<section class="hero">
+<div class="eyebrow">Founder Operations • Dynamic Calendar</div>
+<h1>CALENDAR.</h1>
+<p class="lead">One date system for company work, CHOA cases, court/filing dates, meetings, launches, classes, events, construction, creative releases and anything else that has to happen on a real day.</p>
+<div class="stamps"><div class="stamp">ROOM: LIVE</div><div class="stamp">BUILD: 2026-10-01</div><div id="page-opened" class="stamp">PAGE OPENED: —</div><div class="stamp">LOCAL WORKING DATA: ENABLED</div></div>
+</section>
+
+<section>
+<div class="cal-head"><div><div class="eyebrow">Monthly View</div><h2 class="section-title" id="month-title">—</h2></div><div class="toolbar"><button id="prev">← Prev</button><button id="today">Today</button><button id="next">Next →</button></div></div>
+<div class="calendar-scroll"><div class="cal-grid" id="calendar"></div></div>
+</section>
+
+<section>
+<div class="eyebrow">Add Work</div><h2 class="section-title">Put it on the calendar.</h2>
+<div class="form-grid">
+<label>Title<input id="f-title" placeholder="Court filing, class, event, meeting, purchase…"></label>
+<label>Date<input id="f-date" type="date"></label>
+<label>Time<input id="f-time" type="time"></label>
+<label>Lane<select id="f-lane"><option>Company</option><option>CHOA</option><option>Legal / DocuBot</option><option>Great Food Fight</option><option>JW Comics</option><option>Publishing</option><option>Animal Radio</option><option>Merchandise</option><option>Headquarters / Construction</option><option>Personal</option><option>Other</option></select></label>
+<label class="span2">Project / Matter<input id="f-project" placeholder="Conservatorship, event, product launch…"></label>
+<label class="span2">Source / URL / File<input id="f-source" placeholder="Where this date came from"></label>
+<label class="span4">Notes / Next Action<textarea id="f-notes" placeholder="What must happen, what to bring, who is involved, proof needed…"></textarea></label>
+</div>
+<div class="toolbar"><button id="add">Add Event</button><button id="clear">Clear Form</button></div>
+</section>
+
+<section>
+<div class="eyebrow">Spreadsheet View</div><h2 class="section-title">Event registry.</h2>
+<div class="toolbar"><button id="save">Save Changes</button><button id="blank">+ Blank Row</button><button id="csv">Export CSV</button><button id="json">Export JSON</button><button id="md">Export Markdown</button></div>
+<div class="table-wrap"><table><thead><tr><th>Date</th><th>Time</th><th>Title</th><th>Lane</th><th>Project / Matter</th><th>Source</th><th>Notes / Next Action</th><th>Status</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+<p class="section-copy">This is browser-local working data until Supabase write-back is added. Export regularly. The calendar and spreadsheet are two views of the same records.</p>
+</section>
+</main>
+
+<footer class="site-footer"><div class="wrap footer-grid"><div><strong>★ JUNGLE STAR COMMAND</strong><p>Dynamic Calendar</p></div><div><strong>Pattern</strong><p>Calendar + spreadsheet registry</p></div><div><strong>Continuity</strong><p>One event record, many views.</p></div></div></footer>
+
+<script>
+const KEY="jsc_command_calendar_v1";let view=new Date();view.setDate(1);
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return[]}}let events=load();
+const days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+function save(){localStorage.setItem(KEY,JSON.stringify(events))}
+function esc(v){return String(v??"")}
+function drawCalendar(){
+ const root=document.getElementById("calendar");root.innerHTML="";
+ days.forEach(d=>{const x=document.createElement("div");x.className="dayname";x.textContent=d;root.appendChild(x)});
+ document.getElementById("month-title").textContent=new Intl.DateTimeFormat("en-US",{month:"long",year:"numeric"}).format(view);
+ const y=view.getFullYear(),m=view.getMonth(),first=new Date(y,m,1),start=first.getDay(),count=new Date(y,m+1,0).getDate(),prevCount=new Date(y,m,0).getDate();
+ for(let i=0;i<42;i++){let day=i-start+1,yy=y,mm=m,muted=false;if(day<1){mm=m-1;if(mm<0){mm=11;yy--}day=prevCount+day;muted=true}else if(day>count){day-=count;mm=m+1;if(mm>11){mm=0;yy++}muted=true}
+ const dt=new Date(yy,mm,day),iso=[dt.getFullYear(),String(dt.getMonth()+1).padStart(2,"0"),String(dt.getDate()).padStart(2,"0")].join("-");
+ const cell=document.createElement("div");cell.className="cell"+(muted?" muted":"");cell.innerHTML='<div class="date">'+day+'</div>';
+ events.filter(e=>e.date===iso).sort((a,b)=>(a.time||"").localeCompare(b.time||"")).forEach(e=>{const a=document.createElement("span");a.className="event";a.innerHTML="<strong>"+esc(e.time?e.time+" ":"")+esc(e.title||"Untitled")+"</strong>"+esc(e.lane||"")+" · "+esc(e.project||"");cell.appendChild(a)});
+ root.appendChild(cell)}
+}
+function drawRows(){const b=document.getElementById("rows");b.innerHTML="";events.forEach((e,i)=>{const tr=document.createElement("tr");["date","time","title","lane","project","source","notes","status"].forEach(k=>{const td=document.createElement("td");td.contentEditable="true";td.textContent=e[k]||"";td.oninput=()=>{e[k]=td.textContent};tr.appendChild(td)});const x=document.createElement("td");x.innerHTML='<button type="button">Delete</button>';x.querySelector("button").onclick=()=>{events.splice(i,1);save();drawRows();drawCalendar()};tr.appendChild(x);b.appendChild(tr)})}
+function redraw(){drawRows();drawCalendar()}
+document.getElementById("prev").onclick=()=>{view.setMonth(view.getMonth()-1);drawCalendar()};
+document.getElementById("next").onclick=()=>{view.setMonth(view.getMonth()+1);drawCalendar()};
+document.getElementById("today").onclick=()=>{view=new Date();view.setDate(1);drawCalendar()};
+document.getElementById("add").onclick=()=>{const e={title:document.getElementById("f-title").value,date:document.getElementById("f-date").value,time:document.getElementById("f-time").value,lane:document.getElementById("f-lane").value,project:document.getElementById("f-project").value,source:document.getElementById("f-source").value,notes:document.getElementById("f-notes").value,status:"Open"};if(!e.title&&!e.date)return;events.push(e);save();redraw()};
+document.getElementById("clear").onclick=()=>["f-title","f-date","f-time","f-project","f-source","f-notes"].forEach(id=>document.getElementById(id).value="");
+document.getElementById("save").onclick=()=>{save();drawCalendar();alert("Calendar saved in this browser.")};
+document.getElementById("blank").onclick=()=>{events.push({status:"Open"});drawRows()};
+function download(name,type,text){const b=new Blob([text],{type}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=name;a.click();URL.revokeObjectURL(u)}
+document.getElementById("json").onclick=()=>download("jungle-star-command-calendar.json","application/json",JSON.stringify(events,null,2));
+document.getElementById("csv").onclick=()=>{const h=["Date","Time","Title","Lane","Project / Matter","Source","Notes / Next Action","Status"],q=v=>'"'+String(v??"").replaceAll('"','""')+'"';download("jungle-star-command-calendar.csv","text/csv",[h,...events.map(e=>[e.date,e.time,e.title,e.lane,e.project,e.source,e.notes,e.status])].map(r=>r.map(q).join(",")).join("\n"))};
+document.getElementById("md").onclick=()=>{let s="# Jungle Star Command Calendar\n\n";events.forEach(e=>{s+="## "+(e.date||"No date")+" — "+(e.title||"Untitled")+"\n- Time: "+(e.time||"")+"\n- Lane: "+(e.lane||"")+"\n- Project: "+(e.project||"")+"\n- Status: "+(e.status||"")+"\n- Source: "+(e.source||"")+"\n- Notes: "+(e.notes||"")+"\n\n"});download("jungle-star-command-calendar.md","text/markdown",s)};
+redraw();
+</script>
+</body></html>
