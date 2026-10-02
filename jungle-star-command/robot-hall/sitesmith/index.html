@@ -128,6 +128,42 @@
 </div>
 </section>
 
+<!-- SITESMITH_USABILITY_START -->
+<section id="usability-pass">
+<style>
+.score-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.79rem}
+.score-table th,.score-table td{border:1px solid var(--line);padding:9px;text-align:left;vertical-align:top}
+.score-table th{background:#151e2b;position:sticky;top:0}.score{font-weight:950;text-align:center!important}
+.score-note{color:var(--muted);min-width:260px}
+@media(max-width:850px){.score-table{font-size:.72rem}}
+</style>
+<div class="eyebrow">SiteSmith Usability Pass • 2026-10-02</div>
+<h2 class="section-title">Can people actually use it?</h2>
+<p class="section-copy">Static source review, scored 1–10 against the Founder-defined five-part test: young-person usability, older-person usability, Founder usability, purpose completion, and appearance. These are implementation diagnostics, not user-research claims.</p>
+<table class="score-table">
+<thead><tr><th>Route</th><th>Young</th><th>Older</th><th>Founder</th><th>Purpose</th><th>Appearance</th><th>SiteSmith note</th></tr></thead>
+<tbody>
+<tr><td><a href="/">/</a></td><td class="score">9</td><td class="score">8</td><td class="score">8</td><td class="score">9</td><td class="score">9</td><td class="score-note">Strong front door; 42 internal route references and no placeholders.</td></tr>
+<tr><td><a href="/book-club/">/book-club/</a></td><td class="score">7</td><td class="score">8</td><td class="score">6</td><td class="score">6</td><td class="score">7</td><td class="score-note">Good readable shell; Reviews and Authors are still fake doors.</td></tr>
+<tr><td><a href="/cinemabot/">/cinemabot/</a></td><td class="score">7</td><td class="score">8</td><td class="score">8</td><td class="score">8</td><td class="score">9</td><td class="score-note">Clear review/study/talent structure with real internal anchors and connected rooms.</td></tr>
+<tr><td><a href="/jungle-star-tv/">/jungle-star-tv/</a></td><td class="score">8</td><td class="score">8</td><td class="score">5</td><td class="score">5</td><td class="score">7</td><td class="score-note">Purpose is clear; all three primary content buttons are placeholders.</td></tr>
+<tr><td><a href="/social-jawn/">/social-jawn/</a></td><td class="score">7</td><td class="score">8</td><td class="score">6</td><td class="score">6</td><td class="score">7</td><td class="score-note">Swagger Room works; People is placeholder and Man vs. the Myth target is absent.</td></tr>
+<tr><td><a href="/shop/">/shop/</a></td><td class="score">8</td><td class="score">9</td><td class="score">6</td><td class="score">6</td><td class="score">8</td><td class="score-note">Simple public commerce shell; Browse Products still does nothing.</td></tr>
+<tr><td><a href="/animal-radio/">/animal-radio/</a></td><td class="score">7</td><td class="score">7</td><td class="score">5</td><td class="score">5</td><td class="score">7</td><td class="score-note">Three useful lanes named, but all three destination routes are absent in repo.</td></tr>
+<tr><td><a href="/vox-news/">/vox-news/</a></td><td class="score">7</td><td class="score">8</td><td class="score">5</td><td class="score">5</td><td class="score">7</td><td class="score-note">Clear three-lane concept; all three primary cards currently point to #.</td></tr>
+<tr><td><a href="/jw-comics/">/jw-comics/</a></td><td class="score">8</td><td class="score">7</td><td class="score">8</td><td class="score">8</td><td class="score">9</td><td class="score-note">Real story vault and encyclopedia structure; strongest content body among creative rooms.</td></tr>
+<tr><td><a href="/academy/">/academy/</a></td><td class="score">9</td><td class="score">8</td><td class="score">7</td><td class="score">7</td><td class="score">8</td><td class="score-note">Kid-friendly positioning; one primary control remains a placeholder.</td></tr>
+<tr><td><a href="/choa/">/choa/</a></td><td class="score">6</td><td class="score">8</td><td class="score">7</td><td class="score">7</td><td class="score">7</td><td class="score-note">Readable foundation, but very shallow navigation/body compared with mission scope.</td></tr>
+<tr><td><a href="/saving-the-world/">/saving-the-world/</a></td><td class="score">7</td><td class="score">9</td><td class="score">8</td><td class="score">8</td><td class="score">8</td><td class="score-note">Clear impact doorway with real routes to Vox, Sponsor and email.</td></tr>
+<tr><td><a href="/sponsor/">/sponsor/</a></td><td class="score">7</td><td class="score">9</td><td class="score">9</td><td class="score">9</td><td class="score">8</td><td class="score-note">Actionable support page with real Square and email destinations.</td></tr>
+<tr><td><a href="/kids/">/kids/</a></td><td class="score">10</td><td class="score">8</td><td class="score">7</td><td class="score">9</td><td class="score">8</td><td class="score-note">Direct kid-first navigation into games, TV, radio, books, academy and comics.</td></tr>
+<tr><td><a href="/publishing/">/publishing/</a></td><td class="score">7</td><td class="score">9</td><td class="score">8</td><td class="score">8</td><td class="score">8</td><td class="score-note">Clear publishing doorway with real Book Club and Coaching routes.</td></tr>
+<tr><td><a href="/games.html">/games.html</a></td><td class="score">9</td><td class="score">7</td><td class="score">9</td><td class="score">9</td><td class="score">8</td><td class="score-note">Deepest action page: demo, arcade, sponsor, music, resources and external game links.</td></tr>
+</tbody></table>
+<div class="status"><strong>FRONT-END PRIORITY FROM THIS PASS</strong><br>
+1) Replace fake doors before adding more decorative cards. 2) Put real content behind Jungle Star TV, Book Club and CinemaBot because they are public discovery/production lanes. 3) Preserve the homepage structure—it currently has no placeholder hrefs in the inspected source. 4) Use LinkSmith for destination truth and SiteSmith for human usability; neither robot should redesign the Founder framework on its own.</div>
+</section>
+<!-- SITESMITH_USABILITY_END -->
 </main>
 
 <footer class="site-footer"><div class="wrap footer-grid"><div><strong>★ JUNGLE STAR COMMAND</strong><p>SiteSmith</p></div><div><strong>Job</strong><p>Public rooms + routes + button truth.</p></div><div><strong>Priority</strong><p>GFF → JW character bridge → Shop products.</p></div></div></footer>
