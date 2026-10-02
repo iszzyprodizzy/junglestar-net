@@ -1,6 +1,319 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GrooveBot • Robot Hall Dubai</title><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="/jungle-star-command/assets/command.css"><script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script defer src="/jungle-star-command/assets/command.js"></script></head><body>
-<header class="site-header"><div class="wrap"><div class="main-nav"><a class="brand" href="/jungle-star-command/"><span>★</span> JUNGLE STAR COMMAND</a><div class="account-actions"><div class="account-pill"><div id="account-avatar" class="avatar">J</div><div class="account-copy"><span id="account-name" class="account-name">Checking session…</span><span id="account-email" class="account-email">Robot Hall Dubai</span></div></div><a class="btn" href="/jungle-star-command/robot-hall/">Robot Hall</a><a class="btn" href="/jungle-star-command/">Command Home</a><button class="btn" id="command-sign-out" type="button">Sign Out</button></div></div></div></header>
-<main class="wrap"><section class="hero"><div class="eyebrow">Robot Hall Dubai • Individual Room</div><h1>🎵 GROOVEBOT.</h1><p class="lead">Music catalog, tracks, lyrics/versions, artist context, release readiness, audience distinctions and connected-IP continuity.</p><div class="stamps"><div class="stamp">ROOM: LIVE</div><div class="stamp">BUILD: 2026-10-01</div><div id="page-opened" class="stamp">PAGE OPENED: —</div><div class="stamp">SOURCE HISTORY STAYS</div></div></section>
-<section><div class="eyebrow">Continuity Lanes</div><h2 class="section-title">Load what this robot actually needs.</h2><div class="room-grid"><div class="room added"><div class="icon">🎼</div><h3>Track Registry</h3><p>Song, version, artist identity, audience, album, status and release destination.</p></div><div class="room added"><div class="icon">🧒</div><h3>Kids / Family</h3><p>Kids music, fruit/vegetable songs, Baby Bot material and educational connections.</p></div><div class="room added"><div class="icon">🎤</div><h3>Adult / Artist</h3><p>Adult music, artist identities, features, symbolism and catalog continuity.</p></div><div class="room added"><div class="icon">🌍</div><h3>Animal Radio / Features</h3><p>Philadelphia artists, outside collaborators, international features and station use.</p></div><div class="room added"><div class="icon">🔗</div><h3>Connected IP</h3><p>Character, comic, book, video, game, merchandise and performance-script relationships.</p></div></div></section>
-<section><div class="robot-feature"><div class="robot-feature-title">ROBOT CONTRACT</div><p class="section-copy">Preserve source. Preserve older versions. Separate candidate meaning from approved lesson. Keep this robot connected to the projects, files, products, people and tasks it serves.</p><div class="robot-actions"><a href="/jungle-star-command/robot-hall/training/">Training Registry</a><a href="/jungle-star-command/robot-hall/cattle-silver-gold/">Cattle / Silver / Gold</a><a href="/jungle-star-command/robot-hall/registry/">Fleet Registry</a><a href="/jungle-star-command/#master-to-do">Master To-Do</a></div></div></section></main>
-<footer class="site-footer"><div class="wrap footer-grid"><div><strong>🎵 GrooveBot</strong><p>Robot Hall Dubai</p></div><div><strong>Role</strong><p>Music catalog, tracks, lyrics/versions, artist context, release readiness, audience distinctions and connected-IP continuity.</p></div><div><strong>Law</strong><p>Recover → Preserve → Add</p></div></div></footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GrooveBot • Jungle Star Command</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="/jungle-star-command/assets/command.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="/jungle-star-command/assets/command.js"></script>
+<style>
+  .groove-wrap{width:min(1500px,96vw);margin:auto}
+  .groove-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 30px}
+  .groove-tabs a{padding:9px 12px;border:1px solid #2c3849;border-radius:999px;text-decoration:none;background:#0e141d;font-weight:800;font-size:.78rem}
+  .groove-tabs a:hover{border-color:#e5bd66;color:#e5bd66}
+  .groove-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .groove-card{border:1px solid #2c3849;border-radius:20px;background:#111722;padding:18px}
+  .groove-card h3{margin:.2em 0 .4em}
+  .groove-card p{color:#a5afbe;line-height:1.45}
+  .history-card{border:1px solid rgba(229,189,102,.4);background:rgba(229,189,102,.07);border-radius:20px;padding:20px}
+  .history-card strong{color:#e5bd66}
+  .groove-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .groove-field{display:grid;gap:6px}
+  .groove-field.full{grid-column:1/-1}
+  .groove-field label{font-size:.7rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#8d98a8}
+  .groove-field input,.groove-field select,.groove-field textarea{width:100%;padding:11px 12px;border:1px solid #39485e;border-radius:11px;background:#0c1118;color:#fff}
+  .groove-field textarea{min-height:110px;resize:vertical}
+  .groove-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .groove-table-wrap{overflow:auto;border:1px solid #2c3849;border-radius:16px;margin-top:14px}
+  .groove-table{width:100%;border-collapse:collapse;min-width:980px;background:#0d1219}
+  .groove-table th,.groove-table td{padding:10px 11px;border-bottom:1px solid #212b38;text-align:left;vertical-align:top;font-size:.8rem}
+  .groove-table th{background:#101722}
+  .groove-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+  .groove-stat{padding:16px;border:1px solid #2c3849;border-radius:16px;background:#111722}
+  .groove-stat b{font-size:1.8rem;display:block}
+  .groove-stat span{color:#a5afbe;font-size:.78rem}
+  .groove-note{color:#a5afbe;line-height:1.5}
+  @media(max-width:900px){.groove-grid,.groove-stats{grid-template-columns:1fr 1fr}.groove-form{grid-template-columns:1fr}.groove-field.full{grid-column:auto}}
+  @media(max-width:560px){.groove-grid,.groove-stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <div class="main-nav">
+      <a class="brand" href="/jungle-star-command/"><span>★</span> JUNGLE STAR COMMAND</a>
+      <div class="account-actions">
+        <div class="account-pill">
+          <div id="account-avatar" class="avatar">J</div>
+          <div class="account-copy">
+            <span id="account-name" class="account-name">Checking session…</span>
+            <span id="account-email" class="account-email">GrooveBot</span>
+          </div>
+        </div>
+        <a class="btn" href="/jungle-star-command/robot-hall/">Robot Hall</a>
+        <a class="btn" href="/jungle-star-command/">Command Home</a>
+        <button class="btn" id="command-sign-out" type="button">Sign Out</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="groove-wrap">
+<section class="hero">
+  <div class="eyebrow">Robot Hall Dubai • Music / Culture / Company History</div>
+  <h1>GROOVEBOT.</h1>
+  <p class="lead">Preserve Jungle Star music history, Animal Radio, promoted artists and people, hashtags, lyrics, playlists, outside discoveries, soundtrack connections, voice identities, rights status and work still left to do. Source once. Connect everywhere. Preserve older versions.</p>
+  <div class="stamps">
+    <div class="stamp">ROOM: LIVE</div>
+    <div class="stamp">BUILD: 2026-10-01</div>
+    <div id="groove-opened" class="stamp">PAGE OPENED: —</div>
+    <div class="stamp">RECOVER → PRESERVE → ADD</div>
+  </div>
+</section>
+
+<nav class="groove-tabs">
+  <a href="#history">Company History</a>
+  <a href="#add">Add Record</a>
+  <a href="#records">Records</a>
+  <a href="#todo">GrooveBot To-Do</a>
+  <a href="#exports">Export</a>
+</nav>
+
+<section id="history">
+  <div class="eyebrow">Company History</div>
+  <h2 class="section-title">Remember where Jungle Star came from.</h2>
+  <div class="history-card">
+    <p><strong>Animal Radio / #IszzyDrops historical marker:</strong> April 15, 2016 launch-era activity. A surviving company-history post records that after 60 days, <strong>88,862 people were talking about it</strong>, alongside #AnimalRadio, #UnderGroundSound and #OneThunder.</p>
+    <p class="groove-note">Promotion, ownership, permission, licensing and later reuse stay separate. History is preserved without turning every historical relationship into a rights claim.</p>
+  </div>
+
+  <div class="groove-stats">
+    <div class="groove-stat"><b id="stat-all">0</b><span>Total GrooveBot records</span></div>
+    <div class="groove-stat"><b id="stat-music">0</b><span>Music / lyrics</span></div>
+    <div class="groove-stat"><b id="stat-people">0</b><span>People / throwbacks</span></div>
+    <div class="groove-stat"><b id="stat-tasks">0</b><span>Open tasks</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">GrooveBot Lanes</div>
+  <h2 class="section-title">Everything this robot can hold.</h2>
+  <div class="groove-grid">
+    <div class="groove-card"><h3>🎼 My Music</h3><p>Tracks, versions, artist personas, albums, audiences, release state and platform destinations.</p></div>
+    <div class="groove-card"><h3>📝 Lyrics Vault</h3><p>Working lyrics, versions, adult/kids/performance variants and source files.</p></div>
+    <div class="groove-card"><h3>📻 Animal Radio Throwbacks</h3><p>Artists, performers, visual artists, athletes, media people, organizations and people Jungle Star promoted or featured.</p></div>
+    <div class="groove-card"><h3>📊 Facebook Insights</h3><p>Old posts, screenshots, exports, metrics, campaigns, hashtags and subject relationships.</p></div>
+    <div class="groove-card"><h3>#️⃣ Hashtag Index</h3><p>#IszzyDrops, #AnimalRadio, campaign meaning, first-use era and associated people/projects.</p></div>
+    <div class="groove-card"><h3>▶️ YouTube History</h3><p>Outside music, references, performances, research and songs worth preserving.</p></div>
+    <div class="groove-card"><h3>🔎 Shazam</h3><p>Discovered songs, artists, dates, playlists and why each discovery mattered.</p></div>
+    <div class="groove-card"><h3>🎧 Spotify / Streaming</h3><p>Playlist and collection links across Spotify, YouTube Music, Apple, SoundCloud and future services.</p></div>
+    <div class="groove-card"><h3>🎙️ Penman / Voices</h3><p>Isaac adult voice, Jungle Star Kids delivery, father's voice and future radio/narration uses.</p></div>
+    <div class="groove-card"><h3>🔗 Connected IP</h3><p>Track → character → story → comic/book → game → merch → performance connections.</p></div>
+    <div class="groove-card"><h3>🛡️ Rights / Provenance</h3><p>Owned, permission, licensed, promoted third party, unknown, needs contact or do-not-republish-yet.</p></div>
+    <div class="groove-card"><h3>📚 Source Library</h3><p>Facebook exports, screenshots, chats, spreadsheets, PDFs, ZIPs, audio, video and archive folders.</p></div>
+  </div>
+</section>
+
+<section id="add">
+  <div class="eyebrow">Working Input</div>
+  <h2 class="section-title">Add a GrooveBot record.</h2>
+  <p class="groove-note">This is intentionally broad so you can start loading history now instead of waiting for every specialized form. Use Type to route the record. Export later for GPT, Claude, JawnSort Pro or a database migration.</p>
+
+  <div class="groove-card">
+    <div class="groove-form">
+      <div class="groove-field">
+        <label>Type</label>
+        <select id="r-type">
+          <option>Music</option>
+          <option>Lyrics</option>
+          <option>Animal Radio Throwback</option>
+          <option>Facebook Insight</option>
+          <option>Hashtag</option>
+          <option>YouTube History</option>
+          <option>Shazam</option>
+          <option>Spotify / Streaming</option>
+          <option>Voice / Penman</option>
+          <option>Connected IP</option>
+          <option>Rights / Provenance</option>
+          <option>Source Library</option>
+          <option>Task</option>
+          <option>Company History</option>
+        </select>
+      </div>
+      <div class="groove-field"><label>Title / Name</label><input id="r-title" placeholder="Song, person, post, hashtag, playlist, source, task..."></div>
+      <div class="groove-field"><label>Person / Artist / Character</label><input id="r-person"></div>
+      <div class="groove-field"><label>Project / Campaign / Album</label><input id="r-project"></div>
+      <div class="groove-field"><label>Status</label><input id="r-status" placeholder="Released / archive / next / owned / promoted / etc."></div>
+      <div class="groove-field"><label>Date / Era</label><input id="r-date" placeholder="2016 / 2026-10-01 / unknown"></div>
+      <div class="groove-field full"><label>Source URL / File / Path</label><input id="r-source"></div>
+      <div class="groove-field full"><label>Notes / Lyrics / History / Why It Matters</label><textarea id="r-notes"></textarea></div>
+    </div>
+    <div class="groove-toolbar">
+      <button class="btn primary" id="add-record" type="button">Add Record</button>
+      <button class="btn" id="clear-form" type="button">Clear</button>
+    </div>
+  </div>
+</section>
+
+<section id="records">
+  <div class="eyebrow">Registry</div>
+  <h2 class="section-title">GrooveBot records.</h2>
+  <div class="groove-toolbar">
+    <input id="search-records" placeholder="Search title, artist, project, notes, source..." style="flex:1;min-width:260px;padding:10px 12px;border:1px solid #39485e;border-radius:999px;background:#0c1118;color:#fff">
+    <select id="filter-type" style="padding:10px 12px;border:1px solid #39485e;border-radius:999px;background:#0c1118;color:#fff">
+      <option value="">All types</option>
+    </select>
+  </div>
+  <div id="record-table"></div>
+</section>
+
+<section id="todo">
+  <div class="eyebrow">GrooveBot To-Do</div>
+  <h2 class="section-title">Already seeded work.</h2>
+  <p class="groove-note">Add more tasks with Type = Task. These live in the same GrooveBot export so the robot's history and its unfinished work travel together.</p>
+  <div id="task-table"></div>
+</section>
+
+<section id="exports">
+  <div class="eyebrow">Portability</div>
+  <h2 class="section-title">Take GrooveBot with you.</h2>
+  <div class="groove-card">
+    <p class="groove-note">Records are saved in this browser with localStorage. Export regularly until database write-back is added.</p>
+    <div class="groove-toolbar">
+      <button class="btn primary" id="export-json" type="button">Export JSON</button>
+      <button class="btn" id="export-csv" type="button">Export CSV</button>
+      <button class="btn" id="export-md" type="button">Export Markdown</button>
+      <label class="btn" for="import-json">Import JSON</label>
+      <input id="import-json" type="file" accept=".json,application/json" hidden>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div><strong>🎵 GrooveBot</strong><p>Robot Hall Dubai</p></div>
+    <div><strong>Law</strong><p>Source once → connect everywhere.</p></div>
+    <div><strong>Continuity</strong><p>Recover → Preserve → Add.</p></div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+  const KEY="jungle_star_groovebot_records_v1";
+  const seed=[
+    {type:"Company History",title:"Animal Radio / #IszzyDrops launch-era marker",person:"Jungle Star / Animal Radio",project:"Animal Radio",status:"Archive",date:"2016-04-15",source:"Historical Facebook material",notes:"Surviving company-history post records 88,862 people talking about the campaign after 60 days. Related tags: #AnimalRadio #UnderGroundSound #OneThunder."},
+    {type:"Hashtag",title:"#IszzyDrops",person:"",project:"Animal Radio / Jungle Star",status:"Archive",date:"2016",source:"Historical Facebook material",notes:"Discovery / promotion / Jungle Star music-history tag."},
+    {type:"Hashtag",title:"#AnimalRadio",person:"",project:"Animal Radio",status:"Archive",date:"2016",source:"Historical Facebook material",notes:"Animal Radio identity / promotion."},
+    {type:"Hashtag",title:"#UnderGroundSound",person:"",project:"Animal Radio",status:"Archive",date:"2016",source:"Historical Facebook material",notes:"Underground music promotion / discovery."},
+    {type:"Hashtag",title:"#OneThunder",person:"",project:"Jungle Star / Animal Radio",status:"Archive",date:"2016",source:"Historical Facebook material",notes:"Historical campaign / brand tag."},
+    {type:"Task",title:"Import Facebook Insights / post exports into GrooveBot",person:"",project:"Animal Radio / Company History",status:"Today",date:"2026-10-01",source:"Facebook exports",notes:"Preserve posts, people, hashtags, reach/engagement and source filenames."},
+    {type:"Task",title:"Build Animal Radio throwback registry",person:"Artists / performers / people",project:"Animal Radio",status:"Next",date:"2026-10-01",source:"Facebook archive",notes:"Preserve musician, performer, visual artist, athlete, TV/media, community and other types."},
+    {type:"Task",title:"Reserve/import YouTube history",person:"",project:"GrooveBot",status:"Next",date:"2026-10-01",source:"YouTube history export",notes:"Separate Jungle Star uploads from outside discoveries."},
+    {type:"Task",title:"Reserve/import Shazam history",person:"",project:"GrooveBot",status:"Later",date:"2026-10-01",source:"Shazam export",notes:"Keep song, artist, date, playlist destination and why saved."},
+    {type:"Task",title:"Reserve/import Spotify / streaming playlists",person:"",project:"GrooveBot",status:"Later",date:"2026-10-01",source:"Streaming exports",notes:"Do not depend on one platform."},
+    {type:"Task",title:"Create Penman voice lanes",person:"Isaac / father's voice",project:"Voice / Radio",status:"Next",date:"2026-10-01",source:"Approved voice samples",notes:"Keep adult Animal Radio voice separate from Jungle Star Kids / JW-related delivery."}
+  ];
+
+  let records;
+  try{records=JSON.parse(localStorage.getItem(KEY))||seed}catch(e){records=seed}
+  if(!Array.isArray(records))records=seed;
+
+  const $=id=>document.getElementById(id);
+  const save=()=>{localStorage.setItem(KEY,JSON.stringify(records));render()};
+  const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+
+  function render(){
+    const q=$("search-records").value.toLowerCase().trim();
+    const ft=$("filter-type").value;
+    const filtered=records.filter(r=>{
+      if(ft && r.type!==ft)return false;
+      if(!q)return true;
+      return Object.values(r).join(" ").toLowerCase().includes(q);
+    });
+
+    const types=[...new Set(records.map(r=>r.type))].sort();
+    $("filter-type").innerHTML='<option value="">All types</option>'+types.map(t=>'<option '+(t===ft?'selected':'')+'>'+esc(t)+'</option>').join("");
+
+    $("record-table").innerHTML=table(filtered);
+    $("task-table").innerHTML=table(records.filter(r=>r.type==="Task"));
+
+    $("stat-all").textContent=records.length;
+    $("stat-music").textContent=records.filter(r=>r.type==="Music"||r.type==="Lyrics").length;
+    $("stat-people").textContent=records.filter(r=>r.type==="Animal Radio Throwback").length;
+    $("stat-tasks").textContent=records.filter(r=>r.type==="Task" && String(r.status).toLowerCase()!=="done").length;
+  }
+
+  function table(rows){
+    if(!rows.length)return '<div class="groove-card groove-note">No records yet.</div>';
+    return '<div class="groove-table-wrap"><table class="groove-table"><thead><tr><th>Type</th><th>Title</th><th>Person / Artist / Character</th><th>Project</th><th>Status</th><th>Date / Era</th><th>Source</th><th>Notes</th><th></th></tr></thead><tbody>'+
+      rows.map(r=>{
+        const index=records.indexOf(r);
+        return '<tr><td>'+esc(r.type)+'</td><td>'+esc(r.title)+'</td><td>'+esc(r.person)+'</td><td>'+esc(r.project)+'</td><td>'+esc(r.status)+'</td><td>'+esc(r.date)+'</td><td>'+esc(r.source)+'</td><td>'+esc(r.notes)+'</td><td><button class="btn" data-del="'+index+'">Delete</button></td></tr>';
+      }).join("")+'</tbody></table></div>';
+  }
+
+  $("add-record").onclick=()=>{
+    records.push({
+      type:$("r-type").value,
+      title:$("r-title").value.trim(),
+      person:$("r-person").value.trim(),
+      project:$("r-project").value.trim(),
+      status:$("r-status").value.trim(),
+      date:$("r-date").value.trim(),
+      source:$("r-source").value.trim(),
+      notes:$("r-notes").value.trim(),
+      created:new Date().toISOString()
+    });
+    ["r-title","r-person","r-project","r-status","r-date","r-source","r-notes"].forEach(id=>$(id).value="");
+    save();
+  };
+
+  $("clear-form").onclick=()=>["r-title","r-person","r-project","r-status","r-date","r-source","r-notes"].forEach(id=>$(id).value="");
+  $("search-records").oninput=render;
+  $("filter-type").onchange=render;
+
+  document.addEventListener("click",e=>{
+    const b=e.target.closest("[data-del]");
+    if(!b)return;
+    if(confirm("Delete this GrooveBot record?")){
+      records.splice(Number(b.dataset.del),1);
+      save();
+    }
+  });
+
+  function download(name,type,content){
+    const blob=new Blob([content],{type});
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(blob); a.download=name; a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  }
+
+  $("export-json").onclick=()=>download("groovebot-export.json","application/json",JSON.stringify(records,null,2));
+  $("export-csv").onclick=()=>{
+    const cols=["type","title","person","project","status","date","source","notes","created"];
+    const csv=[cols.join(","),...records.map(r=>cols.map(c=>'"'+String(r[c]??"").replaceAll('"','""')+'"').join(","))].join("\n");
+    download("groovebot-export.csv","text/csv",csv);
+  };
+  $("export-md").onclick=()=>{
+    let md="# GROOVEBOT EXPORT\n\nGenerated: "+new Date().toISOString()+"\n\n";
+    records.forEach((r,i)=>{md+="## "+(i+1)+". "+(r.title||r.type)+"\n\n";Object.entries(r).forEach(([k,v])=>md+="- **"+k+":** "+(v??"")+"\n");md+="\n"});
+    download("GROOVEBOT_CONTINUITY.md","text/markdown",md);
+  };
+  $("import-json").onchange=async e=>{
+    const f=e.target.files[0]; if(!f)return;
+    try{const incoming=JSON.parse(await f.text());if(!Array.isArray(incoming))throw new Error();records=incoming;save();alert("GrooveBot JSON imported.");}
+    catch(err){alert("That JSON is not a GrooveBot record array.");}
+    e.target.value="";
+  };
+
+  $("groove-opened").textContent="PAGE OPENED: "+new Intl.DateTimeFormat("en-US",{dateStyle:"medium",timeStyle:"short"}).format(new Date());
+  render();
+});
+</script>
+</body>
+</html>
