@@ -2061,3 +2061,16 @@ updateTaskTimestamp();
 renderTasks();
 
 initializeCommandAuth();
+
+
+/* ROBOT ROOM NOTEBOOK AUTO-LOAD */
+(function(){
+  const match=location.pathname.match(/^\/jungle-star-command\/robot-hall\/([^/]+)\/?$/);
+  if(!match) return;
+  const slug=match[1];
+  if(["registry","training","cattle-silver-gold"].includes(slug)) return;
+  const script=document.createElement("script");
+  script.src="/jungle-star-command/assets/robot-room-notebook.js";
+  script.defer=true;
+  document.body.appendChild(script);
+})();
