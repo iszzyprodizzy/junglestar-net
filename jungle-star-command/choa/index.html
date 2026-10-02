@@ -8,100 +8,127 @@
 <link rel="stylesheet" href="/jungle-star-command/assets/command.css">
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script defer src="/jungle-star-command/assets/command.js"></script>
+<style>
+.choa-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.choa-tabs a{padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:#111722;text-decoration:none;font-weight:850}
+.data-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:#0e131b;margin-top:14px}
+.data-table{width:100%;border-collapse:collapse;min-width:1050px}
+.data-table th,.data-table td{padding:10px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:.78rem;line-height:1.4}
+.data-table th{background:#151e2b}
+.data-table td[contenteditable="true"]{background:#101722}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.tools button{padding:9px 12px;border:1px solid #45536a;border-radius:999px;background:#111722;color:#fff;font-weight:850;cursor:pointer}
+</style>
 </head>
 <body>
-<header class="site-header">
-  <div class="wrap">
-    <div class="main-nav">
-      <a class="brand" href="/jungle-star-command/"><span>★</span> JUNGLE STAR COMMAND</a>
-      <div class="account-actions">
-        <div class="account-pill">
-          <div id="account-avatar" class="avatar">J</div>
-          <div class="account-copy">
-            <span id="account-name" class="account-name">Checking session…</span>
-            <span id="account-email" class="account-email">Jungle Star Command</span>
-          </div>
-        </div>
-        <a class="btn" href="/jungle-star-command/">Command Home</a>
-        <button class="btn" id="command-sign-out" type="button">Sign Out</button>
-      </div>
-    </div>
-  </div>
-</header>
+<header class="site-header"><div class="wrap"><div class="main-nav">
+<a class="brand" href="/jungle-star-command/"><span>★</span> JUNGLE STAR COMMAND</a>
+<div class="account-actions">
+<div class="account-pill"><div id="account-avatar" class="avatar">J</div><div class="account-copy"><span id="account-name" class="account-name">Checking session…</span><span id="account-email" class="account-email">CHOA</span></div></div>
+<a class="btn" href="/jungle-star-command/calendar/">Calendar</a>
+<a class="btn" href="/jungle-star-command/robot-hall/docubot/">DocuBot</a>
+<a class="btn" href="/jungle-star-command/">Command Home</a>
+<button class="btn" id="command-sign-out" type="button">Sign Out</button>
+</div></div></div></header>
 
 <main class="wrap">
 <section class="hero">
-  <div class="eyebrow">Community Housing Occupation Alliance</div>
-  <h1>CHOA.</h1>
-  <p class="lead">Field needs, residents, housing work, resources, partners, follow-up, meetings, evidence, programs, and real-world next actions.</p>
-  <div class="stamps">
-    <div class="stamp">SKELETON: LIVE</div>
-    <div class="stamp">BUILD: 2026-10-01</div>
-    <div id="page-opened" class="stamp">PAGE OPENED: —</div>
-    <div class="stamp">RECOVER → PRESERVE → ADD</div>
-  </div>
+<div class="eyebrow">Community Housing Occupation Alliance</div>
+<h1>CHOA.</h1>
+<p class="lead">Housing acquisition, conservatorship work, property recovery, pro formas, revenue models, community programs, events, evidence, partners, follow-up and repeatable field knowledge.</p>
+<div class="stamps">
+<div class="stamp">ROOM: LIVE</div><div class="stamp">BUILD: 2026-10-01</div>
+<div id="page-opened" class="stamp">PAGE OPENED: —</div><div class="stamp">RECOVER → PRESERVE → ADD</div>
+</div>
+<div class="choa-tabs">
+<a href="#cases">Cases / Properties</a><a href="#proforma">Pro Forma</a><a href="#events">Programs / Events</a><a href="#knowledge">Knowledge / Teaching</a><a href="#sources">Sources</a>
+</div>
 </section>
 
 <section>
-  <div class="eyebrow">Working Rooms</div>
-  <h2 class="section-title">Start loading the body.</h2>
-  <div class="room-grid">
-    
-<a class="room added" href="#housing">
-  <div class="icon">🏠</div>
-  <h3>Housing Needs</h3>
-  <p>Needs identified in the field, status, urgency, owner, resources, and follow-up.</p>
-</a>
-
-<a class="room added" href="#resources">
-  <div class="icon">🤝</div>
-  <h3>Resources</h3>
-  <p>Services, organizations, food, transportation, documents, referrals, and contact routes.</p>
-</a>
-
-<a class="room added" href="#people">
-  <div class="icon">👥</div>
-  <h3>People / Follow-Up</h3>
-  <p>People met, needs, permissions, assignments, contact status, and next action.</p>
-</a>
-
-<a class="room added" href="#programs">
-  <div class="icon">📋</div>
-  <h3>Programs / Field Work</h3>
-  <p>Outreach, meetings, events, classes, housing actions, and community missions.</p>
-</a>
-
-<a class="room added" href="#evidence">
-  <div class="icon">📎</div>
-  <h3>Evidence / Receipts</h3>
-  <p>Photos, documents, source notes, receipts, outcomes, and accountability.</p>
-</a>
-  </div>
+<div class="eyebrow">Operating Rooms</div>
+<h2 class="section-title">One housing system. Multiple cases.</h2>
+<div class="room-grid">
+<a class="room added" href="#cases"><div class="icon">🏠</div><h3>Cases / Properties</h3><p>One row per property or housing matter. Keep public labels generic; sensitive addresses stay inside the private record.</p></a>
+<a class="room added" href="/jungle-star-command/robot-hall/docubot/"><div class="icon">📄</div><h3>DocuBot / Conservatorship</h3><p>Petitions, packets, notices, exhibits, court instructions, creditor material, evidence and version history.</p></a>
+<a class="room added" href="#proforma"><div class="icon">📊</div><h3>Pro Forma / Revenue</h3><p>Event revenue, kitchen uses, commercial uses, public events, expenses, funding and property operating models.</p></a>
+<a class="room added" href="/jungle-star-command/calendar/"><div class="icon">🗓️</div><h3>CHOA Calendar</h3><p>Hearings, postings, inspections, applications, events, meetings and follow-up dates.</p></a>
+<a class="room added" href="#knowledge"><div class="icon">🧠</div><h3>Teach It Forward</h3><p>Preserve what worked, what failed, reusable checklists, coaching material and future training.</p></a>
+<a class="room added" href="#sources"><div class="icon">📚</div><h3>Source Library</h3><p>Spreadsheets, packets, appraisals, Google Docs, Canva work, photos, receipts and source links.</p></a>
+</div>
 </section>
 
-<section>
-  <div class="robot-feature">
-    <div class="robot-feature-title">SOURCE / CONTINUITY</div>
-    <p class="section-copy">
-      This room is intentionally usable before the database is finished.
-      Add source links, spreadsheets, Markdown continuity, exports, and project-specific task data without deleting older history.
-    </p>
-    <div class="robot-actions">
-      <a href="/jungle-star-command/#master-to-do">Master To-Do</a>
-      <a href="/jungle-star-command/document-forge/">Document Forge</a>
-      <a href="/jungle-star-command/files-receipts/">Files / Receipts</a>
-      <a href="/jungle-star-command/robot-hall/">Robot Hall Dubai</a>
-    </div>
-  </div>
+<section id="cases">
+<div class="eyebrow">Case Registry</div>
+<h2 class="section-title">Track the property without publishing the property.</h2>
+<div class="tools"><button id="add-case">+ Blank Case</button><button id="save-cases">Save</button><button id="export-cases">Export CSV</button></div>
+<div class="data-wrap"><table class="data-table"><thead><tr>
+<th>Case ID</th><th>Working Name</th><th>Type</th><th>Status</th><th>Current Step</th><th>Next Action</th><th>Deadline</th><th>DocuBot Matter</th><th>Source / Notes</th><th></th>
+</tr></thead><tbody id="case-body"></tbody></table></div>
+</section>
+
+<section id="proforma">
+<div class="eyebrow">Recovered Business Planning</div>
+<h2 class="section-title">Pro forma / operating model.</h2>
+<p class="section-copy">The recovered 2022 planning sheets show existing lanes for events, kitchen use, commercial activity, public events and revenue streams. Preserve those as source material instead of rebuilding them from memory.</p>
+<div class="data-wrap"><table class="data-table"><thead><tr><th>Lane</th><th>Recovered Examples</th><th>How CHOA Uses It</th><th>Status</th></tr></thead><tbody>
+<tr><td>Events</td><td>Business/public rental, trade shows, speaker events, conventions, weddings, weekend marketplace, business venue</td><td>Property activation and earned-revenue planning</td><td>Recovered source</td></tr>
+<tr><td>Kitchen</td><td>Commercial share, caterer/entrepreneur time allotments, food sales, fundraiser use</td><td>Shared commercial kitchen / food-program planning</td><td>Recovered source</td></tr>
+<tr><td>Public Programs</td><td>Musical exhibits, live bands, poetry readings, open mics, art gallery events</td><td>Community programming + venue use</td><td>Recovered source</td></tr>
+<tr><td>Revenue Model</td><td>Venue fees, participant/table fees, gallery ticketing/rental, food and beverage service</td><td>Property sustainability / pro forma inputs</td><td>Recovered source</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="events">
+<div class="eyebrow">Calendar + Events</div>
+<h2 class="section-title">Dates belong in one working calendar.</h2>
+<p class="section-copy">Use the Command Calendar for hearings, posting deadlines, inspections, partner meetings, public programs and property events. The recovered dynamic-calendar pattern is preserved as the model: events + calendar + sources of revenue + event expense tracking.</p>
+<div class="robot-actions"><a href="/jungle-star-command/calendar/">OPEN COMMAND CALENDAR</a></div>
+</section>
+
+<section id="knowledge">
+<div class="eyebrow">CHOA Knowledge</div>
+<h2 class="section-title">Do the work once. Teach the system later.</h2>
+<div class="room-grid">
+<div class="room added"><div class="icon">✅</div><h3>Requirements</h3><p>What must be filed, posted, served, inspected, paid or proven.</p></div>
+<div class="room added"><div class="icon">🧾</div><h3>Costs / Capital</h3><p>Acquisition, rehabilitation, filings, materials, contractors, equipment and operating cash.</p></div>
+<div class="room added"><div class="icon">🤝</div><h3>Partners / Staff</h3><p>City, nonprofit, contractors, professionals, volunteers and future paid staff.</p></div>
+<div class="room added"><div class="icon">🎓</div><h3>Training / Coaching</h3><p>Reusable lessons, templates, checklists and case-history knowledge for future CHOA work.</p></div>
+</div>
+</section>
+
+<section id="sources">
+<div class="robot-feature">
+<div class="robot-feature-title">SOURCE / CONTINUITY</div>
+<p class="section-copy">Known source classes now include the conservatorship packet, prior petition work, creditor/estate documentation, machinery and equipment appraisal material, property pro formas, dynamic calendars, Canva working files, Google Docs/Sheets, photos and receipts. Keep originals; build new versions beside them.</p>
+<div class="robot-actions">
+<a href="/jungle-star-command/robot-hall/docubot/">DocuBot</a>
+<a href="/jungle-star-command/calendar/">Calendar</a>
+<a href="/jungle-star-command/#master-to-do">Master To-Do</a>
+<a href="/jungle-star-command/robot-hall/">Robot Hall Dubai</a>
+</div>
+</div>
 </section>
 </main>
 
-<footer class="site-footer">
-  <div class="wrap footer-grid">
-    <div><strong>★ JUNGLE STAR COMMAND</strong><p>CHOA</p></div>
-    <div><strong>Operating Law</strong><p>Recover → Preserve → Add</p></div>
-    <div><strong>Status</strong><p>Skeleton live — load data next.</p></div>
-  </div>
-</footer>
-</body>
-</html>
+<footer class="site-footer"><div class="wrap footer-grid">
+<div><strong>★ JUNGLE STAR COMMAND</strong><p>CHOA</p></div>
+<div><strong>Operating Law</strong><p>Recover → Preserve → Add</p></div>
+<div><strong>Status</strong><p>Case registry + pro forma + calendar lanes live.</p></div>
+</div></footer>
+
+<script>
+const KEY="jsc_choa_cases_v1";
+const seed=[{id:"CHOA-001",name:"Conservatorship Case 001",type:"Conservatorship / Property Recovery",status:"Active",step:"Packet + source comparison",next:"Compare current packet to prior completed work; verify changed dates and posting/service requirements",deadline:"",docubot:"Conservatorship",source:"Private case workspace — keep street address out of public-facing labels"}];
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||seed}catch(e){return seed}}
+let rows=load();
+const body=document.getElementById("case-body");
+function draw(){body.innerHTML="";rows.forEach((r,i)=>{const tr=document.createElement("tr");["id","name","type","status","step","next","deadline","docubot","source"].forEach(k=>{const td=document.createElement("td");td.contentEditable="true";td.textContent=r[k]||"";td.oninput=()=>{r[k]=td.textContent};tr.appendChild(td)});const a=document.createElement("td");a.innerHTML='<button type="button">Delete</button>';a.querySelector("button").onclick=()=>{rows.splice(i,1);draw()};tr.appendChild(a);body.appendChild(tr)})}
+function save(){localStorage.setItem(KEY,JSON.stringify(rows))}
+function csv(){const h=["Case ID","Working Name","Type","Status","Current Step","Next Action","Deadline","DocuBot Matter","Source / Notes"];const esc=v=>'"'+String(v??"").replaceAll('"','""')+'"';const out=[h,...rows.map(r=>[r.id,r.name,r.type,r.status,r.step,r.next,r.deadline,r.docubot,r.source])].map(x=>x.map(esc).join(",")).join("\n");const b=new Blob([out],{type:"text/csv"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="choa-case-registry.csv";a.click();URL.revokeObjectURL(u)}
+document.getElementById("add-case").onclick=()=>{rows.push({});draw()};
+document.getElementById("save-cases").onclick=()=>{save();alert("CHOA case registry saved in this browser.")};
+document.getElementById("export-cases").onclick=csv;
+draw();
+</script>
+</body></html>
