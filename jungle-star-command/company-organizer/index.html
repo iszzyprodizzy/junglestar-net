@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#07111f">
+<title>Company Organizer | Jungle Star Command</title>
+<link rel="stylesheet" href="/jungle-star-command/assets/company-organizer.css">
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="/jungle-star-command/assets/company-organizer.js"></script>
+</head>
+<body>
+<div id="auth-gate" class="auth-gate"><div class="auth-card"><div class="brand-mark">★</div><p>Checking private Command access…</p></div></div>
+<div id="organizer-app" hidden>
+<header class="topbar">
+  <a class="brand" href="/jungle-star-command/"><span class="brand-star">★</span><span>JUNGLE STAR <b>COMMAND</b><small>Build · Create · Educate · Empower</small></span></a>
+  <div class="top-actions"><a class="quiet-link" href="/jungle-star-command/">← Command Home</a><span id="user-label" class="user-label">Private workspace</span></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+  <div class="side-label">WORKSPACE</div>
+  <a class="side-link active" href="/jungle-star-command/company-organizer/">▦ <span>Company Organizer</span></a>
+  <a class="side-link" href="#quick-capture">✦ <span>Quick Capture</span></a>
+  <a class="side-link" href="#your-work">☑ <span>Captured Items</span></a>
+  <a class="side-link" href="/jungle-star-command/projects/">▤ <span>Projects & Tasks</span></a>
+  <a class="side-link" href="/jungle-star-command/purchases/">◇ <span>Purchases & Supplies</span></a>
+  <a class="side-link" href="/jungle-star-command/files-receipts/">▧ <span>Files & Receipts</span></a>
+  <div class="side-divider"></div>
+  <div class="side-label">YOUR AREAS</div>
+  <button class="area-shortcut" data-area="Great Food Fight"><i class="dot lime"></i> Great Food Fight</button>
+  <button class="area-shortcut" data-area="JW Comics"><i class="dot violet"></i> JW Comics</button>
+  <button class="area-shortcut" data-area="Jungle Star Publishing"><i class="dot green"></i> Jungle Star Publishing</button>
+  <button class="area-shortcut" data-area="Soap Station"><i class="dot aqua"></i> Soap Station</button>
+  <button class="area-shortcut" data-area="Construction / HQ"><i class="dot gold"></i> Construction / HQ</button>
+  <button class="area-shortcut" data-area="Vox News"><i class="dot red"></i> Vox News</button>
+  <button class="area-shortcut" data-area="Academy & Community"><i class="dot blue"></i> Academy & Community</button>
+  <button class="area-shortcut" data-area="Other / Ideas"><i class="dot grey"></i> Other / Ideas</button>
+  <div class="sidebar-bottom"><span>★</span><strong>RECOVER → PRESERVE → ADD</strong><small>Private Founder Workspace</small></div>
+</aside>
+<main class="main">
+  <section class="welcome">
+    <div><div class="eyebrow"><span class="eyebrow-dot"></span> FOUNDER OPERATIONS</div><h1>Company Organizer<span class="period">.</span></h1><p>Get it out of your head. Put it where you can find it again.</p></div>
+    <div class="quote">“The stars don’t shine,<br>they burn.”<small>— Jungle Star</small></div>
+  </section>
+  <section class="stats-grid" aria-label="Organizer totals">
+    <article class="stat-card"><span class="stat-icon icon-capture">✦</span><span class="stat-label">CAPTURED ITEMS</span><strong id="stat-total">0</strong><small>Saved in this workspace</small></article>
+    <article class="stat-card"><span class="stat-icon icon-active">◷</span><span class="stat-label">NEEDS ATTENTION</span><strong id="stat-active">0</strong><small>Inbox, ready, or in progress</small></article>
+    <article class="stat-card"><span class="stat-icon icon-areas">▦</span><span class="stat-label">ACTIVE AREAS</span><strong id="stat-areas">8</strong><small>Organized workspaces</small></article>
+    <article class="stat-card"><span class="stat-icon icon-done">✓</span><span class="stat-label">COMPLETED</span><strong id="stat-done">0</strong><small>Kept as part of your history</small></article>
+  </section>
+  <section id="quick-capture" class="capture-panel">
+    <div class="panel-heading"><div><span class="heading-icon">✦</span><div><h2>Quick Capture</h2><p>One thought? Drop it here. Sort it when you’re ready.</p></div></div><span class="save-chip"><i></i> SAVE FIRST</span></div>
+    <form id="capture-form">
+      <label class="sr-only" for="capture-title">What do you need to remember, add, or get done?</label>
+      <div class="capture-row"><input id="capture-title" maxlength="240" required autocomplete="off" placeholder="What do you need to remember, add, or get done?"><button class="primary-button" type="submit">＋ Add to Inbox</button></div>
+      <div class="capture-details">
+        <label><span>ITEM TYPE</span><select id="capture-type"><option>Task</option><option>Idea</option><option>Note</option><option>Product</option><option>Document</option><option>Link</option><option>Purchase</option><option>Book</option></select></label>
+        <label><span>BUSINESS / AREA</span><select id="capture-area"></select></label>
+        <label><span>CATEGORY</span><input id="capture-category" maxlength="80" placeholder="e.g. packaging, sheetrock, book club"></label>
+        <label><span>PROJECT (OPTIONAL)</span><input id="capture-project" maxlength="120" placeholder="e.g. Soap Station launch"></label>
+      </div>
+      <details class="extra-details"><summary>+ Add notes, a link, or a due date (optional)</summary><div class="extra-grid"><label><span>NOTES</span><textarea id="capture-notes" rows="3" maxlength="4000" placeholder="Context, steps, measurements, people, source details…"></textarea></label><label><span>RELATED LINK</span><input id="capture-link" type="url" placeholder="https://…"></label><label><span>DUE DATE</span><input id="capture-due" type="date"></label></div></details>
+    </form>
+    <p class="capture-hint"><span>↵</span> Hit Add to save. You can organize it later. Nothing is auto-deleted.</p>
+  </section>
+  <section class="area-section">
+    <div class="section-heading"><div><h2>Your Company Areas</h2><p>Pick an area to see its captured items. One place for every part of the operation.</p></div><span class="section-note">8 WORKSPACES</span></div>
+    <div class="area-grid">
+      <button class="area-card" data-area="Great Food Fight"><span class="area-symbol lime-bg">🥦</span><span class="area-copy"><b>Great Food Fight</b><small>Game · Books · Media · Missions</small><em id="count-gff">0 items</em></span><span class="chevron">›</span></button>
+      <button class="area-card" data-area="JW Comics"><span class="area-symbol violet-bg">✦</span><span class="area-copy"><b>JW Comics</b><small>Characters · Comics · Music · IP</small><em id="count-jw">0 items</em></span><span class="chevron">›</span></button>
+      <button class="area-card" data-area="Jungle Star Publishing"><span class="area-symbol green-bg">▤</span><span class="area-copy"><b>Jungle Star Publishing</b><small>Books · Print · Distribution</small><em id="count-pub">0 items</em></span><span class="chevron">›</span></button>
+      <button class="area-card" data-area="Soap Station"><span class="area-symbol aqua-bg">◉</span><span class="area-copy"><b>Soap Station</b><small>Products · Ingredients · Packaging</small><em id="count-soap">0 items</em></span><span class="chevron">›</span></button>
+      <button class="area-card" data-area="Construction / HQ"><span class="area-symbol gold-bg">⌂</span><span class="area-copy"><b>Construction / HQ</b><small>House · Lab · Repairs · Infrastructure</small><em id="count-construction">0 items</em></span><span class="chevron">›</span></button>
+      <button class="area-card" data-area="Vox News"><span class="area-symbol red-bg">◉</span><span class="area-copy"><b>Vox News</b><small>Interviews · Video · Community</small><em id="count-vox">0 items</em></span><span class="chevron">›</span></button>
+      <button class="area-card" data-area="Academy & Community"><span class="area-symbol blue-bg">☆</span><span class="area-copy"><b>Academy & Community</b><small>Learning · Book clubs · Programs</small><em id="count-academy">0 items</em></span><span class="chevron">›</span></button>
+      <button class="area-card" data-area="Other / Ideas"><span class="area-symbol grey-bg">✧</span><span class="area-copy"><b>Other / Ideas</b><small>Unsorted thoughts · Research · Later</small><em id="count-other">0 items</em></span><span class="chevron">›</span></button>
+    </div>
+  </section>
+  <section id="your-work" class="work-section">
+    <div class="section-heading work-title"><div><h2 id="work-heading">Your Captured Items</h2><p id="work-subtitle">Your saved thoughts, tasks, products, and reference points.</p></div><div class="data-actions"><button id="export-data" class="outline-button" type="button">⇩ Backup</button><label class="outline-button import-button">⇧ Restore<input id="import-data" type="file" accept=".json,application/json" hidden></label></div></div>
+    <div class="filters">
+      <label class="search-field"><span>⌕</span><input id="search-items" type="search" placeholder="Search your captured items…"></label>
+      <select id="filter-status" aria-label="Filter by status"><option value="all">All statuses</option><option>Inbox</option><option>Ready</option><option>In Progress</option><option>Blocked</option><option>Waiting</option><option>Completed</option><option>Archived</option></select>
+      <select id="filter-type" aria-label="Filter by item type"><option value="all">All item types</option><option>Task</option><option>Idea</option><option>Note</option><option>Product</option><option>Document</option><option>Link</option><option>Purchase</option><option>Book</option></select>
+      <button id="clear-area-filter" class="text-button" type="button" hidden>Clear area ×</button>
+    </div>
+    <div id="items-list" class="items-list"></div>
+    <div id="empty-state" class="empty-state"><div>✦</div><h3>Your workspace is ready.</h3><p>Capture your first thought above, or choose a company area to get started.</p><button id="empty-capture" class="outline-button" type="button">＋ Capture something</button></div>
+  </section>
+  <section class="preserve-panel"><div class="preserve-icon">▣</div><div><b>Preserve the work.</b><p>Use <strong>Backup</strong> to download your captured items as a JSON file, and <strong>Restore</strong> to bring that backup back. This first version stores captures in this browser for your signed-in account; it does not yet sync them between devices. Back up important entries before clearing browser data.</p></div><a href="/jungle-star-command/export/">Open Command Data Export ↗</a></section>
+  <footer class="footer"><span>★ JUNGLE STAR COMMAND</span><span>PRIVATE · FOUNDER WORKSPACE</span><span>RECOVER → PRESERVE → ADD</span></footer>
+</main>
+</div>
+</div>
+</body>
+</html>
