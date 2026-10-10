@@ -84,6 +84,7 @@
   }
   function renderStats(){
     $("stat-total").textContent = items.length;
+    $("stat-areas").textContent = AREAS.length;
     $("stat-active").textContent = items.filter(x => ["Inbox","Ready","In Progress","Blocked","Waiting"].includes(x.status)).length;
     $("stat-done").textContent = items.filter(x => x.status === "Completed").length;
     AREAS.forEach(area => {
