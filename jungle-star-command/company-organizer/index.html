@@ -36,6 +36,7 @@
   <button class="area-shortcut" data-area="Vox News"><i class="dot red"></i> Vox News</button>
   <button class="area-shortcut" data-area="Academy & Community"><i class="dot blue"></i> Academy & Community</button>
   <button class="area-shortcut" data-area="Other / Ideas"><i class="dot grey"></i> Other / Ideas</button>
+  <div id="custom-area-shortcuts"></div>
   <div class="sidebar-bottom"><span>★</span><strong>RECOVER → PRESERVE → ADD</strong><small>Private Founder Workspace</small></div>
 </aside>
 <main class="main">
@@ -65,7 +66,8 @@
     <p class="capture-hint"><span>↵</span> Hit Add to save. You can organize it later. Nothing is auto-deleted.</p>
   </section>
   <section class="area-section">
-    <div class="section-heading"><div><h2>Your Company Areas</h2><p>Pick an area to see its captured items. One place for every part of the operation.</p></div><span class="section-note">8 WORKSPACES</span></div>
+    <div class="section-heading"><div><h2>Your Company Areas</h2><p>Add workspaces as new industries and projects come into view.</p></div><span id="workspace-count" class="section-note">8 WORKSPACES</span></div>
+    <form id="workspace-form" class="workspace-form"><label for="workspace-name">NEW BUSINESS / AREA</label><input id="workspace-name" maxlength="70" required placeholder="e.g. Music Production, Real Estate, AI Lab"><button class="outline-button" type="submit">＋ Add Workspace</button><p id="workspace-message" role="status" aria-live="polite"></p></form>
     <div class="area-grid">
       <button class="area-card" data-area="Great Food Fight"><span class="area-symbol lime-bg">🥦</span><span class="area-copy"><b>Great Food Fight</b><small>Game · Books · Media · Missions</small><em id="count-gff">0 items</em></span><span class="chevron">›</span></button>
       <button class="area-card" data-area="JW Comics"><span class="area-symbol violet-bg">✦</span><span class="area-copy"><b>JW Comics</b><small>Characters · Comics · Music · IP</small><em id="count-jw">0 items</em></span><span class="chevron">›</span></button>
@@ -75,6 +77,7 @@
       <button class="area-card" data-area="Vox News"><span class="area-symbol red-bg">◉</span><span class="area-copy"><b>Vox News</b><small>Interviews · Video · Community</small><em id="count-vox">0 items</em></span><span class="chevron">›</span></button>
       <button class="area-card" data-area="Academy & Community"><span class="area-symbol blue-bg">☆</span><span class="area-copy"><b>Academy & Community</b><small>Learning · Book clubs · Programs</small><em id="count-academy">0 items</em></span><span class="chevron">›</span></button>
       <button class="area-card" data-area="Other / Ideas"><span class="area-symbol grey-bg">✧</span><span class="area-copy"><b>Other / Ideas</b><small>Unsorted thoughts · Research · Later</small><em id="count-other">0 items</em></span><span class="chevron">›</span></button>
+      <div id="custom-area-cards" class="custom-area-cards"></div>
     </div>
   </section>
   <section id="your-work" class="work-section">
@@ -83,6 +86,7 @@
       <label class="search-field"><span>⌕</span><input id="search-items" type="search" placeholder="Search your captured items…"></label>
       <select id="filter-status" aria-label="Filter by status"><option value="all">All statuses</option><option>Inbox</option><option>Ready</option><option>In Progress</option><option>Blocked</option><option>Waiting</option><option>Completed</option><option>Archived</option></select>
       <select id="filter-type" aria-label="Filter by item type"><option value="all">All item types</option><option>Task</option><option>Idea</option><option>Note</option><option>Product</option><option>Document</option><option>Link</option><option>Purchase</option><option>Book</option></select>
+      <button id="show-tasks" class="text-button" type="button" aria-pressed="false">Tasks only</button>
       <button id="clear-area-filter" class="text-button" type="button" hidden>Clear area ×</button>
     </div>
     <div id="items-list" class="items-list"></div>
