@@ -110,7 +110,7 @@
     render();
   }
   function exportBackup(){
-    const backup = {format:"JungleStarCompanyOrganizer",version:1,exportedAt:new Date().toISOString(),items};
+    const backup = {format:"JungleStarCompanyOrganizer",version:2,exportedAt:new Date().toISOString(),areas:AREAS.filter(a => !DEFAULT_AREAS.includes(a)),items};
     const blob = new Blob([JSON.stringify(backup,null,2)],{type:"application/json"});
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -123,6 +123,15 @@
       const data = JSON.parse(await file.text());
       const incoming = Array.isArray(data) ? data : data.items;
       if(!Array.isArray(incoming)) throw new Error("This file does not contain an organizer item list.");
+      if(!Array.isArray(data) && Array.isArray(data.areas)) {
+        data.areas.forEach(rawArea => {
+          if(typeof rawArea === "string") {
+            const name = rawArea.trim().slice(0,70);
+            if(name && !AREAS.some(a => a.toLowerCase() === name.toLowerCase())) AREAS.push(name);
+          }
+        });
+        saveCustomAreas(); renderCustomAreas(); setupAreaSelect();
+      }
       let added = 0;
       const known = new Set(items.map(x => x.id));
       incoming.forEach(raw => {
@@ -140,6 +149,7 @@
         known.add(item.id); items.push(item); added++;
       });
       persist();
+      renderCustomAreas(); setupAreaSelect(); render();
       alert("Restore complete: " + added + " item(s) imported. Existing items were preserved.");
     } catch(e) { alert("Could not restore this backup: " + e.message); }
     $("import-data").value = "";
