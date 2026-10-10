@@ -29,7 +29,7 @@
     } catch (e) { AREAS = [...DEFAULT_AREAS]; }
   }
   function saveCustomAreas(){
-    try { localStorage.setItem(customAreasKey, JSON.stringify(AREAS.filter(a => !DEFAULT_AREAS.includes(a))); return true; }
+    try { localStorage.setItem(customAreasKey, JSON.stringify(AREAS.filter(a => !DEFAULT_AREAS.includes(a)))); return true; }
     catch(e) { alert("Could not save the workspace list in this browser. Your existing captured items were not changed."); return false; }
   }
   function renderCustomAreas(){
@@ -41,7 +41,7 @@
   function addWorkspace(event){
     event.preventDefault();
     const input = $("workspace-name"), message = $("workspace-message");
-    const name = input.value.trim().replace(/\\s+/g," ");
+    const name = input.value.trim().replace(/\s+/g," ");
     if(!name) return;
     if(AREAS.some(a => a.toLowerCase() === name.toLowerCase())) { message.textContent = "That workspace already exists. Select it from the list."; return; }
     AREAS.push(name);
