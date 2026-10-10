@@ -241,6 +241,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     $("capture-form").addEventListener("submit", addItem);
     $("workspace-form").addEventListener("submit", addWorkspace);
+    $("workspace-form").addEventListener("click", event => event.stopPropagation());
     $("items-list").addEventListener("change", handleListAction);
     $("items-list").addEventListener("click", handleListAction);
     $("items-list").addEventListener("submit", saveEditedItem);
