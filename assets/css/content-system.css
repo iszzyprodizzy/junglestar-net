@@ -1,0 +1,67 @@
+/* Jungle Star shared content system — v1
+   Add to a page with: <link rel="stylesheet" href="/assets/css/content-system.css">
+   Designed to coexist with existing section-specific themes. */
+:root {
+  --js-ink: #f7f8fb;
+  --js-muted: #b8c1ce;
+  --js-paper: #10151e;
+  --js-panel: #171e29;
+  --js-line: #354152;
+  --js-brand: #e2bf67;
+  --js-brand-strong: #f3d982;
+  --js-radius: 1.1rem;
+  --js-content: 72rem;
+  --js-reading: 46rem;
+  --js-space: clamp(1rem, 2.5vw, 1.6rem);
+  color-scheme: dark;
+}
+.js-page, .js-page * { box-sizing: border-box; }
+.js-page { margin: 0; color: var(--js-ink); font: 1rem/1.65 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; }
+.js-page a { color: inherit; }
+.js-wrap { width: min(var(--js-content), 92vw); margin-inline: auto; }
+.js-reading { max-width: var(--js-reading); }
+.js-skip-link { position: absolute; left: -9999px; top: 1rem; z-index: 999; padding: .75rem 1rem; background: var(--js-brand); color: #111; }
+.js-skip-link:focus { left: 1rem; }
+.js-page a:focus-visible, .js-page button:focus-visible, .js-page input:focus-visible, .js-page textarea:focus-visible, .js-page select:focus-visible { outline: 3px solid var(--js-brand-strong); outline-offset: 3px; }
+.js-header, .js-footer { border-color: var(--js-line); border-style: solid; }
+.js-header { border-width: 0 0 1px; }
+.js-header-inner { min-height: 4.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.js-brand { font-weight: 900; letter-spacing: .04em; text-decoration: none; }
+.js-nav { display: flex; flex-wrap: wrap; align-items: center; gap: .85rem; }
+.js-nav a { text-decoration: none; color: var(--js-muted); font-size: .92rem; }
+.js-nav a:hover, .js-nav a[aria-current="page"] { color: var(--js-brand-strong); }
+.js-hero { padding-block: clamp(2.5rem, 7vw, 5.5rem) 2rem; }
+.js-eyebrow { color: var(--js-brand); font-size: .78rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+.js-title { margin: .2em 0; font-size: clamp(2.4rem, 7vw, 5.2rem); line-height: .98; letter-spacing: -.04em; }
+.js-lead { max-width: 52rem; color: var(--js-muted); font-size: clamp(1.05rem, 2vw, 1.25rem); }
+.js-section { padding-block: 1.5rem 3rem; }
+.js-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.js-card { min-width: 0; padding: var(--js-space); border: 1px solid var(--js-line); border-radius: var(--js-radius); background: var(--js-panel); }
+.js-card h2, .js-card h3 { margin-top: 0; line-height: 1.2; }
+.js-meta { display: flex; flex-wrap: wrap; gap: .5rem 1rem; color: var(--js-muted); font-size: .88rem; }
+.js-button { display: inline-block; padding: .7rem 1rem; border: 1px solid var(--js-brand); border-radius: 999px; color: var(--js-ink); text-decoration: none; font-weight: 800; }
+.js-button-primary { background: var(--js-brand); color: #111; }
+.js-prose { max-width: var(--js-reading); }
+.js-prose p, .js-prose li { line-height: 1.8; }
+.js-prose h2, .js-prose h3 { line-height: 1.2; margin-top: 1.8em; }
+.js-sources { padding-left: 1.25rem; }
+.js-note { padding: 1rem 1.1rem; border-left: 4px solid var(--js-brand); background: var(--js-panel); color: var(--js-muted); }
+.js-form { display: grid; gap: 1rem; max-width: 42rem; }
+.js-field { display: grid; gap: .35rem; }
+.js-field label { font-weight: 800; }
+.js-field input, .js-field textarea, .js-field select { width: 100%; padding: .8rem; border: 1px solid var(--js-line); border-radius: .65rem; background: #0c1118; color: var(--js-ink); font: inherit; }
+.js-field textarea { min-height: 8rem; resize: vertical; }
+.js-small { color: var(--js-muted); font-size: .88rem; }
+.js-footer { margin-top: 3rem; border-width: 1px 0 0; padding-block: 1.5rem 3rem; color: var(--js-muted); }
+@media (max-width: 800px) { .js-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .js-header-inner { align-items: flex-start; padding-block: 1rem; flex-direction: column; } }
+@media (max-width: 540px) { .js-grid { grid-template-columns: 1fr; } .js-nav { gap: .6rem; } }
+@media print {
+  :root { color-scheme: light; --js-ink: #111; --js-muted: #444; --js-paper: #fff; --js-panel: #fff; --js-line: #bbb; }
+  body, .js-page { background: #fff !important; color: #111 !important; }
+  .js-header, .js-footer, .js-nav, .js-button, .js-form, video, iframe, .no-print { display: none !important; }
+  .js-wrap { width: 100%; max-width: none; }
+  .js-hero, .js-section { padding: .5rem 0; }
+  .js-card, .js-note { background: #fff !important; box-shadow: none !important; break-inside: avoid; }
+  a { color: #111 !important; text-decoration: underline; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 80%; overflow-wrap: anywhere; }
+}
